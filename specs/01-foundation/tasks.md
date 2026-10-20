@@ -18,7 +18,7 @@ Legend: `[P]` can run in parallel with other `[P]` tasks in the same phase. Each
 - [x] **T-01.09** [P] `core.packs`: load, validate, serve; formatters. Verify the ID region codes against BPS and correct `packs/ID.yaml` if needed (note the source in a comment). FR-01.10.
 - [ ] **T-01.10** [P] `specs/01-foundation/format-cases.json` from DESIGN.md section 11 (at least 30 cases across kinds) and the Python formatter tests that read it. Done when: every case passes.
 - [x] **T-01.11** `core.db.tenant_session` and the catalog-driven RLS test harness. FR-01.7, FR-01.8. Done when: the harness passes on the 0001 tables and fails if a policy is dropped.
-- [ ] **T-01.12** `core.outbox` + worker publisher with retries and dead-letter. FR-01.12. Done when: a crash between commit and publish still delivers exactly once to an idempotent consumer in tests.
+- [x] **T-01.12** `core.outbox` + worker publisher with retries and dead-letter. FR-01.12. Done when: a crash between commit and publish still delivers exactly once to an idempotent consumer in tests.
 - [ ] **T-01.13** [P] `core.storage` on MinIO with SHA-256 on write, no overwrite. FR-01.13.
 - [ ] **T-01.14** [P] `core.ids` human id sequences (D-35) per insurer code and year, gap-free under concurrency.
 
