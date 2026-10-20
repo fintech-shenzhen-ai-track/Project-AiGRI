@@ -21,7 +21,7 @@ Lanes: **A** = Platform, trust and money. **B** = Journeys and portals. **T** = 
 | C13 | Policy Record tables and endpoints (T-04.02, T-04.03) | A | B | Curation candidates (T-07.09) | 2 | [ ] |
 | C14 | Publish service (T-04.12) | A | B | Real published records in Curation | 2 | [ ] |
 | C15 | Clause sheet and `PolicyQA` component (T-04.15) | A | B | c06 and c07 (T-07.14, T-07.15) | 2 | [ ] |
-| C16 | `proposed_amount`, `expected_payout`, `fit` (T-05.07, T-05.09) | A | B | Curation score (T-07.10), pre-check (T-11.07) | 1–2 | [ ] |
+| C16 | `proposed_amount`, `expected_payout`, `fit` (T-05.07, T-05.09) | A | B | Curation score (T-07.10), pre-check (T-11.07) | 1–2 | [x] |
 | C17 | `forecast_snapshots` table (T-07.01) | B | B | Alerts (09) | 2 | [ ] |
 | C18 | Loss Events (T-09.05) | B | A | Damage Assessment pipeline (10) | 2 | [ ] |
 | C19 | Fixture Damage Assessments (T-10.02) | A | B | Claim drafting (T-11.04) | 2 | [ ] |
