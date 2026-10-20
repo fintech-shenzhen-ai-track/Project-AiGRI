@@ -2,7 +2,7 @@
 
 ## Phase A: contracts
 
-- [ ] **T-03.01** Next.js app scaffold with pnpm, TypeScript strict, ESLint, Vitest, Playwright + axe; `make lint` and `make e2e` wired. Done when: a placeholder page passes lint, unit and e2e.
+- [x] **T-03.01** Next.js app scaffold with pnpm, TypeScript strict, ESLint, Vitest, Playwright + axe; `make lint` and `make e2e` wired. Done when: a placeholder page passes lint, unit and e2e.
 - [ ] **T-03.02** Port `system.css` to `styles/system.css` and the icon sprite and logos. FR-03.1. Done when: a static page using prototype markup looks identical to the prototype file side by side.
 - [ ] **T-03.03** `lib/nav.ts` with every route in the plan's route table and role guards in `middleware.ts`. FR-03.6, FR-03.7.
 - [ ] **T-03.04** `lib/api` generated types and client (uses `openapi.json` from 01). FR-03.5.
