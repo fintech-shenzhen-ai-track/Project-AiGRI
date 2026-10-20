@@ -70,13 +70,15 @@ def _crop_record(
     rate: str,
     perils: list[dict[str, Any]],
     partial_from: str = "10",
+    *,
+    product: str,
 ) -> dict[str, Any]:
     return {
         "policy_record_id": record_id,
         "version": 1,
         "status": "published",
         "insurer": {"insurer_id": f"ins-{code.lower()}", "code": code, "name": name},
-        "product_name": {"value": "Rice cover", "clause": c("1.1")},
+        "product_name": {"value": product, "clause": c("1.1")},
         "product_type": "crop_indemnity",
         "insured_class": {"kind": "crop", "crop": "rice", "unit": "parcel", "clause": c("2.1")},
         "period": {"rule": "purchase_to_season_end", "clause": c("3.1")},
@@ -142,14 +144,27 @@ PEST = {"peril": "pest_disease", "clause": c("4.3")}
 def jasindo_rfd() -> dict[str, Any]:
     """PR-JSD-RFD-2026: Rp8.000.000/ha, 3,5%, franchise 10% per parcel (D-07)."""
     return _crop_record(
-        "PR-JSD-RFD-2026", "JSD", "Asuransi Jasindo", 8_000_000, "3.5", [FLOOD, DROUGHT]
+        "PR-JSD-RFD-2026",
+        "JSD",
+        "Asuransi Jasindo",
+        8_000_000,
+        "3.5",
+        [FLOOD, DROUGHT],
+        product="Rice Flood & Drought Cover",
     )
 
 
 def askrindo_ryp() -> dict[str, Any]:
     """PR-ASK-RYP-2026: Rp7.500.000/ha, 3,2%, pays from 20% loss (Clause 5.3)."""
     rec = _crop_record(
-        "PR-ASK-RYP-2026", "ASK", "Askrindo", 7_500_000, "3.2", [FLOOD, DROUGHT, PEST], "20"
+        "PR-ASK-RYP-2026",
+        "ASK",
+        "Askrindo",
+        7_500_000,
+        "3.2",
+        [FLOOD, DROUGHT, PEST],
+        "20",
+        product="Rice Yield Protect",
     )
     rec["deductible"]["pct"] = "20"
     return rec
@@ -157,7 +172,15 @@ def askrindo_ryp() -> dict[str, Any]:
 
 def sinarmas_pfc() -> dict[str, Any]:
     """PR-SMI-PFC-2026: Rp6.000.000/ha, 2,4%, flood only (Clause 3.2)."""
-    return _crop_record("PR-SMI-PFC-2026", "SMI", "Asuransi Sinar Mas", 6_000_000, "2.4", [FLOOD])
+    return _crop_record(
+        "PR-SMI-PFC-2026",
+        "SMI",
+        "Asuransi Sinar Mas",
+        6_000_000,
+        "2.4",
+        [FLOOD],
+        product="Paddy Flood Cover",
+    )
 
 
 def autp() -> dict[str, Any]:
@@ -166,7 +189,13 @@ def autp() -> dict[str, Any]:
     Scheme clause id is "Scheme rule 2.1", the only scheme rule PLAN gives.
     """
     rec = _crop_record(
-        "PR-JSD-AUTP-2026", "JSD", "Asuransi Jasindo", 6_000_000, "3", [FLOOD, DROUGHT]
+        "PR-JSD-AUTP-2026",
+        "JSD",
+        "Asuransi Jasindo",
+        6_000_000,
+        "3",
+        [FLOOD, DROUGHT],
+        product="AUTP Rice (government scheme)",
     )
     rec["scheme"] = {
         "code": "AUTP",
@@ -192,9 +221,17 @@ def autp() -> dict[str, Any]:
 def autsk() -> dict[str, Any]:
     """PR-JSD-AUTSK-2026: livestock scheme, min(declared, cap 10.000.000)/head, 2%, subsidy 80%.
 
-    Scheme clause id reuses "Scheme rule 2.1" (PLAN gives no livestock scheme rule).
+    Scheme clause id is synthetic: PLAN gives no livestock scheme rule.
     """
-    rec = _crop_record("PR-JSD-AUTSK-2026", "JSD", "Asuransi Jasindo", 0, "2", [])
+    rec = _crop_record(
+        "PR-JSD-AUTSK-2026",
+        "JSD",
+        "Asuransi Jasindo",
+        0,
+        "2",
+        [],
+        product="AUTS/K Cattle (government scheme)",
+    )
     rec["product_type"] = "livestock_mortality"
     rec["insured_class"] = {
         "kind": "livestock",
@@ -217,7 +254,7 @@ def autsk() -> dict[str, Any]:
         "code": "AUTS/K",
         "subsidy_pct": "80",
         "subsidy_payer": "Government of Indonesia",
-        "clause": c("Scheme rule 2.1"),
+        "clause": c("SYNTHETIC scheme rule (AUTS/K)"),
     }
     rec.pop("deductible")
     rec["loss_categories"] = [
