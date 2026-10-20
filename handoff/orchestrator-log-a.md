@@ -22,6 +22,7 @@ Wave 1, before M1. Docker restarts while developer A retries moving its disk ima
 
 - 01 phase B part 2 (DB tasks T-01.06, T-01.11, T-01.12, T-01.14) · `feat/01-foundation-pb` · `.claude/worktrees/agent-a1f1fd5aa4ac94f72` · 2026-10-20 · in review; adds migration `0001_ids` (down_revision `0001_core`): two heads once 12's `0012` merges → `alembic merge heads`
 - 12 phase A (T-12.01–T-12.03, C08) · `feat/12-wallet-pa` · `.claude/worktrees/agent-a913b84b2e51ae0de` · 2026-10-20 · fix round 1 (ledger txn status + payout shape, tenant columns from wallet, currency from packs, no superadmin claim)
+- 04 phase A (T-04.01–T-04.03, C13) · `feat/04-policy-compiler-pa` · new worktree · 2026-10-20 · `record_clauses` without `embedding` until R-004
 
 ## Merged
 
