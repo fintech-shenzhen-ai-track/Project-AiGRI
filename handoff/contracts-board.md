@@ -29,7 +29,7 @@ Lanes: **A** = Platform, trust and money. **B** = Journeys and portals. **T** = 
 | C21 | Policies and `policy_assets` (T-08.01) | A | B | Claims tables (T-11.01), insurer views (13) | 3 | [ ] |
 | C22 | Claim state machine and `claim.approved` event (T-11.03, T-11.08) | B | A | Real payouts end to end (T-12.06 is built earlier against fake events) | 3 | [ ] |
 | C23 | Nudges table (T-14.01) | B | B | Dashboard nudges (13) | 4 | [ ] |
-| C24 | Bench runner (T-16.01) | A | B | B's bench cases run in CI | 0–1 | [ ] |
+| C24 | Bench runner (T-16.01) | A | B | B's bench cases run in CI | 0–1 | [x] |
 | C25 | Fixture files (T-15.01–T-15.05) | T (A reviews) | A, B | Every gold test | 0–1 | [ ] |
 | C26 | Gateway registry export for the self-assessment (part of T-18.03) | A | B | Security self-assessment document (18) | 4 | [ ] |
 
