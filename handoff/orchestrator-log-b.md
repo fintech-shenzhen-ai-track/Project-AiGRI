@@ -4,7 +4,7 @@ Run settings: SCOPE = lane B (03, 06, 07, 09, 11, 13, 14, 17, 18) · MAX_IMPLEME
 
 ## Pause summary (2026-10-20, after 03 phase A merge)
 
-03 phase A is merged into `lane/b` (`fb038da`). The reviewer approved with no fixes. `make lint` and `make test` pass on `lane/b` (backend 6 passed, 4 skipped; vitest 137). C04 is ticked. T-01.01–T-01.04 is ticked except T-03.05, which is built against a C02 stand-in. `lane/b` is pushed and a pull request to `main` is opened for developer A to review (C04 is what A waits for). Raised R-006–R-009 (all with proposed defaults; R-007–R-009 need lane A's input). Next when resumed: 03 phase B (T-03.06–T-03.14, components = C05). Still waiting on C01 being ticked on `origin/main`; 03 B is frontend only like 03 A, so it needs the same override from the person to start before C01.
+03 phase A is merged into `lane/b` (`fb038da`). The reviewer approved with no fixes. `make lint` and `make test` pass on `lane/b` (backend 6 passed, 4 skipped; vitest 137). C04 is ticked. T-03.01–T-03.04 are ticked; T-03.05 is built against a C02 stand-in and left unticked. `lane/b` is pushed and PR #2 (`lane/b` → `main`) is open for developer A to review (C04 is what A waits for); merge only once it is approved and green. Raised R-006–R-009 (all with proposed defaults; R-007–R-009 need lane A's input). Next when resumed: 03 phase B (T-03.06–T-03.14, components = C05). Still waiting on C01 being ticked on `origin/main`; 03 B is frontend only like 03 A, so it needs the same override from the person to start before C01.
 
 ## Pause summary (2026-10-20, lane B start: nothing dispatched)
 
@@ -33,6 +33,7 @@ Wave 0, before M1. 03 phase A merged (C04). Paused (PAUSE_AT = every-merge). Nex
 ## Blocked
 
 - (overridden 2026-10-20) 03 phase A gate on C01; dispatched anyway, merged
+- PR #2 lane/b → main · waiting for developer A's review · 2026-10-20
 - 03 phase B onward: lane gate on C01 (section 10); needs the person's override again or C01 ticked
 
 ## Queue (once C01 is ticked)
