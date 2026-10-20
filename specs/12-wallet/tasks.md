@@ -4,9 +4,9 @@ Depends on 01 and 02 only for the core; consumers attach when 08 and 11 emit the
 
 ## Phase A: contracts
 
-- [ ] **T-12.01** Migration `0012` with ledger constraints and the payout trigger check. FR-12.2, FR-12.4.
-- [ ] **T-12.02** `PartnerWalletAdapter` protocol and the mock wallet service API. FR-12.1.
-- [ ] **T-12.03** Endpoints and models with stubs; OpenAPI regenerated. Wallet creation interface used by 06's onboarding.
+- [x] **T-12.01** Migration `0012` with ledger constraints and the payout trigger check. FR-12.2, FR-12.4.
+- [x] **T-12.02** `PartnerWalletAdapter` protocol and the mock wallet service API. FR-12.1.
+- [x] **T-12.03** Endpoints and models with stubs; OpenAPI regenerated. Wallet creation interface used by 06's onboarding.
 
 ## Phase B: ledger and movements
 

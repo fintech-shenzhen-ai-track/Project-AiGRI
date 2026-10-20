@@ -1,6 +1,139 @@
 {
   "components": {
     "schemas": {
+      "AlertLevelIn": {
+        "properties": {
+          "currency": {
+            "maxLength": 3,
+            "minLength": 3,
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency",
+            "type": "string"
+          },
+          "low_balance_alert_minor": {
+            "minimum": 0.0,
+            "title": "Low Balance Alert Minor",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "low_balance_alert_minor",
+          "currency"
+        ],
+        "title": "AlertLevelIn",
+        "type": "object"
+      },
+      "AreaUnit": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "enum": [
+              "ha",
+              "rai"
+            ],
+            "title": "Code",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "per_hectare": {
+            "title": "Per Hectare",
+            "type": "number"
+          }
+        },
+        "required": [
+          "code",
+          "label",
+          "per_hectare"
+        ],
+        "title": "AreaUnit",
+        "type": "object"
+      },
+      "ClientWalletOut": {
+        "properties": {
+          "accounts": {
+            "items": {
+              "$ref": "#/components/schemas/PayoutAccountOut"
+            },
+            "title": "Accounts",
+            "type": "array"
+          },
+          "balance": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "country_label": {
+            "title": "Country Label",
+            "type": "string"
+          },
+          "payout_arrived": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TxnOut"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "previous_balance": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sandbox": {
+            "default": true,
+            "title": "Sandbox",
+            "type": "boolean"
+          },
+          "season": {
+            "$ref": "#/components/schemas/SeasonSummary"
+          },
+          "wallet_id": {
+            "title": "Wallet Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "wallet_id",
+          "balance",
+          "country_label",
+          "season",
+          "accounts"
+        ],
+        "title": "ClientWalletOut",
+        "type": "object"
+      },
+      "CompactUnit": {
+        "additionalProperties": false,
+        "properties": {
+          "at_least": {
+            "title": "At Least",
+            "type": "number"
+          },
+          "divide_by": {
+            "title": "Divide By",
+            "type": "number"
+          },
+          "suffix": {
+            "title": "Suffix",
+            "type": "string"
+          }
+        },
+        "required": [
+          "at_least",
+          "suffix",
+          "divide_by"
+        ],
+        "title": "CompactUnit",
+        "type": "object"
+      },
       "ComponentHealth": {
         "properties": {
           "detail": {
@@ -29,6 +162,200 @@
         "title": "ComponentHealth",
         "type": "object"
       },
+      "Currency": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "pattern": "^[A-Z]{3}$",
+            "title": "Code",
+            "type": "string"
+          },
+          "compact_units": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/CompactUnit"
+            },
+            "title": "Compact Units",
+            "type": "array"
+          },
+          "display_decimals": {
+            "maximum": 3.0,
+            "minimum": 0.0,
+            "title": "Display Decimals",
+            "type": "integer"
+          },
+          "minor_unit_exponent": {
+            "maximum": 3.0,
+            "minimum": 0.0,
+            "title": "Minor Unit Exponent",
+            "type": "integer"
+          },
+          "symbol": {
+            "title": "Symbol",
+            "type": "string"
+          },
+          "symbol_spacing": {
+            "default": "none",
+            "enum": [
+              "none",
+              "space"
+            ],
+            "title": "Symbol Spacing",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "symbol",
+          "display_decimals",
+          "minor_unit_exponent"
+        ],
+        "title": "Currency",
+        "type": "object"
+      },
+      "Formats": {
+        "additionalProperties": false,
+        "properties": {
+          "date": {
+            "title": "Date",
+            "type": "string"
+          },
+          "datetime": {
+            "title": "Datetime",
+            "type": "string"
+          },
+          "decimal": {
+            "maxLength": 1,
+            "title": "Decimal",
+            "type": "string"
+          },
+          "phone_example": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone Example"
+          },
+          "thousands": {
+            "maxLength": 1,
+            "title": "Thousands",
+            "type": "string"
+          }
+        },
+        "required": [
+          "decimal",
+          "thousands",
+          "date",
+          "datetime"
+        ],
+        "title": "Formats",
+        "type": "object"
+      },
+      "FundingIn": {
+        "properties": {
+          "amount_minor": {
+            "exclusiveMinimum": 0.0,
+            "title": "Amount Minor",
+            "type": "integer"
+          },
+          "currency": {
+            "maxLength": 3,
+            "minLength": 3,
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency",
+            "type": "string"
+          }
+        },
+        "required": [
+          "amount_minor",
+          "currency"
+        ],
+        "title": "FundingIn",
+        "type": "object"
+      },
+      "FundingOut": {
+        "properties": {
+          "balance": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "replayed": {
+            "default": false,
+            "title": "Replayed",
+            "type": "boolean"
+          },
+          "txn_id": {
+            "title": "Txn Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "txn_id",
+          "balance"
+        ],
+        "title": "FundingOut",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HazardSource": {
+        "additionalProperties": false,
+        "properties": {
+          "access": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Access"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "warnings",
+              "forecast",
+              "hazard_map",
+              "disaster_records",
+              "flood_map",
+              "satellite",
+              "cyclone"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "kind"
+        ],
+        "title": "HazardSource",
+        "type": "object"
+      },
       "HealthResponse": {
         "properties": {
           "components": {
@@ -53,6 +380,1069 @@
         ],
         "title": "HealthResponse",
         "type": "object"
+      },
+      "InsurerPayoutOut": {
+        "properties": {
+          "amount": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "claim_id": {
+            "title": "Claim Id",
+            "type": "string"
+          },
+          "claim_no": {
+            "title": "Claim No",
+            "type": "string"
+          },
+          "client_name": {
+            "title": "Client Name",
+            "type": "string"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "payout_no": {
+            "title": "Payout No",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "posted",
+              "failed",
+              "pending_funds"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "trigger_event_seq": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Trigger Event Seq"
+          },
+          "trigger_label": {
+            "title": "Trigger Label",
+            "type": "string"
+          },
+          "txn_id": {
+            "title": "Txn Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "txn_id",
+          "payout_no",
+          "claim_id",
+          "claim_no",
+          "client_name",
+          "amount",
+          "status",
+          "trigger_event_seq",
+          "trigger_label",
+          "created_at"
+        ],
+        "title": "InsurerPayoutOut",
+        "type": "object"
+      },
+      "InsurerPayoutPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/InsurerPayoutOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "InsurerPayoutPage",
+        "type": "object"
+      },
+      "InsurerWalletOut": {
+        "properties": {
+          "balance": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "integrity": {
+            "items": {
+              "$ref": "#/components/schemas/IntegrityCheck"
+            },
+            "title": "Integrity",
+            "type": "array"
+          },
+          "low_balance_alert": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Money"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "money_in_this_month": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "payouts_this_month": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "pending_funds": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "sandbox": {
+            "default": true,
+            "title": "Sandbox",
+            "type": "boolean"
+          },
+          "wallet_id": {
+            "title": "Wallet Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "wallet_id",
+          "balance",
+          "integrity",
+          "payouts_this_month",
+          "pending_funds",
+          "money_in_this_month"
+        ],
+        "title": "InsurerWalletOut",
+        "type": "object"
+      },
+      "IntegrityCheck": {
+        "properties": {
+          "checked_at": {
+            "format": "date-time",
+            "title": "Checked At",
+            "type": "string"
+          },
+          "code": {
+            "enum": [
+              "payouts_without_approval",
+              "double_payouts",
+              "ledger_audit_mismatch",
+              "account_change_before_payout"
+            ],
+            "title": "Code",
+            "type": "string"
+          },
+          "count": {
+            "title": "Count",
+            "type": "integer"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "ok": {
+            "title": "Ok",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "code",
+          "label",
+          "count",
+          "ok",
+          "checked_at"
+        ],
+        "title": "IntegrityCheck",
+        "type": "object"
+      },
+      "Money": {
+        "properties": {
+          "amount_minor": {
+            "title": "Amount Minor",
+            "type": "integer"
+          },
+          "currency": {
+            "maxLength": 3,
+            "minLength": 3,
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency",
+            "type": "string"
+          }
+        },
+        "required": [
+          "amount_minor",
+          "currency"
+        ],
+        "title": "Money",
+        "type": "object"
+      },
+      "MoneyInOut": {
+        "properties": {
+          "amount": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "funding",
+              "escrow_release"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "txn_id": {
+            "title": "Txn Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "txn_id",
+          "kind",
+          "title",
+          "amount",
+          "created_at"
+        ],
+        "title": "MoneyInOut",
+        "type": "object"
+      },
+      "MoneyInPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/MoneyInOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "MoneyInPage",
+        "type": "object"
+      },
+      "Pack": {
+        "additionalProperties": false,
+        "properties": {
+          "alert_loss_probability": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Alert Loss Probability"
+          },
+          "area_unit": {
+            "$ref": "#/components/schemas/AreaUnit"
+          },
+          "code": {
+            "pattern": "^[A-Z]{2}$",
+            "title": "Code",
+            "type": "string"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "data_law": {
+            "title": "Data Law",
+            "type": "string"
+          },
+          "format": {
+            "$ref": "#/components/schemas/Formats"
+          },
+          "hazard_sources": {
+            "items": {
+              "$ref": "#/components/schemas/HazardSource"
+            },
+            "title": "Hazard Sources",
+            "type": "array"
+          },
+          "insurers": {
+            "items": {
+              "$ref": "#/components/schemas/PackInsurer"
+            },
+            "title": "Insurers",
+            "type": "array"
+          },
+          "live_since": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Live Since"
+          },
+          "locale": {
+            "title": "Locale",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "payout_rails": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Payout Rails",
+            "type": "array"
+          },
+          "public_schemes": {
+            "items": {
+              "$ref": "#/components/schemas/PublicScheme"
+            },
+            "title": "Public Schemes",
+            "type": "array"
+          },
+          "regions": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Region"
+            },
+            "title": "Regions",
+            "type": "array"
+          },
+          "regulator": {
+            "$ref": "#/components/schemas/Regulator"
+          },
+          "setup_steps": {
+            "items": {
+              "$ref": "#/components/schemas/SetupStep"
+            },
+            "title": "Setup Steps",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "live",
+              "planned"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "timezones": {
+            "items": {
+              "$ref": "#/components/schemas/Timezone"
+            },
+            "minItems": 1,
+            "title": "Timezones",
+            "type": "array"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "status",
+          "currency",
+          "locale",
+          "format",
+          "area_unit",
+          "timezones",
+          "regulator",
+          "data_law",
+          "payout_rails",
+          "hazard_sources",
+          "public_schemes",
+          "insurers",
+          "setup_steps"
+        ],
+        "title": "Pack",
+        "type": "object"
+      },
+      "PackInsurer": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "pattern": "^[A-Z]{3}$",
+            "title": "Code",
+            "type": "string"
+          },
+          "initials": {
+            "title": "Initials",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "initials"
+        ],
+        "title": "PackInsurer",
+        "type": "object"
+      },
+      "PayoutAccountChangeIn": {
+        "properties": {
+          "account_name": {
+            "title": "Account Name",
+            "type": "string"
+          },
+          "account_number": {
+            "minLength": 4,
+            "title": "Account Number",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "bank",
+              "ewallet"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "make_default": {
+            "default": false,
+            "title": "Make Default",
+            "type": "boolean"
+          },
+          "otp_code": {
+            "maxLength": 8,
+            "minLength": 4,
+            "title": "Otp Code",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "rail": {
+            "title": "Rail",
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind",
+          "provider",
+          "account_number",
+          "account_name",
+          "rail",
+          "otp_code"
+        ],
+        "title": "PayoutAccountChangeIn",
+        "type": "object"
+      },
+      "PayoutAccountChangeOut": {
+        "properties": {
+          "account": {
+            "$ref": "#/components/schemas/PayoutAccountOut"
+          },
+          "hold_until": {
+            "format": "date-time",
+            "title": "Hold Until",
+            "type": "string"
+          }
+        },
+        "required": [
+          "account",
+          "hold_until"
+        ],
+        "title": "PayoutAccountChangeOut",
+        "type": "object"
+      },
+      "PayoutAccountOut": {
+        "properties": {
+          "account_name": {
+            "title": "Account Name",
+            "type": "string"
+          },
+          "changed_at": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Changed At"
+          },
+          "hold_until": {
+            "anyOf": [
+              {
+                "format": "date-time",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Hold Until"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "is_default": {
+            "title": "Is Default",
+            "type": "boolean"
+          },
+          "kind": {
+            "enum": [
+              "bank",
+              "ewallet"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "masked_number": {
+            "title": "Masked Number",
+            "type": "string"
+          },
+          "provider": {
+            "title": "Provider",
+            "type": "string"
+          },
+          "rail": {
+            "title": "Rail",
+            "type": "string"
+          },
+          "verified": {
+            "title": "Verified",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "provider",
+          "masked_number",
+          "account_name",
+          "rail",
+          "verified",
+          "is_default"
+        ],
+        "title": "PayoutAccountOut",
+        "type": "object"
+      },
+      "PublicScheme": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "gloss": {
+            "title": "Gloss",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "gloss"
+        ],
+        "title": "PublicScheme",
+        "type": "object"
+      },
+      "ReconciliationLine": {
+        "properties": {
+          "amount": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "kind": {
+            "enum": [
+              "premium",
+              "payout",
+              "refund"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "ref_id": {
+            "title": "Ref Id",
+            "type": "string"
+          },
+          "ref_type": {
+            "enum": [
+              "policy",
+              "claim"
+            ],
+            "title": "Ref Type",
+            "type": "string"
+          },
+          "running_balance": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "when": {
+            "format": "date-time",
+            "title": "When",
+            "type": "string"
+          }
+        },
+        "required": [
+          "when",
+          "kind",
+          "amount",
+          "running_balance",
+          "ref_type",
+          "ref_id"
+        ],
+        "title": "ReconciliationLine",
+        "type": "object"
+      },
+      "ReconciliationOut": {
+        "properties": {
+          "lines": {
+            "items": {
+              "$ref": "#/components/schemas/ReconciliationLine"
+            },
+            "title": "Lines",
+            "type": "array"
+          },
+          "payouts_out": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "premiums_in": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "product": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Product"
+          },
+          "refunds": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "running_balance": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "required": [
+          "product",
+          "premiums_in",
+          "payouts_out",
+          "refunds",
+          "running_balance",
+          "lines"
+        ],
+        "title": "ReconciliationOut",
+        "type": "object"
+      },
+      "Region": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "level": {
+            "enum": [
+              "province",
+              "regency",
+              "district"
+            ],
+            "title": "Level",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "parent": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "level"
+        ],
+        "title": "Region",
+        "type": "object"
+      },
+      "Regulator": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "short": {
+            "title": "Short",
+            "type": "string"
+          }
+        },
+        "required": [
+          "short",
+          "name"
+        ],
+        "title": "Regulator",
+        "type": "object"
+      },
+      "SeasonSummary": {
+        "properties": {
+          "payouts_received": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "premiums_paid": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "withdrawn": {
+            "$ref": "#/components/schemas/Money"
+          }
+        },
+        "required": [
+          "premiums_paid",
+          "payouts_received",
+          "withdrawn"
+        ],
+        "title": "SeasonSummary",
+        "type": "object"
+      },
+      "SetupStep": {
+        "additionalProperties": false,
+        "properties": {
+          "done": {
+            "title": "Done",
+            "type": "boolean"
+          },
+          "step": {
+            "title": "Step",
+            "type": "string"
+          }
+        },
+        "required": [
+          "step",
+          "done"
+        ],
+        "title": "SetupStep",
+        "type": "object"
+      },
+      "Timezone": {
+        "additionalProperties": false,
+        "properties": {
+          "default": {
+            "default": false,
+            "title": "Default",
+            "type": "boolean"
+          },
+          "iana": {
+            "title": "Iana",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          }
+        },
+        "required": [
+          "iana",
+          "label"
+        ],
+        "title": "Timezone",
+        "type": "object"
+      },
+      "TopUpIn": {
+        "properties": {
+          "amount_minor": {
+            "exclusiveMinimum": 0.0,
+            "title": "Amount Minor",
+            "type": "integer"
+          },
+          "currency": {
+            "maxLength": 3,
+            "minLength": 3,
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency",
+            "type": "string"
+          }
+        },
+        "required": [
+          "amount_minor",
+          "currency"
+        ],
+        "title": "TopUpIn",
+        "type": "object"
+      },
+      "TxnOut": {
+        "properties": {
+          "amount": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "balance_after": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "created_at": {
+            "format": "date-time",
+            "title": "Created At",
+            "type": "string"
+          },
+          "direction": {
+            "enum": [
+              "in",
+              "out"
+            ],
+            "title": "Direction",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "top_up",
+              "premium",
+              "escrow_release",
+              "refund",
+              "payout",
+              "withdrawal",
+              "funding"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "ref_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ref Id"
+          },
+          "ref_type": {
+            "anyOf": [
+              {
+                "enum": [
+                  "policy",
+                  "claim",
+                  "purchase"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ref Type"
+          },
+          "status": {
+            "enum": [
+              "posted",
+              "failed",
+              "pending_funds"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "kind",
+          "direction",
+          "title",
+          "amount",
+          "balance_after",
+          "status",
+          "created_at"
+        ],
+        "title": "TxnOut",
+        "type": "object"
+      },
+      "TxnPage": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/TxnOut"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "next_cursor": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Next Cursor"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "TxnPage",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      },
+      "WithdrawalIn": {
+        "properties": {
+          "amount_minor": {
+            "exclusiveMinimum": 0.0,
+            "title": "Amount Minor",
+            "type": "integer"
+          },
+          "currency": {
+            "maxLength": 3,
+            "minLength": 3,
+            "pattern": "^[A-Z]{3}$",
+            "title": "Currency",
+            "type": "string"
+          },
+          "payout_account_id": {
+            "title": "Payout Account Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "amount_minor",
+          "currency",
+          "payout_account_id"
+        ],
+        "title": "WithdrawalIn",
+        "type": "object"
+      },
+      "WithdrawalOut": {
+        "properties": {
+          "amount": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "fee": {
+            "$ref": "#/components/schemas/Money"
+          },
+          "rail": {
+            "title": "Rail",
+            "type": "string"
+          },
+          "replayed": {
+            "default": false,
+            "title": "Replayed",
+            "type": "boolean"
+          },
+          "status": {
+            "enum": [
+              "posted",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "txn_id": {
+            "title": "Txn Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "txn_id",
+          "amount",
+          "fee",
+          "rail",
+          "status"
+        ],
+        "title": "WithdrawalOut",
+        "type": "object"
       }
     }
   },
@@ -62,6 +1452,245 @@
   },
   "openapi": "3.1.0",
   "paths": {
+    "/api/v1/client/wallet": {
+      "get": {
+        "operationId": "get_wallet_api_v1_client_wallet_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ClientWalletOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Get Wallet",
+        "tags": [
+          "wallet"
+        ]
+      }
+    },
+    "/api/v1/client/wallet/payout-accounts": {
+      "post": {
+        "operationId": "change_payout_account_api_v1_client_wallet_payout_accounts_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PayoutAccountChangeIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PayoutAccountChangeOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Change Payout Account",
+        "tags": [
+          "wallet"
+        ]
+      }
+    },
+    "/api/v1/client/wallet/statement.csv": {
+      "get": {
+        "operationId": "statement_csv_api_v1_client_wallet_statement_csv_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Statement Csv",
+        "tags": [
+          "wallet"
+        ]
+      }
+    },
+    "/api/v1/client/wallet/top-up": {
+      "post": {
+        "operationId": "top_up_api_v1_client_wallet_top_up_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TopUpIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TxnOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Top Up",
+        "tags": [
+          "wallet"
+        ]
+      }
+    },
+    "/api/v1/client/wallet/transactions": {
+      "get": {
+        "operationId": "list_transactions_api_v1_client_wallet_transactions_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "filter",
+            "required": false,
+            "schema": {
+              "default": "all",
+              "enum": [
+                "all",
+                "in",
+                "out"
+              ],
+              "title": "Filter",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TxnPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Transactions",
+        "tags": [
+          "wallet"
+        ]
+      }
+    },
+    "/api/v1/client/wallet/withdrawals": {
+      "post": {
+        "operationId": "withdraw_api_v1_client_wallet_withdrawals_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WithdrawalIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WithdrawalOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Withdraw",
+        "tags": [
+          "wallet"
+        ]
+      }
+    },
     "/api/v1/health": {
       "get": {
         "operationId": "get_health",
@@ -80,6 +1709,347 @@
         "summary": "Get Health",
         "tags": [
           "health"
+        ]
+      }
+    },
+    "/api/v1/insurer/wallet": {
+      "get": {
+        "operationId": "get_wallet_api_v1_insurer_wallet_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InsurerWalletOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Get Wallet",
+        "tags": [
+          "wallet"
+        ]
+      }
+    },
+    "/api/v1/insurer/wallet/alert-level": {
+      "put": {
+        "operationId": "set_alert_level_api_v1_insurer_wallet_alert_level_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AlertLevelIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InsurerWalletOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Set Alert Level",
+        "tags": [
+          "wallet"
+        ]
+      }
+    },
+    "/api/v1/insurer/wallet/funding": {
+      "post": {
+        "operationId": "fund_api_v1_insurer_wallet_funding_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FundingIn"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FundingOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Fund",
+        "tags": [
+          "wallet"
+        ]
+      }
+    },
+    "/api/v1/insurer/wallet/money-in": {
+      "get": {
+        "operationId": "list_money_in_api_v1_insurer_wallet_money_in_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MoneyInPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Money In",
+        "tags": [
+          "wallet"
+        ]
+      }
+    },
+    "/api/v1/insurer/wallet/payouts": {
+      "get": {
+        "operationId": "list_payouts_api_v1_insurer_wallet_payouts_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "cursor",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Cursor"
+            }
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "schema": {
+              "default": 50,
+              "maximum": 200,
+              "minimum": 1,
+              "title": "Limit",
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InsurerPayoutPage"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "List Payouts",
+        "tags": [
+          "wallet"
+        ]
+      }
+    },
+    "/api/v1/insurer/wallet/reconciliation": {
+      "get": {
+        "operationId": "reconciliation_api_v1_insurer_wallet_reconciliation_get",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "product",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Product"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReconciliationOut"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Reconciliation",
+        "tags": [
+          "wallet"
+        ]
+      }
+    },
+    "/api/v1/packs": {
+      "get": {
+        "operationId": "list_packs_api_v1_packs_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Pack"
+                  },
+                  "title": "Response List Packs Api V1 Packs Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Packs",
+        "tags": [
+          "packs"
+        ]
+      }
+    },
+    "/api/v1/packs/{code}": {
+      "get": {
+        "operationId": "get_pack_api_v1_packs__code__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "code",
+            "required": true,
+            "schema": {
+              "title": "Code",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pack"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Pack",
+        "tags": [
+          "packs"
         ]
       }
     }
