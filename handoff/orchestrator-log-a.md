@@ -20,10 +20,11 @@ Wave 0–1, before M1. Resumed during the pause at developer A's request while D
 
 ## Running
 
-- 01 phase B (T-01.05–T-01.14 except T-01.10, T-01.13) · `feat/01-foundation-pb` · new worktree · 2026-10-20
+- 01 phase B part 2 (DB tasks T-01.06, T-01.11, T-01.12, T-01.14) · `feat/01-foundation-pb` (kept after part 1 merge) · `.claude/worktrees/agent-a1f1fd5aa4ac94f72` · 2026-10-20
 
 ## Merged
 
+- 01 phase B part 1 · `2588bb2` · ticked T-01.05, T-01.07, T-01.08, T-01.09 (Done when re-run on lane/a with the DB: 210 passed; reviewer planted a `datetime.now()` and the ban test failed) · no board contract. No fix round. R-007 interim (b) in code (`core/packs.py` `_compact_decimals`); BPS region codes verified, unchanged. T-01.10 waits on R-007; T-01.13 needs MinIO.
 - 05 phase B · `b56deb6` · ticked T-05.03–T-05.10 (Done when re-run on lane/a with the DB: 124 passed, no xfail; hero gold 190.400.000 / 187.800.000) · C16 delivered. No fix round. Reviewer: R-015 (a) matches FR-05.7/FR-05.8; business days Mon–Fri without holidays follows FR-05.4 (holidays are roadmap); `expected_payout` rounds per class then once at the end, so T-15.07 calibration must use this same function. Leftover: unused `not_built` helper in `backend/tests/rules/records.py`.
 - 02 phase A · `574ce93` · ticked T-02.01–T-02.03 (Done when re-run on lane/a: parity and router-graph tests pass, 60 passed) · C07 delivered. One fix round (feature 14 tools moved from `core/` to `nudges/tools.py`; resolver owner is 01 T-01.15; `fastapi>=0.151`). Route code uses `Annotated[Authorized, Depends(gate("x"))]` or `dependencies=[...]` (ruff B008).
 - 05 phase A · `2b1e269` · ticked T-05.01, T-05.02 (Done when re-run on lane/a: 29 passed, 56 xfailed strict for phase B) · C06 delivered. Two fix rounds (invented fixture texts; product names, synthetic AUTS/K scheme rule id `SYNTHETIC scheme rule (AUTS/K)` to replace if a spec gives a real one). Phase B must drop the xfail markers and switch `rules_fn` lazy imports to real ones.
@@ -36,6 +37,7 @@ Wave 0–1, before M1. Resumed during the pause at developer A's request while D
 
 ## Fakes to swap
 
+- Swap notes for `rules/_compat.py` (from the 01 B review): `canonical_json` → `core.hashing.jcs` (byte-identical except: `jcs` accepts floats, so keep a float guard in `rules/`; `jcs` rejects ints from 2**53 with `rfc8785.IntegerDomainError`, adjust any `except ValueError`); money `round_minor` same for IDR/PHP/THB, `core.money` raises PackNotFound for undefined currencies and needs packs loaded; `round_half_up`, `parse_pct` have no core equivalent (keep in rules/ or add); check `core.packs` exposes time zone / local date helpers. `bench/audit_chain.py` `canonical_json` uses `json.dumps(sort_keys=True)`, differs from RFC 8785, switch to `core.hashing.jcs` + `entry_hash` (with the audit swap after T-01.06).
 - actor resolver · `backend/aigri/gateway/actor.py` default fails closed (401) · 01 T-01.15 (C03) must call `install_actor_resolver` with its session lookup
 - `gateway.denied` Audit Log entry not written · `gateway/authorize.py` · T-02.04 (02 phase B) after T-01.06
 - `core.money`, `core.packs` (time zone), `core.hashing` (`canonical_json`) · `backend/aigri/rules/_compat.py` (05 A and B), used by `sum_insured.py`, `premium.py`, `amount.py`, `expected.py`, `deadlines.py`, `model.py`, `trail.py` · swap when 01 B merges (T-01.05, T-01.08, T-01.09), delete the file; `canonical_json` must match `core.hashing` byte for byte
@@ -80,6 +82,7 @@ Lane B contracts this lane needs will not be built in this run (out of scope): C
 
 ## Raised
 
+- R-021 · 01 pack schema not in the backend image; default (a) pydantic mirror fallback
 - R-020 · 05 per-asset deductible on a total-loss line; default (a) applies
 - R-019 · 05 `per_policy` franchise/deductible formula; default (a) keep, teammate review
 - R-018 · 02 role mapping of "Person roles" cells; default (a) as encoded in the parity test
