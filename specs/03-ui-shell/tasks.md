@@ -10,7 +10,7 @@
 
 ## Phase B: components
 
-- [ ] **T-03.06** [P] Buttons, fields, inputs, selects, choices, checks, switch, seg, chips, upload, OTP.
+- [x] **T-03.06** [P] Buttons, fields, inputs, selects, choices, checks, switch, seg, chips, upload, OTP.
 - [ ] **T-03.07** [P] Cards, stat, kv, meter, policy card, cite, demo note, sandbox pill, ins-mark, avatar, hash.
 - [ ] **T-03.08** [P] Table (with stack mode, flagged rows, clickable rows), pills, tabs with ink bar, banners, empty, skeleton, error state, check list.
 - [ ] **T-03.09** [P] Modal, sheet (bottom on mobile, right panel on desktop), toasts, disclosure, flow + stepper, timeline.
