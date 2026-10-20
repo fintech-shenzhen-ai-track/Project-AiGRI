@@ -12,7 +12,7 @@ Paused because PAUSE_AT = every-merge. 01 phase A's code is merged (`e8d86f3`); 
 
 ## Status
 
-Wave 0, before M1. Resumed 2026-10-20 after PR #1 (lane A) and PR #2 (lane B, 03 phase A, C04) merged into `main`; synced `origin/main` into `lane/a` (no conflicts, no compose or migration changes); `make lint` and `REQUIRE_DB=1 make test` green on `lane/a` (10 passed; frontend halves skipped, no pnpm). C01 still unticked: T-01.02 (`make up`) blocked on R-005. Running: 01 phase A finish (T-01.02 via R-005 default (a) + R-009 default (a); tick T-01.03), 05 phase A (C06), 16 T-16.01 (C24). Plan: when 01 A finish is approved, the orchestrator brings up the shared stack from that branch's compose file (project `aigri`); if all healthy, the implementer ticks T-01.02, then merge and tick C01, then dispatch 02 phase A (C07) and 01 phase B in parallel.
+Wave 0, before M1. Resumed again 2026-10-20 (new orchestrator session; the three running implementers' sessions ended, all three had committed: 01 A finish `34d4d47`, 05 A `f1c97c8`, 16 T-16.01 `b7dd435`; their final reports were lost). Synced `origin/main` (PR #3, lane B 03 phase B, C05 ticked) into `lane/a`; pnpm now installed and `portals/node_modules` installed from the lockfile, so the frontend halves run: `make lint` green, `REQUIRE_DB=1 make test` 10 backend + 228 frontend passed. The LAN IP changed: use `TEST_ADMIN_URL=postgresql://aigri_owner:aigri_owner@192.168.3.24:5432/postgres`. In progress: reviewers on 05 A and 16; the orchestrator is running `docker compose up --build --wait` from the 01 A finish worktree (project `aigri`) to check T-01.02.
 
 
 ## Running
@@ -23,6 +23,7 @@ Wave 0, before M1. Resumed 2026-10-20 after PR #1 (lane A) and PR #2 (lane B, 03
 
 ## Merged
 
+- Sync: `origin/main` (PR #3, lane B 03 phase B, C05) into `lane/a` 2026-10-20; lint and tests green.
 - Lane PR #2 (lane B: 03 phase A, C04) merged into `main` 2026-10-20; synced into `lane/a`.
 - Lane PR #1 (lane A: 01 phase A, C01 pending) merged into `main` 2026-10-20.
 - 01 phase A · `e8d86f3` · ticked T-01.01, T-01.04 (T-01.02, T-01.03 open: need `make up` and `REQUIRE_DB=1 make test` on main) · C01 not yet confirmed. One fix round (T-01.02 was ticked on `docker compose config` only).
@@ -55,7 +56,7 @@ Lane B contracts this lane needs will not be built in this run (out of scope): C
 - R-005 MinIO image · developer A · confirm default (a) (build from source, applied in 01 A finish) or pick another option
 - Model size · developer A · machine has 16 GB RAM; D-10 suggests `LLM_MODEL=qwen3:8b` in `.env` on small machines (not changed by the orchestrator)
 - A native Postgres (not this project's) listens on localhost:5432 · developer A · stop it or remap the compose `db` port, so `make up` and the test DB work
-- `pnpm` not installed (Node is v26, AGENTS.md says Node 24 LTS) · developer A · install pnpm (and Node 24 if the pin matters); until then the frontend halves of `make lint`, `make test`, `make openapi` are skipped
+- Node is v26, AGENTS.md says Node 24 LTS · developer A · install Node 24 if the pin matters (pnpm 12.14 now installed; frontend checks run)
 - T-15.01 fixture transcription (money tables) · accounting teammate · `seed/fixtures/*.yaml` written and reviewed
 - T-15.02 policy clause texts · PolSci teammate · `seed/policies/*.md`
 - T-05.12 counterfactual cases · accounting teammate · `bench/suites/counterfactual/cases/`
