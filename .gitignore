@@ -3,3 +3,9 @@
 .claude/worktrees/
 .claude/settings.local.json
 .DS_Store
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+node_modules/
