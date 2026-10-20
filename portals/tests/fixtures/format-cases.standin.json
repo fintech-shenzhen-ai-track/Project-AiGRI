@@ -1,0 +1,84 @@
+{
+  "_standin": "STAND-IN for specs/01-foundation/format-cases.json (contract C02, T-01.10), which is not merged yet. Cases are derived only from DESIGN.md section 11, PLAN.md 2.x figures, decisions D-37 and D-38 and the planned packs under packs/. Delete this file and point tests/pack-format.test.ts at the real one when C02 lands; the adapter there maps `kind` to a formatter and passes `args` after the pack.",
+  "cases": [
+    { "id": "money-basic", "kind": "money", "pack": "ID", "args": [{ "amount_minor": 6000000, "currency": "IDR" }], "expected": "Rp6.000.000" },
+    { "id": "money-zero", "kind": "money", "pack": "ID", "args": [{ "amount_minor": 0, "currency": "IDR" }], "expected": "Rp0" },
+    { "id": "money-small", "kind": "money", "pack": "ID", "args": [{ "amount_minor": 950, "currency": "IDR" }], "expected": "Rp950" },
+    { "id": "money-negative", "kind": "money", "pack": "ID", "args": [{ "amount_minor": -13440000, "currency": "IDR" }], "expected": "−Rp13.440.000" },
+    { "id": "money-signed-positive", "kind": "money", "pack": "ID", "args": [{ "amount_minor": 187800000, "currency": "IDR" }, { "sign": true }], "expected": "+Rp187.800.000" },
+    { "id": "money-signed-negative", "kind": "money", "pack": "ID", "args": [{ "amount_minor": -13440000, "currency": "IDR" }, { "sign": true }], "expected": "−Rp13.440.000" },
+    { "id": "money-signed-zero", "kind": "money", "pack": "ID", "args": [{ "amount_minor": 0, "currency": "IDR" }, { "sign": true }], "expected": "Rp0" },
+    { "id": "money-plan-claim", "kind": "money", "pack": "ID", "args": [{ "amount_minor": 190400000, "currency": "IDR" }], "expected": "Rp190.400.000" },
+    { "id": "money-string-minor", "kind": "money", "pack": "ID", "args": [{ "amount_minor": "21120000", "currency": "IDR" }], "expected": "Rp21.120.000" },
+    { "id": "money-compact-jt", "kind": "money", "pack": "ID", "args": [{ "amount_minor": 187800000, "currency": "IDR" }, { "compact": true }], "expected": "Rp187,8 jt" },
+    { "id": "money-compact-jt-whole", "kind": "money", "pack": "ID", "args": [{ "amount_minor": 1000000, "currency": "IDR" }, { "compact": true }], "expected": "Rp1 jt" },
+    { "id": "money-compact-m", "kind": "money", "pack": "ID", "args": [{ "amount_minor": 1240000000, "currency": "IDR" }, { "compact": true }], "expected": "Rp1,24 M" },
+    { "id": "money-compact-m-trim", "kind": "money", "pack": "ID", "args": [{ "amount_minor": 2500000000, "currency": "IDR" }, { "compact": true }], "expected": "Rp2,5 M" },
+    { "id": "money-compact-below-juta", "kind": "money", "pack": "ID", "args": [{ "amount_minor": 950000, "currency": "IDR" }, { "compact": true }], "expected": "Rp950.000" },
+    { "id": "money-compact-negative", "kind": "money", "pack": "ID", "args": [{ "amount_minor": -187800000, "currency": "IDR" }, { "compact": true }], "expected": "−Rp187,8 jt" },
+    { "id": "money-ph-decimals", "kind": "money", "pack": "PH", "args": [{ "amount_minor": 123450, "currency": "PHP" }], "expected": "₱1,234.50" },
+    { "id": "money-ph-negative", "kind": "money", "pack": "PH", "args": [{ "amount_minor": -5, "currency": "PHP" }], "expected": "−₱0.05" },
+    { "id": "money-th-decimals", "kind": "money", "pack": "TH", "args": [{ "amount_minor": 100000000, "currency": "THB" }], "expected": "฿1,000,000.00" },
+    { "id": "money-vn-no-decimals", "kind": "money", "pack": "VN", "args": [{ "amount_minor": 1500000, "currency": "VND" }], "expected": "₫1.500.000" },
+
+    { "id": "money-major-basic", "kind": "moneyMajor", "pack": "ID", "args": [6000000], "expected": "Rp6.000.000" },
+    { "id": "money-major-half-up", "kind": "moneyMajor", "pack": "ID", "args": [2.5], "expected": "Rp3" },
+    { "id": "money-major-half-up-negative", "kind": "moneyMajor", "pack": "ID", "args": [-2.5], "expected": "−Rp3" },
+    { "id": "money-major-round-down", "kind": "moneyMajor", "pack": "ID", "args": [2.4999], "expected": "Rp2" },
+
+    { "id": "rate-per-area", "kind": "rate", "pack": "ID", "args": [{ "amount_minor": 280000, "currency": "IDR" }, "area"], "expected": "Rp280.000/ha" },
+    { "id": "rate-per-head-year", "kind": "rate", "pack": "ID", "args": [{ "amount_minor": 200000, "currency": "IDR" }, "head/year"], "expected": "Rp200.000/head/year" },
+    { "id": "rate-per-area-th", "kind": "rate", "pack": "TH", "args": [{ "amount_minor": 50000, "currency": "THB" }, "area"], "expected": "฿500.00/rai" },
+
+    { "id": "pct-decimal-comma", "kind": "pct", "pack": "ID", "args": [3.5, 1], "expected": "3,5%" },
+    { "id": "pct-whole", "kind": "pct", "pack": "ID", "args": [92], "expected": "92%" },
+    { "id": "pct-ph-decimal-point", "kind": "pct", "pack": "PH", "args": [3.5, 1], "expected": "3.5%" },
+
+    { "id": "num-count", "kind": "num", "pack": "ID", "args": [1284], "expected": "1.284" },
+    { "id": "num-million", "kind": "num", "pack": "ID", "args": [1234567], "expected": "1.234.567" },
+    { "id": "num-small", "kind": "num", "pack": "ID", "args": [59], "expected": "59" },
+    { "id": "num-ratio", "kind": "num", "pack": "ID", "args": [1.46, 2], "expected": "1,46" },
+    { "id": "num-ratio-pad", "kind": "num", "pack": "ID", "args": [1.3, 2], "expected": "1,30" },
+    { "id": "num-negative", "kind": "num", "pack": "ID", "args": [-1284], "expected": "−1.284" },
+    { "id": "num-half-up-decimal-repr", "kind": "num", "pack": "ID", "args": [1.005, 2], "expected": "1,01" },
+    { "id": "num-ph", "kind": "num", "pack": "PH", "args": [1284], "expected": "1,284" },
+
+    { "id": "area-whole", "kind": "area", "pack": "ID", "args": [48], "expected": "48,0 ha" },
+    { "id": "area-fraction", "kind": "area", "pack": "ID", "args": [0.8], "expected": "0,8 ha" },
+    { "id": "area-plan-parcel", "kind": "area", "pack": "ID", "args": [9.6], "expected": "9,6 ha" },
+    { "id": "area-plan-total", "kind": "area", "pack": "ID", "args": [40.5], "expected": "40,5 ha" },
+    { "id": "area-rai", "kind": "area", "pack": "TH", "args": [1], "expected": "6.3 rai" },
+    { "id": "area-ph", "kind": "area", "pack": "PH", "args": [48], "expected": "48.0 ha" },
+
+    { "id": "date-basic", "kind": "date", "pack": "ID", "args": ["2026-02-16"], "expected": "16 Feb 2026" },
+    { "id": "date-single-digit-day", "kind": "date", "pack": "ID", "args": ["2026-01-05"], "expected": "5 Jan 2026" },
+    { "id": "date-instant-rolls-over-in-pack-zone", "kind": "date", "pack": "ID", "args": ["2026-02-15T18:00:00Z"], "expected": "16 Feb 2026" },
+
+    { "id": "datetime-naive-is-pack-wall-clock", "kind": "dateTime", "pack": "ID", "args": ["2026-02-16T08:20"], "expected": "16 Feb 2026, 08:20 WIB" },
+    { "id": "datetime-utc-instant", "kind": "dateTime", "pack": "ID", "args": ["2026-02-16T01:20:00Z"], "expected": "16 Feb 2026, 08:20 WIB" },
+    { "id": "datetime-story-clock", "kind": "dateTime", "pack": "ID", "args": ["2026-02-24T08:30:00+07:00"], "expected": "24 Feb 2026, 08:30 WIB" },
+    { "id": "datetime-rolls-over-midnight", "kind": "dateTime", "pack": "ID", "args": ["2026-02-15T18:00:00Z"], "expected": "16 Feb 2026, 01:00 WIB" },
+    { "id": "datetime-other-zone-label", "kind": "dateTime", "pack": "ID", "args": ["2026-02-16T01:20:00Z", "Asia/Makassar"], "expected": "16 Feb 2026, 09:20 WITA" },
+    { "id": "datetime-date-only-falls-back", "kind": "dateTime", "pack": "ID", "args": ["2026-02-16"], "expected": "16 Feb 2026" },
+    { "id": "datetime-ph-zone", "kind": "dateTime", "pack": "PH", "args": ["2026-02-16T00:20:00Z"], "expected": "16 Feb 2026, 08:20 PHT" },
+
+    { "id": "audit-time", "kind": "auditTime", "pack": "ID", "args": ["2026-02-16T01:20:11Z"], "expected": "2026-02-16 08:20:11 WIB" },
+
+    { "id": "range-same-month", "kind": "range", "pack": "ID", "args": ["2026-02-06", "2026-02-08"], "expected": "6–8 Feb 2026" },
+    { "id": "range-same-year", "kind": "range", "pack": "ID", "args": ["2026-01-01", "2026-04-30"], "expected": "1 Jan – 30 Apr 2026" },
+    { "id": "range-across-years", "kind": "range", "pack": "ID", "args": ["2025-12-28", "2026-01-03"], "expected": "28 Dec 2025 – 3 Jan 2026" },
+    { "id": "range-single-day", "kind": "range", "pack": "ID", "args": ["2026-02-16", "2026-02-16"], "expected": "16 Feb 2026" },
+
+    { "id": "relative-hours", "kind": "relative", "pack": "ID", "args": ["2026-02-16T06:20:00Z", "2026-02-16T08:20:00Z"], "expected": "2 h ago" },
+    { "id": "relative-over-a-day-is-null", "kind": "relative", "pack": "ID", "args": ["2026-02-15T06:20:00Z", "2026-02-16T08:20:00Z"], "expected": null },
+    { "id": "relative-just-under-a-day", "kind": "relative", "pack": "ID", "args": ["2026-02-15T08:21:00Z", "2026-02-16T08:20:00Z"], "expected": "23 h ago" },
+
+    { "id": "coords-negative-latitude", "kind": "coordinates", "pack": "ID", "args": [-6.8571, 110.639], "expected": "−6.8571, 110.6390" },
+    { "id": "coords-plan-parcel", "kind": "coordinates", "pack": "ID", "args": [-6.8312, 110.7046], "expected": "−6.8312, 110.7046" },
+    { "id": "coords-ignore-pack-separator", "kind": "coordinates", "pack": "VN", "args": [10.5, 106.25], "expected": "10.5000, 106.2500" },
+
+    { "id": "phone-e164", "kind": "phone", "pack": "ID", "args": ["+6281227410938"], "expected": "+62 812-2741-0938" },
+    { "id": "phone-national", "kind": "phone", "pack": "ID", "args": ["081227410938"], "expected": "+62 812-2741-0938" },
+    { "id": "phone-already-formatted", "kind": "phone", "pack": "ID", "args": ["+62 812-2741-0938"], "expected": "+62 812-2741-0938" }
+  ]
+}
