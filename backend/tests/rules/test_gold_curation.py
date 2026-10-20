@@ -1,4 +1,4 @@
-"""Gold: Curation for CV Tani Makmur Demak, 48,0 ha (PLAN 2.6). Phase B tests xfail until built.
+"""Gold: Curation for CV Tani Makmur Demak, 48,0 ha (PLAN 2.6).
 
 Expected payouts depend on the seeded risk outputs (feature 15 calibrates them, T-15.07). Here the
 risk outputs are injected: one flood class with damage fraction 0,5 and a probability chosen so the
@@ -11,9 +11,12 @@ from decimal import ROUND_HALF_UP, Decimal
 
 import pytest
 
+from aigri.rules.expected import expected_payout, fit
 from aigri.rules.model import AssetFacts, Line, PolicyRecordView, RiskClass
+from aigri.rules.premium import premium as premium_fn
+from aigri.rules.sum_insured import sum_insured
 
-from .records import askrindo_ryp, jasindo_rfd, not_built, rules_fn, sinarmas_pfc
+from .records import askrindo_ryp, jasindo_rfd, sinarmas_pfc
 
 # record factory, sum insured, premium, expected payout, score, injected flood probability
 CASES = [
@@ -32,35 +35,31 @@ def _asset() -> AssetFacts:
 
 @pytest.mark.parametrize(("factory", "si", "premium", "expected", "score", "p"), CASES, ids=IDS)
 class TestCuration:
-    @not_built("T-05.03")
     def test_sum_insured(self, factory, si, premium, expected, score, p) -> None:  # type: ignore[no-untyped-def]
         from datetime import date
 
         record = PolicyRecordView.from_body(factory())
-        assert rules_fn("sum_insured", "sum_insured")(record, _asset(), date(2026, 1, 10)) == si
+        assert sum_insured(record, _asset(), date(2026, 1, 10)) == si
 
-    @not_built("T-05.04")
     def test_premium(self, factory, si, premium, expected, score, p) -> None:  # type: ignore[no-untyped-def]
         record = PolicyRecordView.from_body(factory())
-        split = rules_fn("premium", "premium")(record, si, None)
+        split = premium_fn(record, si, None)
         assert split.premium_minor == premium
         assert (split.subsidy_minor, split.client_share_minor) == (0, premium)
 
-    @not_built("T-05.09")
     def test_expected_payout_with_injected_risk(  # type: ignore[no-untyped-def]
         self, factory, si, premium, expected, score, p
     ) -> None:
         record = PolicyRecordView.from_body(factory())
         risk = [RiskClass("flood", Decimal(p), Decimal("0.5"))]
         lines = [Line("TANI-48", si, Decimal(0))]
-        got = rules_fn("expected", "expected_payout")(record, lines, risk)
+        got = expected_payout(record, lines, risk)
         assert got == expected
         ratio = (Decimal(expected) / Decimal(premium)).quantize(
             Decimal("0.01"), rounding=ROUND_HALF_UP
         )
         assert str(ratio) == score  # expected payout per Rp1 of premium (D-37: 2 decimals)
 
-    @not_built("T-05.09")
     def test_perils_not_covered_contribute_zero(  # type: ignore[no-untyped-def]
         self, factory, si, premium, expected, score, p
     ) -> None:
@@ -70,19 +69,17 @@ class TestCuration:
             RiskClass("typhoon_wind", Decimal("0.5"), Decimal("1")),
         ]
         lines = [Line("TANI-48", si, Decimal(0))]
-        assert rules_fn("expected", "expected_payout")(record, lines, risk) == expected
+        assert expected_payout(record, lines, risk) == expected
 
 
-@not_built("T-05.09")
 def test_below_franchise_class_pays_nothing() -> None:
     """A 5% damage class is under the 10% franchise (Clause 6.2): zero expected payout."""
     record = PolicyRecordView.from_body(jasindo_rfd())
     risk = [RiskClass("flood", Decimal("0.4"), Decimal("0.05"))]
     lines = [Line("TANI-48", 384_000_000, Decimal(0))]
-    assert rules_fn("expected", "expected_payout")(record, lines, risk) == 0
+    assert expected_payout(record, lines, risk) == 0
 
 
-@not_built("T-05.09")
 def test_fit_is_covered_share_of_expected_loss() -> None:
     """Sinar Mas covers flood only: fit = flood loss / (flood + drought loss), 4 decimals."""
     record = PolicyRecordView.from_body(sinarmas_pfc())
@@ -90,15 +87,14 @@ def test_fit_is_covered_share_of_expected_loss() -> None:
         RiskClass("flood", Decimal("0.2"), Decimal("0.5")),
         RiskClass("drought", Decimal("0.1"), Decimal("0.6")),
     ]
-    assert rules_fn("expected", "fit")(record, risk) == "0.6250"  # 0.10 / 0.16
+    assert fit(record, risk) == "0.6250"  # 0.10 / 0.16
     jasindo = PolicyRecordView.from_body(jasindo_rfd())
-    assert rules_fn("expected", "fit")(jasindo, risk) == "1.0000"
+    assert fit(jasindo, risk) == "1.0000"
 
 
-@not_built("T-05.09")
 def test_fit_zero_risk_is_defined() -> None:
     record = PolicyRecordView.from_body(jasindo_rfd())
-    assert rules_fn("expected", "fit")(record, []) == "0.0000"
+    assert fit(record, []) == "0.0000"
 
 
 def test_score_formula_with_injected_values() -> None:
