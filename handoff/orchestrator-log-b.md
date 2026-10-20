@@ -2,6 +2,12 @@
 
 Run settings: SCOPE = lane B (03, 06, 07, 09, 11, 13, 14, 17, 18) · MAX_IMPLEMENTERS = 3 · MAX_FIX_ROUNDS = 2 · PAUSE_AT = every-merge · LANE_BRANCH = lane/b (created from `origin/main` at `c75b9a4`, 2026-10-20). Lane B runs on its own log here, not in the lane A log.
 
+## Waiting for now (2026-10-20)
+
+**C01 is not ticked on `origin/main`.** Lane A's T-01.02 (`make up` healthy) fails because the `minio/minio` image cannot be pulled (R-005, open, needs a person to confirm default (a): build MinIO from source). Developer A must resolve R-005, pass T-01.02 and tick C01. Until then: no shared stack runs, so lane B checks that need the full stack stay unticked. Also waiting on C02 (`format-cases.json`, T-01.10) and C03 (auth endpoints, T-01.15) from 01 phase B, which has not started.
+
+**Override (2026-10-20, by the person running lane B):** 03 phase A is dispatched before C01 is ticked, because it is frontend only and does not need MinIO. Stack-dependent checks stay open until C01 lands.
+
 ## Pause summary (2026-10-20, lane B start: nothing dispatched)
 
 Lane B's ground check is done: `lane/b` exists and is pushed, there are no worktrees and no `feat/*` branches. Docker (daemon running) and GNU make are now installed. Nothing was dispatched: section 10 says lane B's first work order waits until C01 is ticked on `origin/main`, and it is not ticked. Lane A still has T-01.02 (`make up` healthy) open, blocked on R-005 (the `minio/minio` image cannot be pulled). First work order once C01 is ticked: 03 phase A (T-03.01–T-03.05, delivers C04). T-03.04 needs C03 and T-03.05 needs C02 (both from 01, not merged), so it will be built against spec-following fakes and swapped later.
@@ -10,11 +16,11 @@ Housekeeping for a person: local `main` has two unpushed commits (`2cdaa31` and 
 
 ## Status
 
-Wave 0, before M1. Nothing running, nothing merged. Waiting for C01 on `origin/main` (lane A).
+Wave 0, before M1. 03 phase A running (gate overridden by the person). Nothing merged. Waiting for C01 on `origin/main` (lane A, R-005).
 
 ## Running
 
-(none)
+- 03 phase A (T-03.01–T-03.05) · `feat/03-ui-shell-pa` · worktree path from implementer report · started 2026-10-20
 
 ## Merged
 
@@ -22,11 +28,12 @@ Wave 0, before M1. Nothing running, nothing merged. Waiting for C01 on `origin/m
 
 ## Fakes to swap
 
-(none)
+- C02 `format-cases.json` · 03 phase A test fixture under `portals/` (spec-following stand-in) · swap when C02 merges
+- C03 auth endpoints / session cookie · `portals/lib/api` stand-in types · swap when C03 merges
 
 ## Blocked
 
-- 03 phase A (first lane B work order) · C01 not ticked on `origin/main`; lane A's T-01.02 is blocked on R-005 · since 2026-10-20
+- (overridden 2026-10-20) 03 phase A gate on C01; dispatched anyway
 
 ## Queue (once C01 is ticked)
 
