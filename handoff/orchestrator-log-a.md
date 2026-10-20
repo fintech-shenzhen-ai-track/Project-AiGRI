@@ -16,12 +16,13 @@ Paused because PAUSE_AT = every-merge. 01 phase A's code is merged (`e8d86f3`); 
 
 ## Status
 
-Wave 1, before M1. Docker restarts while developer A retries moving its disk image (still on `/`, 4.1 GiB free); compose `db` restarted by hand after each. Merged today: 01 A finish, 16 T-16.01 (C24), 05 A (C06), 02 A (C07), 05 B (C16), 01 B part 1 (hashing, clock, money, packs). Running: 01 B part 2 (DB tasks), 05 swap onto real core, 12 A (C08). C01 waits on `make up`; T-01.10 (C02) waits on R-007. Lane PR #4 open.
+Wave 1, before M1. Docker restarts while developer A retries moving its disk image (still on `/`, 4.1 GiB free); compose `db` restarted by hand after each. Merged today: 01 A finish, 16 T-16.01 (C24), 05 A (C06), 02 A (C07), 05 B (C16), 01 B part 1 (hashing, clock, money, packs). 05 swap merged. Running: 01 B part 2 (DB tasks), 12 A (C08), 05 C (T-05.11). C01 waits on `make up`; T-01.10 (C02) waits on R-007. Lane PR #4 open.
 
 ## Running
 
 - 01 phase B part 2 (DB tasks T-01.06, T-01.11, T-01.12, T-01.14) · `feat/01-foundation-pb` · `.claude/worktrees/agent-a1f1fd5aa4ac94f72` · 2026-10-20
 - 12 phase A (T-12.01–T-12.03, C08) · `feat/12-wallet-pa` · new worktree · 2026-10-20
+- 05 phase C (T-05.11 only; T-05.12 is the accounting teammate's) · `feat/05-rules-engine-pc` · new worktree · 2026-10-20 · adds `pytest-cov` dev dep per R-022 (a)
 
 ## Merged
 
@@ -84,6 +85,7 @@ Lane B contracts this lane needs will not be built in this run (out of scope): C
 
 ## Raised
 
+- R-022 · `pytest-cov` dev dependency for the 05 coverage gate in 01's pyproject; default (a) 05 adds it
 - R-021 · 01 pack schema not in the backend image; default (a) pydantic mirror fallback
 - R-020 · 05 per-asset deductible on a total-loss line; default (a) applies
 - R-019 · 05 `per_policy` franchise/deductible formula; default (a) keep, teammate review
