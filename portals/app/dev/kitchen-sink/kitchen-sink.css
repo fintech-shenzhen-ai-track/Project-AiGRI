@@ -1,0 +1,8 @@
+/* local: kitchen-sink only (colour chips and layout of the demo page); copied from system-preview/shared/_kitchen-sink.html */
+.kit-sw{height:72px;border-radius:14px;display:flex;align-items:flex-end;padding:8px 12px;font-size:15px;font-weight:600;background:var(--c)}
+.kit-sw.on-dark{color:#fff}
+.kit-box{padding:24px;border-radius:20px;background:var(--surface-2)}
+.kit-photo{height:100%}
+.kit-sub{margin:32px 0 12px;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.kit-sub:first-child{margin-top:0}
+.kit-pad{padding:24px}
