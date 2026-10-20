@@ -21,10 +21,65 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/packs": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Packs */
+        get: operations["list_packs_api_v1_packs_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/packs/{code}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Pack */
+        get: operations["get_pack_api_v1_packs__code__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AreaUnit */
+        AreaUnit: {
+            /**
+             * Code
+             * @enum {string}
+             */
+            code: "ha" | "rai";
+            /** Label */
+            label: string;
+            /** Per Hectare */
+            per_hectare: number;
+        };
+        /** CompactUnit */
+        CompactUnit: {
+            /** At Least */
+            at_least: number;
+            /** Divide By */
+            divide_by: number;
+            /** Suffix */
+            suffix: string;
+        };
         /** ComponentHealth */
         ComponentHealth: {
             /** Detail */
@@ -34,6 +89,60 @@ export interface components {
              * @enum {string}
              */
             status: "ok" | "down";
+        };
+        /** Currency */
+        Currency: {
+            /** Code */
+            code: string;
+            /**
+             * Compact Units
+             * @default []
+             */
+            compact_units: components["schemas"]["CompactUnit"][];
+            /** Display Decimals */
+            display_decimals: number;
+            /** Minor Unit Exponent */
+            minor_unit_exponent: number;
+            /** Symbol */
+            symbol: string;
+            /**
+             * Symbol Spacing
+             * @default none
+             * @enum {string}
+             */
+            symbol_spacing: "none" | "space";
+        };
+        /** Formats */
+        Formats: {
+            /** Date */
+            date: string;
+            /** Datetime */
+            datetime: string;
+            /** Decimal */
+            decimal: string;
+            /** Phone Example */
+            phone_example?: string | null;
+            /** Thousands */
+            thousands: string;
+        };
+        /** HTTPValidationError */
+        HTTPValidationError: {
+            /** Detail */
+            detail?: components["schemas"]["ValidationError"][];
+        };
+        /** HazardSource */
+        HazardSource: {
+            /** Access */
+            access?: string | null;
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "warnings" | "forecast" | "hazard_map" | "disaster_records" | "flood_map" | "satellite" | "cyclone";
+            /** Name */
+            name: string;
         };
         /** HealthResponse */
         HealthResponse: {
@@ -46,6 +155,118 @@ export interface components {
              * @enum {string}
              */
             status: "ok" | "degraded";
+        };
+        /** Pack */
+        Pack: {
+            /** Alert Loss Probability */
+            alert_loss_probability?: number | null;
+            area_unit: components["schemas"]["AreaUnit"];
+            /** Code */
+            code: string;
+            currency: components["schemas"]["Currency"];
+            /** Data Law */
+            data_law: string;
+            format: components["schemas"]["Formats"];
+            /** Hazard Sources */
+            hazard_sources: components["schemas"]["HazardSource"][];
+            /** Insurers */
+            insurers: components["schemas"]["PackInsurer"][];
+            /** Live Since */
+            live_since?: string | null;
+            /** Locale */
+            locale: string;
+            /** Name */
+            name: string;
+            /** Payout Rails */
+            payout_rails: string[];
+            /** Public Schemes */
+            public_schemes: components["schemas"]["PublicScheme"][];
+            /**
+             * Regions
+             * @default []
+             */
+            regions: components["schemas"]["Region"][];
+            regulator: components["schemas"]["Regulator"];
+            /** Setup Steps */
+            setup_steps: components["schemas"]["SetupStep"][];
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "live" | "planned";
+            /** Timezones */
+            timezones: components["schemas"]["Timezone"][];
+        };
+        /** PackInsurer */
+        PackInsurer: {
+            /** Code */
+            code: string;
+            /** Initials */
+            initials: string;
+            /** Name */
+            name: string;
+        };
+        /** PublicScheme */
+        PublicScheme: {
+            /** Code */
+            code: string;
+            /** Gloss */
+            gloss: string;
+            /** Name */
+            name: string;
+        };
+        /** Region */
+        Region: {
+            /** Code */
+            code: string;
+            /**
+             * Level
+             * @enum {string}
+             */
+            level: "province" | "regency" | "district";
+            /** Name */
+            name: string;
+            /** Parent */
+            parent?: string | null;
+        };
+        /** Regulator */
+        Regulator: {
+            /** Name */
+            name: string;
+            /** Short */
+            short: string;
+        };
+        /** SetupStep */
+        SetupStep: {
+            /** Done */
+            done: boolean;
+            /** Step */
+            step: string;
+        };
+        /** Timezone */
+        Timezone: {
+            /**
+             * Default
+             * @default false
+             */
+            default: boolean;
+            /** Iana */
+            iana: string;
+            /** Label */
+            label: string;
+        };
+        /** ValidationError */
+        ValidationError: {
+            /** Context */
+            ctx?: Record<string, never>;
+            /** Input */
+            input?: unknown;
+            /** Location */
+            loc: (string | number)[];
+            /** Message */
+            msg: string;
+            /** Error Type */
+            type: string;
         };
     };
     responses: never;
@@ -72,6 +293,57 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HealthResponse"];
+                };
+            };
+        };
+    };
+    list_packs_api_v1_packs_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Pack"][];
+                };
+            };
+        };
+    };
+    get_pack_api_v1_packs__code__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                code: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Pack"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
