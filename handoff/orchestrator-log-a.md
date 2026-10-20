@@ -19,11 +19,11 @@ Wave 0, before M1. Resumed again 2026-10-20 (new orchestrator session; the three
 
 - 02 phase A (T-02.01–T-02.03, C07) · `feat/02-gateway-agent-pa` · new worktree · 2026-10-20
 - 05 phase A fix round 1 (reviewer: two invented fixture clause texts in `backend/tests/rules/records.py`) · `feat/05-rules-engine-pa` · new worktree · 2026-10-20
-- 16 T-16.01 fix round 1 (reviewer: `datetime.now` fallback in `bench/runner.py`) · `feat/16-bench-pall` · new worktree · 2026-10-20
-- 01 phase A finish · `feat/01-foundation-pa` · `.claude/worktrees/agent-a72203db3fdfab5b6` · static review running; live `make up` blocked on disk space (see Blocked). Plan: merge with T-01.02 open if approved, so 01 B can start; tick T-01.02 later in a small work order once `make up` is healthy.
+- 16 T-16.01 fix round 1 committed `6e29ff7`; re-review running · `feat/16-bench-pall` · `.claude/worktrees/agent-ac54db35258e15683` · 2026-10-20
 
 ## Merged
 
+- 01 phase A finish · `8549343` · ticked T-01.03 (Done when re-run on lane/a: migration tests pass) · T-01.02 compose fix merged (MinIO from source, R-005 (a); portals env, R-009 (a)) but T-01.02 stays open until `make up` is healthy · C01 not ticked. Reviewer risks for the live run: `go install minio@RELEASE…` tag resolution unproven (fallback: git clone + go build), long build, disk use.
 - Sync: `origin/main` (PR #3, lane B 03 phase B, C05) into `lane/a` 2026-10-20; lint and tests green.
 - Lane PR #2 (lane B: 03 phase A, C04) merged into `main` 2026-10-20; synced into `lane/a`.
 - Lane PR #1 (lane A: 01 phase A, C01 pending) merged into `main` 2026-10-20.
