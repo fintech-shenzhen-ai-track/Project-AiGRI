@@ -82,7 +82,7 @@ def _crop_record(
         "period": {"rule": "purchase_to_season_end", "clause": c("3.1")},
         "currency": "IDR",
         "perils_covered": perils,
-        "exclusions": [{"exclusion": "War and nuclear risks", "clause": c("5.1")}],
+        "exclusions": [{"exclusion": "Losses from poor farming practice", "clause": c("5.1")}],
         "sum_insured": {
             "basis": "per_hectare",
             "amount_minor": per_ha,
@@ -161,7 +161,10 @@ def sinarmas_pfc() -> dict[str, Any]:
 
 
 def autp() -> dict[str, Any]:
-    """PR-JSD-AUTP-2026: scheme, Rp6.000.000/ha, 3%, subsidy 80%, damage >=75% pays in full."""
+    """PR-JSD-AUTP-2026: scheme, Rp6.000.000/ha, 3%, subsidy 80%, damage >=75% pays in full.
+
+    Scheme clause id is "Scheme rule 2.1", the only scheme rule PLAN gives.
+    """
     rec = _crop_record(
         "PR-JSD-AUTP-2026", "JSD", "Asuransi Jasindo", 6_000_000, "3", [FLOOD, DROUGHT]
     )
@@ -169,7 +172,7 @@ def autp() -> dict[str, Any]:
         "code": "AUTP",
         "subsidy_pct": "80",
         "subsidy_payer": "Government of Indonesia",
-        "clause": c("Scheme rule 1.1"),
+        "clause": c("Scheme rule 2.1"),
     }
     rec.pop("deductible")
     rec["loss_categories"] = [
@@ -187,7 +190,10 @@ def autp() -> dict[str, Any]:
 
 
 def autsk() -> dict[str, Any]:
-    """PR-JSD-AUTSK-2026: livestock scheme, min(declared, cap 10.000.000)/head, 2%, subsidy 80%."""
+    """PR-JSD-AUTSK-2026: livestock scheme, min(declared, cap 10.000.000)/head, 2%, subsidy 80%.
+
+    Scheme clause id reuses "Scheme rule 2.1" (PLAN gives no livestock scheme rule).
+    """
     rec = _crop_record("PR-JSD-AUTSK-2026", "JSD", "Asuransi Jasindo", 0, "2", [])
     rec["product_type"] = "livestock_mortality"
     rec["insured_class"] = {
@@ -211,7 +217,7 @@ def autsk() -> dict[str, Any]:
         "code": "AUTS/K",
         "subsidy_pct": "80",
         "subsidy_payer": "Government of Indonesia",
-        "clause": c("Scheme rule 1.1"),
+        "clause": c("Scheme rule 2.1"),
     }
     rec.pop("deductible")
     rec["loss_categories"] = [
