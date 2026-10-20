@@ -18,11 +18,11 @@ Wave 0, before M1. Resumed again 2026-10-20 (new orchestrator session; the three
 ## Running
 
 - 02 phase A (T-02.01–T-02.03, C07) · `feat/02-gateway-agent-pa` · new worktree · 2026-10-20
-- 05 phase A fix round 1 (reviewer: two invented fixture clause texts in `backend/tests/rules/records.py`) · `feat/05-rules-engine-pa` · new worktree · 2026-10-20
-- 16 T-16.01 fix round 1 committed `6e29ff7`; re-review running · `feat/16-bench-pall` · `.claude/worktrees/agent-ac54db35258e15683` · 2026-10-20
+- 05 phase A fix round 1 committed `74e1c2f`; re-review running · `feat/05-rules-engine-pa` · `.claude/worktrees/agent-a4972d35e7a887ef5` · 2026-10-20
 
 ## Merged
 
+- 16 T-16.01 · `a5784b6` · ticked T-16.01 (Done when re-run on lane/a: `make bench` wrote a results folder, 9 suites "not run", audit "not available") · C24 delivered (board `a8dce42`). One fix round (`datetime.now` fallback). Feature 16's later tasks (T-16.02+) reuse branch `feat/16-bench-pall`.
 - 01 phase A finish · `8549343` · ticked T-01.03 (Done when re-run on lane/a: migration tests pass) · T-01.02 compose fix merged (MinIO from source, R-005 (a); portals env, R-009 (a)) but T-01.02 stays open until `make up` is healthy · C01 not ticked. Reviewer risks for the live run: `go install minio@RELEASE…` tag resolution unproven (fallback: git clone + go build), long build, disk use.
 - Sync: `origin/main` (PR #3, lane B 03 phase B, C05) into `lane/a` 2026-10-20; lint and tests green.
 - Lane PR #2 (lane B: 03 phase A, C04) merged into `main` 2026-10-20; synced into `lane/a`.
@@ -73,6 +73,7 @@ Lane B contracts this lane needs will not be built in this run (out of scope): C
 
 ## Raised
 
+- R-013 · 16 tests in `backend/tests/bench/` outside 16's owned paths; default (a) allow it
 - R-009 · (lane B) portals service needs `API_INTERNAL_URL` and `SANDBOX`; default (a) applied in 01 A finish
 - R-008 · (lane B) format-cases.json wire shape; default (a) `{id, kind, pack, args[], expected}`; tell 01 phase B (T-01.10)
 - R-007 · (lane B) compact-money decimals in pack schema; default (a) edits `specs/00-shared/schemas/country-pack.schema.json` (team file); needs a person before T-01.10
