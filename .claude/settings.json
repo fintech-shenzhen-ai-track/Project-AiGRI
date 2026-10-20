@@ -33,7 +33,15 @@
       "Bash(git worktree list:*)",
       "Bash(git -C:*)",
       "Bash(gh pr view:*)",
-      "Bash(gh pr checks:*)"
+      "Bash(gh pr checks:*)",
+      "Bash(git fetch:*)",
+      "Bash(git push origin lane/a:*)",
+      "Bash(git push -u origin lane/a:*)",
+      "Bash(git push origin lane/b:*)",
+      "Bash(git push -u origin lane/b:*)",
+      "Bash(gh pr list:*)",
+      "Bash(gh pr create:*)",
+      "Bash(gh pr comment:*)"
     ],
     "deny": [
       "Bash(git push --force:*)",

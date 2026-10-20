@@ -2,6 +2,10 @@
 
 Run settings: SCOPE = lane A (01, 05, 02, 12, 04, 10, 08, 15, 16) · MAX_IMPLEMENTERS = 3 · MAX_FIX_ROUNDS = 2 · PAUSE_AT = every-merge · MERGE_MODE = local. Started 2026-10-20.
 
+## Pause summary (2026-10-20, update: Docker running, usage limit reached)
+
+Docker is up. Only the compose `db` service runs (from the main checkout). `make up` fails: the `minio/minio` image is no longer pullable (R-005). `REQUIRE_DB=1 make test` on main: 10 passed against the compose db, reached at the host LAN IP because a native Postgres holds 127.0.0.1:5432: `TEST_ADMIN_URL=postgresql://aigri_owner:aigri_owner@192.168.1.94:5432/postgres REQUIRE_DB=1 make test` (the IP may change). T-01.03's Done when passes on main; T-01.02 still fails. C01 stays unticked. Next on resume: dispatch 01 phase B (T-01.05–T-01.14; first commit ticks T-01.03; T-01.13 storage stays open on R-005; use the TEST_ADMIN_URL above; pyproject already has hypothesis and jsonschema) and 05 phase A (T-05.01–T-05.02; gold tests marked xfail(strict=True) so main stays green; local copies of the core.money/core.hashing interfaces until 01 B merges; no pyproject edits). Their paths do not overlap.
+
 ## Pause summary (2026-10-20, after merging 01 phase A)
 
 Paused because PAUSE_AT = every-merge. 01 phase A's code is merged (`e8d86f3`); `make lint` and `make test` pass on main, but the 4 DB tests and the frontend checks are skipped. C01 is NOT ticked: T-01.02 (`make up` healthy) and T-01.03 (`alembic upgrade head`, app role cannot UPDATE `audit_events`) have never run because the Docker daemon is down. Nothing else is dispatched until `make up` and `REQUIRE_DB=1 make test` pass on main. Needs a person: start Docker, install pnpm, resolve the port 5432 clash, and confirm or answer R-001–R-004.
@@ -56,6 +60,8 @@ Lane B contracts this lane needs will not be built in this run (out of scope): C
 - R-001 insurer wallet balances · team + accounting · confirm default (b) or pick another option
 
 ## Raised
+
+- R-005 · `minio/minio` image not pullable, `make up` fails; default (a): build MinIO from source
 
 - R-004 · pgvector missing from `postgis/postgis:16-3.4` for `record_clauses.embedding`; no default; decide before 04 Phase B
 - R-003 · identity tables without tenant policy, allowlisted in T-01.11 (default a)

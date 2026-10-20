@@ -20,7 +20,10 @@ MAX_IMPLEMENTERS = 3                   # implementers running at the same time
 MAX_FIX_ROUNDS   = 2                   # review → fix cycles before you escalate to a person
 PAUSE_AT         = milestones          # milestones | never | every-merge
 MERGE_MODE       = local               # local: merge into main here | pr: push the branch, open a PR with gh, merge after approval
+LANE_BRANCH      = auto                # auto: lane/a or lane/b when SCOPE is one lane, none otherwise (section 10)
 ```
+
+When `SCOPE` is `lane A` or `lane B`, read section 10 before section 2. It changes sections 2 to 7 and 9, and it wins where they disagree.
 
 ## 1. Read before anything else
 
@@ -136,5 +139,46 @@ Keep `handoff/orchestrator-log.md` with these sections, newest entries first, an
 ## 9. Finishing
 
 When every work order in scope is merged or blocked: run `make lint`, `make test`, `make e2e` and `make bench` on `main`; record the results in the log; check every milestone's exit criteria; and give the person a short summary: what is merged, what is blocked and why, what is waiting on people, the open R-entries, and the next step.
+
+## 10. Running one lane
+
+Each developer can run their own orchestrator on their own lane at the same time: developer A with `SCOPE = lane A` on branch `lane/a`, developer B with `SCOPE = lane B` on branch `lane/b`. `main` on `origin` is where the two lanes meet. Neither orchestrator merges into `main` locally; each lane reaches `main` only through a pull request the other developer reviews.
+
+### What changes
+
+- **Your branch.** Everywhere sections 2 to 7 and 9 say `main` (switching to it, merging into it, running checks on it, "done on `main`"), read your lane branch. Implementer worktrees branch from it, because the main checkout sits on it (`worktree.baseRef: "head"`). Tell every implementer and reviewer the base branch in its work order.
+- **`MERGE_MODE` does not apply.** Feature branches always merge into the lane branch locally (section 5.1 to 5.6). Section 5.7 is replaced by "Sending the lane to `main`" below.
+- **The log** is `handoff/orchestrator-log-a.md` or `handoff/orchestrator-log-b.md`, never the other lane's. Resume from yours.
+- **The contract board.** Tick only rows whose "From" is your lane. The other lane's ticks reach you through the sync. A contract counts as merged for your work orders when it is ticked on your lane branch after a sync.
+- **Raised decisions.** Sync first, then take the next `R-NNN` free in your lane branch. If the other lane took the same number before you reached `main`, renumber yours during the sync (update the references in your commits' files and your log) and keep both rows.
+- **Milestones.** Pause at the exit criteria in section 7 of your own lane document (`handoff/DEV-A.md` or `handoff/DEV-B.md`), not the whole-team table in the roadmap, which needs both lanes.
+- **Starting.** Lane B's first work order waits until C01 is ticked on `origin/main`. Lane A starts with 01 phase A as in section 3.
+
+### Ground check (adds to section 2)
+
+1. `git fetch origin`. If the lane branch does not exist, create it from `origin/main` (`git switch -c lane/a origin/main`) and push it (`git push -u origin lane/a`). If it exists, `git switch` to it.
+2. The main checkout stays on the lane branch for the whole run. Never switch it to `main`.
+
+### Syncing from `main` (before every dispatch round and before every pause)
+
+1. `git fetch origin`. If `origin/main` has commits your lane branch lacks, `git merge --no-ff origin/main -m "sync: main into lane/a"`.
+2. Resolve conflicts with section 5.2's rules, plus: in `handoff/contracts-board.md` keep every `[x]` from both sides; in the "Raised by agents" table keep every row from both sides (renumber yours if two share an id). Any other conflict, especially in paths the other lane owns: `git merge --abort`, log it, and stop and ask (section 6). Never edit the other lane's code to make a sync work.
+3. Run `make lint` and `make test`. If the sync made them red, `git reset --hard ORIG_HEAD` (only this sync merge, before pushing), keep working on the old base, put it under "Blocked" and tell the person; the fix belongs to whoever broke `main`.
+4. If the sync changed `docker-compose.yml` or brought new migrations, restart the shared stack (`make up`) and run `alembic upgrade head`.
+5. Read the board again. For each newly ticked contract from the other lane: work orders waiting on it become ready, and every entry under "Fakes to swap" for it becomes a work order of its own (`NN phase X: swap fake for C-NN`) that goes ahead of new phases of the same feature.
+
+### Features from the other lane
+
+- A wave dependency on a feature outside your scope counts as met for the order rules in section 3 once its Phase A contract is ticked after a sync. Until then, dispatch your work order anyway and have the implementer build against a spec-following fake; note it under "Fakes to swap".
+- Exception: a work order that is mostly screens (it writes to `portals/app/...`) waits for C04 and C05 instead of faking the component library. Put it at the back of the queue and list it under "Blocked: waiting on lane B".
+- Never dispatch work orders for the other lane's features, even when they block you. Log what you are waiting for under "Waiting on people" (the other developer) so it comes up at the daily sync.
+
+### Sending the lane to `main`
+
+1. Do this right after any merge that delivers a contract the other lane waits for, and at every pause. Sync first (above).
+2. `git push origin lane/a`. Never force-push.
+3. If no pull request is open from the lane branch (`gh pr list --head lane/a --state open`), open one: `gh pr create --base main --head lane/a --title "Lane A: <work orders since the last lane merge>"`, body = for each work order merged since the last lane merge, its tasks, the contracts it delivers and the reviewer verdict, then the open R-entries, ending with the line `🤖 Generated with [Claude Code](https://claude.com/claude-code)`. If one is open, the push updates it; add a comment listing what the push added.
+4. The other developer reviews it with their lane's checklist (section 6 of their lane document). You never approve it. Merge with `gh pr merge --merge` only when `gh pr view` shows it approved and every check green. Never squash or rebase it: the lane branch keeps going after the merge, and squashing would make the next sync conflict with your own work.
+5. Then `git fetch origin` and log the lane merge under "Merged" (pull request number, contracts that reached `main`).
 
 Begin with section 1.

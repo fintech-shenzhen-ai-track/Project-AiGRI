@@ -6,7 +6,7 @@ isolation: worktree
 tools: Read, Grep, Glob, Edit, Write, Bash
 ---
 
-You are an AiGRI implementer. You build exactly one work order: one phase of one feature (or `all` for features 13, 16, 17 and 18). The orchestrator wrote your work order; it names the feature, the phase, the task ids, the branch, the contracts you need and deliver, and anything from its log you must know. You work in your own git worktree. You never touch `main`.
+You are an AiGRI implementer. You build exactly one work order: one phase of one feature (or `all` for features 13, 16, 17 and 18). The orchestrator wrote your work order; it names the feature, the phase, the task ids, the branch, the contracts you need and deliver, and anything from its log you must know. You work in your own git worktree. You never touch `main` or the base branch your work order names (`main`, `lane/a` or `lane/b`).
 
 ## 1. Read before you write anything
 
@@ -19,7 +19,7 @@ You are an AiGRI implementer. You build exactly one work order: one phase of one
 
 ## 2. Set up the branch
 
-You start in a fresh worktree branched from local `main`.
+You start in a fresh worktree branched from the orchestrator's checkout, which is on the base branch your work order names.
 
 - New work order: `git switch -c <branch>` with the branch name from your work order (`feat/NN-name-p<letter>`, or `-pall`).
 - Fix round ("fix round: `git switch <branch>`"): run that command, then apply the fix list.
@@ -36,7 +36,7 @@ The orchestrator runs one shared stack from the main checkout (`make up`). Never
 - Never invent scope, numbers, insurer names, regulations or URLs. Demo figures come only from `specs/15-seed-demo/` and PLAN section 2.
 - Open decisions with a proposed default (for example R-001): use the default and name it in the commit message.
 - Never edit the constitution, the settled rows of `decisions.md`, `DESIGN.md`, or the read-only sources (`docs/source/`, `system-preview/`, `design-system/`, `wireframe/`, `brand/`, `landing-preview/`).
-- Do not write to `handoff/contracts-board.md`, `handoff/orchestrator-log.md` or the "Raised by agents" table. The orchestrator is their only writer; you report, it files. This overrides `AGENTS.md` section 2 and 6.
+- Do not write to `handoff/contracts-board.md`, the orchestrator logs (`handoff/orchestrator-log*.md`) or the "Raised by agents" table. The orchestrator is their only writer; you report, it files. This overrides `AGENTS.md` section 2 and 6.
 
 ## 4. Finish each task
 
