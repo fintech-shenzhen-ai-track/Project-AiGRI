@@ -2,11 +2,9 @@
 
 Run settings: SCOPE = lane B (03, 06, 07, 09, 11, 13, 14, 17, 18) · MAX_IMPLEMENTERS = 3 · MAX_FIX_ROUNDS = 2 · PAUSE_AT = every-merge · LANE_BRANCH = lane/b (created from `origin/main` at `c75b9a4`, 2026-10-20). Lane B runs on its own log here, not in the lane A log.
 
-## Waiting for now (2026-10-20)
+## Pause summary (2026-10-20, after 03 phase A merge)
 
-**C01 is not ticked on `origin/main`** (lane A, R-005 MinIO image). Stack-dependent checks stay open until it lands. Also waiting on C02 (T-01.10) and C03 (T-01.15) from 01 phase B.
-
-**Resumed (2026-10-20)** from the capital-D `Documents` path; the worktree casing problem is gone. Removed the empty stale worktree `03-ui-shell-pa` and branch `feat/03-ui-shell-pa` (no commits). Re-dispatched 03 phase A under the person's override (frontend only, does not need MinIO).
+03 phase A is merged into `lane/b` (`fb038da`). The reviewer approved with no fixes. `make lint` and `make test` pass on `lane/b` (backend 6 passed, 4 skipped; vitest 137). C04 is ticked. T-01.01–T-01.04 is ticked except T-03.05, which is built against a C02 stand-in. `lane/b` is pushed and a pull request to `main` is opened for developer A to review (C04 is what A waits for). Raised R-006–R-009 (all with proposed defaults; R-007–R-009 need lane A's input). Next when resumed: 03 phase B (T-03.06–T-03.14, components = C05). Still waiting on C01 being ticked on `origin/main`; 03 B is frontend only like 03 A, so it needs the same override from the person to start before C01.
 
 ## Pause summary (2026-10-20, lane B start: nothing dispatched)
 
@@ -16,24 +14,26 @@ Housekeeping for a person: local `main` has two unpushed commits (`2cdaa31` and 
 
 ## Status
 
-Wave 0, before M1. 03 phase A running (gate on C01 overridden by the person). Nothing merged. Waiting for C01 on `origin/main` (lane A, R-005).
+Wave 0, before M1. 03 phase A merged (C04). Paused (PAUSE_AT = every-merge). Next: 03 phase B (C05). Nothing running. C01 still not ticked on `origin/main`. Waiting for C01 on `origin/main` (lane A, R-005).
 
 ## Running
 
-- 03 phase A (T-03.01–T-03.05, delivers C04) · `feat/03-ui-shell-pa` (harness branch `worktree-agent-a067ce0b3c6226b23`) · `.claude/worktrees/agent-a067ce0b3c6226b23` · 2026-10-20
+(none)
 
 ## Merged
 
-(none)
+- 03 phase A · `fb038da` · T-03.01, T-03.02, T-03.03, T-03.04 (T-03.05 built, unticked: C02 stand-in) · C04
 
 ## Fakes to swap
 
-- C02 `format-cases.json` · 03 phase A test fixture under `portals/` (spec-following stand-in) · swap when C02 merges
-- C03 auth endpoints / session cookie · `portals/lib/api` stand-in types · swap when C03 merges
+- C02 `format-cases.json` · `portals/tests/fixtures/format-cases.standin.json` (adapter in `portals/tests/pack-format.test.tsx`; shape per R-008) · swap when C02 merges, then tick T-03.05
+- C03 auth endpoints · `portals/lib/api/standin.ts` (`Me`, `Badges`); `portals/lib/pack/types.ts` hand-written from the schema · swap when C03 merges: `make openapi`, alias to generated schemas, delete standin.ts, re-check T-03.03 against real `auth/me`
+- Test-only fake API · `portals/e2e/support/fake-api.mjs` · keep for unit e2e; add real-stack runs once C01 is ticked
 
 ## Blocked
 
-- (overridden 2026-10-20) 03 phase A gate on C01; dispatched anyway
+- (overridden 2026-10-20) 03 phase A gate on C01; dispatched anyway, merged
+- 03 phase B onward: lane gate on C01 (section 10); needs the person's override again or C01 ticked
 
 ## Queue (once C01 is ticked)
 
@@ -42,6 +42,7 @@ Wave 0, before M1. 03 phase A running (gate on C01 overridden by the person). No
 ## Waiting on people
 
 - (resolved 2026-10-20) Restarted from the `Documents` path; worktrees work
+- R-007, R-008, R-009 · developer A · answer when building T-01.10 / fixing compose
 - C01 (T-01.02 `make up` healthy) · developer A · resolve R-005 (MinIO image), finish 01 phase A checks, tick C01 on `origin/main`
 - Native PostgreSQL services hold localhost:5432 (from the lane A log) · developer A · stop them or remap the compose `db` port
 - (resolved 2026-10-20) Docker installed and running; GNU make installed; pnpm 12.14.0, Node v24.10.0
@@ -53,4 +54,8 @@ Wave 0, before M1. 03 phase A running (gate on C01 overridden by the person). No
 
 ## Raised
 
-(none by lane B yet; open on main: R-001–R-005)
+- R-006 · keep `middleware.ts` vs rename to `proxy.ts` (Next 16)
+- R-007 · compact-money decimals into the pack schema (lane A, T-01.10)
+- R-008 · wire shape of `format-cases.json` (lane A confirms)
+- R-009 · compose needs `API_INTERNAL_URL` and `SANDBOX` for the portals service (lane A)
+- open on main from lane A: R-001–R-005
