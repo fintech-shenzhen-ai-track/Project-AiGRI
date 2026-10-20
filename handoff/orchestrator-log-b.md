@@ -2,6 +2,10 @@
 
 Run settings: SCOPE = lane B (03, 06, 07, 09, 11, 13, 14, 17, 18) · MAX_IMPLEMENTERS = 3 · MAX_FIX_ROUNDS = 2 · PAUSE_AT = every-merge · LANE_BRANCH = lane/b (created from `origin/main` at `c75b9a4`, 2026-10-20). Lane B runs on its own log here, not in the lane A log.
 
+## Resumed (2026-10-20)
+
+The person approved the override for 03 phase B (dispatched before C01 is ticked; frontend only). Synced `origin/main` into `lane/b` (`f2d5a57`): PR #2 was merged into `main` (`29b606e`), so the sync changed no files. C01–C03 are still unticked.
+
 ## Pause summary (2026-10-20, after 03 phase A merge)
 
 03 phase A is merged into `lane/b` (`fb038da`). The reviewer approved with no fixes. `make lint` and `make test` pass on `lane/b` (backend 6 passed, 4 skipped; vitest 137). C04 is ticked. T-03.01–T-03.04 are ticked; T-03.05 is built against a C02 stand-in and left unticked. `lane/b` is pushed and PR #2 (`lane/b` → `main`) is open for developer A to review (C04 is what A waits for); merge only once it is approved and green. Raised R-006–R-009 (all with proposed defaults; R-007–R-009 need lane A's input). Next when resumed: 03 phase B (T-03.06–T-03.14, components = C05). Still waiting on C01 being ticked on `origin/main`; 03 B is frontend only like 03 A, so it needs the same override from the person to start before C01.
@@ -14,14 +18,15 @@ Housekeeping for a person: local `main` has two unpushed commits (`2cdaa31` and 
 
 ## Status
 
-Wave 0, before M1. 03 phase A merged (C04). Paused (PAUSE_AT = every-merge). Next: 03 phase B (C05). Nothing running. C01 still not ticked on `origin/main`. Waiting for C01 on `origin/main` (lane A, R-005).
+Wave 0, before M1. 03 phase A merged and on `main` via PR #2 (C04). 03 phase B running (C05; gate on C01 overridden by the person). C01 still not ticked on `origin/main`. Waiting for C01 on `origin/main` (lane A, R-005).
 
 ## Running
 
-(none)
+- 03 phase B (T-03.06–T-03.14, delivers C05) · `feat/03-ui-shell-pb` · `.claude/worktrees/agent-a67d151b3da122cde` · 2026-10-20
 
 ## Merged
 
+- Lane merge PR #2 (`lane/b` → `main`, `29b606e`) · C04 reached `main`
 - 03 phase A · `fb038da` · T-03.01, T-03.02, T-03.03, T-03.04 (T-03.05 built, unticked: C02 stand-in) · C04
 
 ## Fakes to swap
@@ -33,8 +38,8 @@ Wave 0, before M1. 03 phase A merged (C04). Paused (PAUSE_AT = every-merge). Nex
 ## Blocked
 
 - (overridden 2026-10-20) 03 phase A gate on C01; dispatched anyway, merged
-- PR #2 lane/b → main · waiting for developer A's review · 2026-10-20
-- 03 phase B onward: lane gate on C01 (section 10); needs the person's override again or C01 ticked
+- (overridden 2026-10-20) 03 phase B gate on C01; dispatched
+- 03 phase C/D and other features: lane gate on C01 (section 10); need the person's override or C01 ticked
 
 ## Queue (once C01 is ticked)
 
