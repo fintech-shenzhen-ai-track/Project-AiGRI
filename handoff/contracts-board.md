@@ -12,7 +12,7 @@ Lanes: **A** = Platform, trust and money. **B** = Journeys and portals. **T** = 
 | C04 | `system.css` port and icon sprite (T-03.02) | B | A | Any screen A builds | 0 | [x] |
 | C05 | Core components (T-03.06–T-03.12) and `lib/api` (T-03.04) | B | A | i02 (T-04.14), c08 (T-08.11), c13 and i06 (T-12.10, T-12.11), underwriting (T-08.12) | 0–1 | [x] |
 | C06 | Rules engine model and gold tests (T-05.01, T-05.02) | A | B | Curation and claims test setup | 0 | [x] |
-| C07 | Tool registry, tags and `gate()` (T-02.01–T-02.03) | A | B | Every backend route B writes (06, 07, 09, 11, 13, 14) | 1 | [ ] |
+| C07 | Tool registry, tags and `gate()` (T-02.01–T-02.03) | A | B | Every backend route B writes (06, 07, 09, 11, 13, 14) | 1 | [x] |
 | C08 | Wallet adapter and wallet-creation interface (T-12.02, T-12.03) | A | B | Onboarding finish (T-06.03) | 1 | [ ] |
 | C09 | Assets tables and endpoints (T-06.01, T-06.02) | B | A | Damage Assessment (10), Purchase (08) | 1 | [ ] |
 | C10 | Capture uploads with hashes and pHash (T-06.06) | B | A | Photo checks (T-10.12) | 1 | [ ] |
