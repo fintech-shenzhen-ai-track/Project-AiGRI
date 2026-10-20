@@ -282,6 +282,7 @@ svg{flex:none}
 .upload.is-over{background:var(--cream)}
 .upload .h-card{color:var(--ink)}
 .upload .meter{width:100%;max-width:320px;margin-top:8px}
+.upload:focus-within{outline:3px solid var(--focus);outline-offset:3px} /* port: the React Upload keeps its file input visually hidden, so the zone shows the focus ring */
 .otp{display:flex;gap:8px}
 .otp .input{flex:1 1 0;min-width:0;max-width:56px;height:56px;padding:0;text-align:center;font-size:24px;font-weight:600}
 
