@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Sequence
 from decimal import ROUND_HALF_UP, Decimal
 
-from aigri.rules._compat import round_half_up
+from aigri.rules._numeric import round_half_up
 from aigri.rules.amount import payout_for_pct
 from aigri.rules.model import Line, PolicyRecordView, RiskClass
 

@@ -6,8 +6,9 @@ from datetime import UTC, date, datetime
 from decimal import Decimal
 
 import pytest
+import rfc8785
 
-from aigri.rules import VERSION, _compat
+from aigri.rules import VERSION
 from aigri.rules.amount import payout_for_pct, proposed_amount
 from aigri.rules.categories import loss_category
 from aigri.rules.deadlines import deadlines
@@ -105,20 +106,18 @@ def test_deadline_datetime_converted_to_pack_time_zone() -> None:
 
 
 def test_canonical_json_rfc8785_properties() -> None:
-    assert _compat.canonical_json({"b": [1, None, True], "a": "é\n"}) == (
+    assert canonical_json({"b": [1, None, True], "a": "é\n"}) == (
         b'{"a":"\xc3\xa9\\n","b":[1,null,true]}'
     )
     # keys sort by UTF-16 code units: U+FF5E after U+1F600's surrogate D83D
-    assert _compat.canonical_json({"～": 1, "\U0001f600": 2}) == (
-        '{"\U0001f600":2,"～":1}'.encode()
-    )
-    assert _compat.canonical_json(False) == b"false"
+    assert canonical_json({"～": 1, "\U0001f600": 2}) == ('{"\U0001f600":2,"～":1}'.encode())
+    assert canonical_json(False) == b"false"
     with pytest.raises(TypeError):
-        _compat.canonical_json(1.5)
-    with pytest.raises(ValueError, match="exact"):
-        _compat.canonical_json(2**60)
+        canonical_json(1.5)
+    with pytest.raises(rfc8785.IntegerDomainError):
+        canonical_json(2**60)
     with pytest.raises(TypeError):
-        _compat.canonical_json(object())
+        canonical_json(object())
 
 
 def test_canonical_json_of_outputs_and_version() -> None:

@@ -8,7 +8,8 @@ from decimal import Decimal
 
 import pytest
 
-from aigri.rules._compat import parse_pct, round_minor
+from aigri.core.money import round_minor
+from aigri.rules._numeric import parse_pct
 from aigri.rules.model import Line, PolicyRecordError, PolicyRecordView
 
 from . import records
@@ -91,7 +92,7 @@ def test_rejects_clause_less_cited_field() -> None:
     _bad(lambda b: b["product_name"].pop("clause"))
 
 
-def test_compat_money_rules() -> None:
+def test_money_rules() -> None:
     assert round_minor(Decimal("0.5"), "IDR") == 1  # half-up, whole rupiah (D-37, D-38)
     assert round_minor(Decimal("2.5"), "IDR") == 3
     assert round_minor(Decimal("1.005"), "PHP") == 101  # 2 minor-unit digits

@@ -16,7 +16,7 @@ from __future__ import annotations
 from collections.abc import Sequence
 from decimal import Decimal
 
-from aigri.rules._compat import round_half_up
+from aigri.rules._numeric import round_half_up
 from aigri.rules.categories import loss_category_rule
 from aigri.rules.model import (
     Line,

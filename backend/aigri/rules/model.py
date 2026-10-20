@@ -14,7 +14,7 @@ from typing import Any, Literal
 
 import jsonschema
 
-from aigri.rules._compat import parse_pct
+from aigri.rules._numeric import parse_pct
 
 SCHEMA_FILE = "policy-record.schema.json"
 

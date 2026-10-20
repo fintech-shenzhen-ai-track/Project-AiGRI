@@ -7,7 +7,7 @@ from datetime import date
 from decimal import Decimal
 from typing import Any
 
-from aigri.rules import _compat
+from aigri.core.hashing import jcs
 from aigri.rules.model import ClauseRef, TrailStep
 
 
@@ -42,4 +42,20 @@ def to_jsonable(value: Any) -> Any:
 
 def canonical_json(value: Any) -> bytes:
     """Byte-identical canonical JSON (RFC 8785) of any rules output (US-05.3)."""
-    return _compat.canonical_json(to_jsonable(value))
+    jsonable = to_jsonable(value)
+    _reject_floats(jsonable)
+    return jcs(jsonable)
+
+
+def _reject_floats(value: Any) -> None:
+    """Payloads carry no floats (no float money); ``jcs`` itself would accept them."""
+    if isinstance(value, float):
+        raise TypeError("floats are not allowed in canonical payloads")
+    if isinstance(value, dict):
+        for v in value.values():
+            _reject_floats(v)
+    elif isinstance(value, list | tuple):
+        for v in value:
+            _reject_floats(v)
+    elif value is not None and not isinstance(value, bool | int | str):
+        raise TypeError(f"not JSON-compatible: {type(value).__name__}")
