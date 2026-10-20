@@ -16,12 +16,13 @@ Paused because PAUSE_AT = every-merge. 01 phase A's code is merged (`e8d86f3`); 
 
 ## Status
 
-Wave 1, before M1. Docker restarts while developer A retries moving its disk image (still on `/`, 4.1 GiB free); compose `db` restarted by hand after each. Merged today: 01 A finish, 16 T-16.01 (C24), 05 A (C06), 02 A (C07), 05 B (C16), 01 B part 1 (hashing, clock, money, packs). 05 swap merged. 05 C merged. Running: 01 B part 2 (in review), 12 A (fix round 1). 12 B blocked on R-023/R-024 (person). C01 waits on `make up`; T-01.10 (C02) waits on R-007. Lane PR #4 open.
+Wave 1, before M1. Docker restarts while developer A retries moving its disk image (still on `/`, 4.1 GiB free); compose `db` restarted by hand after each. Merged today: 01 A finish, 16 T-16.01 (C24), 05 A (C06), 02 A (C07), 05 B (C16), 01 B part 1 (hashing, clock, money, packs). 05 swap merged. 05 C and 01 B part 2 merged. Running: 12 A (fix round 1), 04 A (C13), 01 C (C03). 12 B blocked on R-023/R-024 (person). C01 waits on `make up`; T-01.10 (C02) waits on R-007. Lane PR #4 open.
 
 ## Running
 
 - 12 phase A (T-12.01–T-12.03, C08) · `feat/12-wallet-pa` · `.claude/worktrees/agent-a913b84b2e51ae0de` · 2026-10-20 · fix round 1 (ledger txn status + payout shape, tenant columns from wallet, currency from packs, no superadmin claim)
 - 04 phase A (T-04.01–T-04.03, C13) · `feat/04-policy-compiler-pa` · new worktree · 2026-10-20 · `record_clauses` without `embedding` until R-004
+- 01 phase C (T-01.15–T-01.18, C03; T-01.18 needs a PR run to tick) · `feat/01-foundation-pc` · new worktree · 2026-10-20
 
 ## Merged
 
