@@ -16,10 +16,12 @@ Paused because PAUSE_AT = every-merge. 01 phase A's code is merged (`e8d86f3`); 
 
 ## Status
 
-Wave 0–1, before M1. Paused after merges (every-merge). C06, C07 and C24 ticked; C01 waits on a live `make up` (disk space). Nothing running. Lane PR #4 open (now includes 02 A).
+Wave 0–1, before M1. Resumed during the pause at developer A's request while Docker Desktop moves its disk image to `/Volumes/RolfStuffs` (Docker is down, so no DB). Running: 05 phase B (pure library) and 01 phase B (pure tasks first: T-01.05, T-01.07, T-01.08, T-01.09; DB tasks T-01.06, T-01.11, T-01.12, T-01.14 ticked only after `REQUIRE_DB=1` passes; T-01.10 waits on R-007; T-01.13 needs `make up`). C06, C07, C24 ticked; C01 waits on `make up`. Lane PR #4 open.
 
 ## Running
 
+- 05 phase B (T-05.03–T-05.10, C16) · `feat/05-rules-engine-pb` · new worktree · 2026-10-20
+- 01 phase B (T-01.05–T-01.14 except T-01.10, T-01.13) · `feat/01-foundation-pb` · new worktree · 2026-10-20
 
 ## Merged
 
