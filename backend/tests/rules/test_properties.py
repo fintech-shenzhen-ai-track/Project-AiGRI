@@ -195,3 +195,25 @@ def test_business_days_land_on_weekdays_and_never_precede_calendar(start: date, 
     assert add_days(start, n, business=False) <= biz
     if n:
         assert biz.weekday() < 5
+
+
+@settings(max_examples=300)
+@given(
+    kind=st.sampled_from(KINDS),
+    lines=st.lists(line_st, min_size=2, max_size=5),
+    idx=st.integers(0, 4),
+    new=pcts,
+)
+def test_per_policy_higher_assessed_pct_never_pays_less(
+    kind: str, lines: list[Line], idx: int, new: Decimal
+) -> None:
+    # R-019 (a): raising one line's assessed % (same sum insured) never lowers the policy total.
+    record = _record(kind, "per_policy")
+    i = idx % len(lines)
+    raised_line = Line(
+        lines[i].asset_id, lines[i].sum_insured_minor, max(lines[i].assessed_pct, new)
+    )
+    raised = [*lines[:i], raised_line, *lines[i + 1 :]]
+    before = proposed_amount(record, POLICY, lines).total_minor
+    after = proposed_amount(record, POLICY, raised).total_minor
+    assert before <= after
