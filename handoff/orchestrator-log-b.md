@@ -2,6 +2,10 @@
 
 Run settings: SCOPE = lane B (03, 06, 07, 09, 11, 13, 14, 17, 18) · MAX_IMPLEMENTERS = 3 · MAX_FIX_ROUNDS = 2 · PAUSE_AT = every-merge · LANE_BRANCH = lane/b (created from `origin/main` at `c75b9a4`, 2026-10-20). Lane B runs on its own log here, not in the lane A log.
 
+## Waiting (2026-10-20)
+
+The person approved 03 phase C (override of the C01 gate), to start once PR #3 is merged into `main`. Waiting for developer A to review PR #3.
+
 ## Pause summary (2026-10-20, after 03 phase B merge)
 
 03 phase B is merged into `lane/b` (`70f011b`). The reviewer approved with no fixes. `make lint` and `make test` pass on `lane/b` (backend 6 passed, 4 skipped; vitest 228). The reviewer's `make e2e` passed on the branch (66 passed, 2 skipped; kitchen-sink pixel diff 0.02% at 1280, 0.03% at 390). T-03.06–T-03.14 are ticked. C05 is ticked. Raised R-010 (map style provider and env), R-011 (design-token contrast gaps, needs the design owner) and R-012 (placeholder demo photos until 17). `lane/b` is pushed and PR #3 is open for developer A (merge only once approved and green). Next when resumed: 03 phase C (T-03.15–T-03.19: AppShell, sign-in c01, settings, PWA, /dev). It is frontend only, but T-03.16 sign-in needs C03 (fake it), and the C01 gate needs the person's override again. Lane M1 exit criteria (C04, C05 merged; demo sign-in reaches all three shells) need phase C plus C03.
@@ -24,7 +28,7 @@ Housekeeping for a person: local `main` has two unpushed commits (`2cdaa31` and 
 
 ## Status
 
-Wave 0, before M1. 03 phases A and B merged (C04, C05). PR #3 open to `main`. Paused (every-merge). Next: 03 phase C. C01 still not ticked on `origin/main`. Waiting for C01 on `origin/main` (lane A, R-005).
+Wave 0, before M1. 03 phases A and B merged (C04, C05). PR #3 open to `main`, waiting for review. 03 phase C approved by the person to start after PR #3 merges. C01 still not ticked on `origin/main`. Waiting for C01 on `origin/main` (lane A, R-005).
 
 ## Running
 
