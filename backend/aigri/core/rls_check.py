@@ -20,6 +20,7 @@ NO_POLICY_ALLOWLIST: dict[str, str] = {
     "audit_events": "append-only chain; tenant reads go through audited views (R-002)",
     "clock_state": "single platform row, no tenant data",
     "outbox": "system infrastructure written by services, read by the worker",
+    "id_counters": "human id counters: no tenant data (T-01.14)",
     "alembic_version": "migration bookkeeping",
     "spatial_ref_sys": "PostGIS reference data",
 }

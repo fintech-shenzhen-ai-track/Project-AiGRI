@@ -20,7 +20,7 @@ Legend: `[P]` can run in parallel with other `[P]` tasks in the same phase. Each
 - [x] **T-01.11** `core.db.tenant_session` and the catalog-driven RLS test harness. FR-01.7, FR-01.8. Done when: the harness passes on the 0001 tables and fails if a policy is dropped.
 - [x] **T-01.12** `core.outbox` + worker publisher with retries and dead-letter. FR-01.12. Done when: a crash between commit and publish still delivers exactly once to an idempotent consumer in tests.
 - [ ] **T-01.13** [P] `core.storage` on MinIO with SHA-256 on write, no overwrite. FR-01.13.
-- [ ] **T-01.14** [P] `core.ids` human id sequences (D-35) per insurer code and year, gap-free under concurrency.
+- [x] **T-01.14** [P] `core.ids` human id sequences (D-35) per insurer code and year, gap-free under concurrency.
 
 ## Phase C: auth and sandbox
 
