@@ -2,7 +2,7 @@
 
 Starts in Wave 0 (runner and report) and grows with each feature.
 
-- [ ] **T-16.01** Runner, results folder, report writers, Audit Log export with chain file, "not run" handling. FR-16.1, FR-16.2, FR-16.8.
+- [x] **T-16.01** Runner, results folder, report writers, Audit Log export with chain file, "not run" handling. FR-16.1, FR-16.2, FR-16.8.
 - [ ] **T-16.02** Adjuster bot. D-11.
 - [ ] **T-16.03** [P] Wallet integrity suite (with 12). 
 - [ ] **T-16.04** [P] Curation suite (with 07).
