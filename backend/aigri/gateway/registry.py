@@ -26,7 +26,6 @@ TOOL_MODULES: tuple[str, ...] = (
     "aigri.assets",
     "aigri.claims",
     "aigri.compiler",
-    "aigri.core",
     "aigri.curation",
     "aigri.damage",
     "aigri.gateway",

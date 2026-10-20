@@ -1,4 +1,4 @@
-"""The caller of a tool. Feature 03 installs the resolver that builds it from the session."""
+"""The caller of a tool. Feature 01 (T-01.15) installs the resolver from the session."""
 
 from __future__ import annotations
 
@@ -29,7 +29,7 @@ _resolver: ActorResolver | None = None
 
 
 def install_actor_resolver(resolver: ActorResolver | None) -> None:
-    """Called once by feature 03 (sessions). Tests install fakes and pass None to reset."""
+    """Called once by feature 01 (T-01.15, sessions). Tests install fakes and pass None to reset."""
     global _resolver
     _resolver = resolver
 
