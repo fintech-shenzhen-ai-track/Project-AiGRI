@@ -4,7 +4,7 @@ Run settings: SCOPE = lane A (01, 05, 02, 12, 04, 10, 08, 15, 16) · MAX_IMPLEME
 
 ## Pause summary (2026-10-20, after 01 A finish, 16 T-16.01, 05 A)
 
-Paused (PAUSE_AT = every-merge). Merged into `lane/a`: 01 A finish (T-01.03), 16 T-16.01 (C24), 05 phase A (C06); `make lint`, `REQUIRE_DB=1 make test` and `make bench` green on `lane/a`. Lane PR #4 open to `main` (needs developer B's review; the orchestrator never approves it). Still running: 02 phase A (C07); it will be reviewed when it reports, nothing new is dispatched. Needs a person: (1) disk space for Docker (root disk 2.4 GiB free) so `make up` can run, which is all that stands between us and C01/T-01.02; (2) review PR #4; (3) confirm defaults R-005, R-009, R-013–R-016 (and older R-001–R-003, R-007, R-008); R-004 has no default and blocks 04 phase B. Next on resume: review/merge 02 A (C07), then 01 phase B (T-01.05–T-01.14), 05 phase B, and once `make up` is healthy a small work order to tick T-01.02 and C01.
+Paused (PAUSE_AT = every-merge). Merged into `lane/a`: 01 A finish (T-01.03), 16 T-16.01 (C24), 05 phase A (C06); `make lint`, `REQUIRE_DB=1 make test` and `make bench` green on `lane/a`. Lane PR #4 open to `main` (needs developer B's review; the orchestrator never approves it). Update: 02 phase A (C07) was finished, reviewed (one fix round) and merged during the pause; nothing is running. Needs a person: (1) disk space for Docker (root disk 2.4 GiB free) so `make up` can run, which is all that stands between us and C01/T-01.02; (2) review PR #4; (3) confirm defaults R-005, R-009, R-013–R-018 (and older R-001–R-003, R-007, R-008); R-004 has no default and blocks 04 phase B. Next on resume: 01 phase B (T-01.05–T-01.14), 05 phase B, and once `make up` is healthy a small work order to tick T-01.02 and C01.
 
 ## Pause summary (2026-10-20, update: Docker running, usage limit reached)
 
@@ -16,14 +16,14 @@ Paused because PAUSE_AT = every-merge. 01 phase A's code is merged (`e8d86f3`); 
 
 ## Status
 
-Wave 0–1, before M1. Paused after merges (every-merge). C06 and C24 ticked; C01 waits on a live `make up` (disk space). Running: 02 phase A. Lane PR #4 open.
+Wave 0–1, before M1. Paused after merges (every-merge). C06, C07 and C24 ticked; C01 waits on a live `make up` (disk space). Nothing running. Lane PR #4 open (now includes 02 A).
 
 ## Running
 
-- 02 phase A (T-02.01–T-02.03, C07) · `feat/02-gateway-agent-pa` · new worktree · 2026-10-20
 
 ## Merged
 
+- 02 phase A · `574ce93` · ticked T-02.01–T-02.03 (Done when re-run on lane/a: parity and router-graph tests pass, 60 passed) · C07 delivered. One fix round (feature 14 tools moved from `core/` to `nudges/tools.py`; resolver owner is 01 T-01.15; `fastapi>=0.151`). Route code uses `Annotated[Authorized, Depends(gate("x"))]` or `dependencies=[...]` (ruff B008).
 - 05 phase A · `2b1e269` · ticked T-05.01, T-05.02 (Done when re-run on lane/a: 29 passed, 56 xfailed strict for phase B) · C06 delivered. Two fix rounds (invented fixture texts; product names, synthetic AUTS/K scheme rule id `SYNTHETIC scheme rule (AUTS/K)` to replace if a spec gives a real one). Phase B must drop the xfail markers and switch `rules_fn` lazy imports to real ones.
 - 16 T-16.01 · `a5784b6` · ticked T-16.01 (Done when re-run on lane/a: `make bench` wrote a results folder, 9 suites "not run", audit "not available") · C24 delivered (board `a8dce42`). One fix round (`datetime.now` fallback). Feature 16's later tasks (T-16.02+) reuse branch `feat/16-bench-pall`.
 - 01 phase A finish · `8549343` · ticked T-01.03 (Done when re-run on lane/a: migration tests pass) · T-01.02 compose fix merged (MinIO from source, R-005 (a); portals env, R-009 (a)) but T-01.02 stays open until `make up` is healthy · C01 not ticked. Reviewer risks for the live run: `go install minio@RELEASE…` tag resolution unproven (fallback: git clone + go build), long build, disk use.
@@ -34,6 +34,8 @@ Wave 0–1, before M1. Paused after merges (every-merge). C06 and C24 ticked; C0
 
 ## Fakes to swap
 
+- actor resolver · `backend/aigri/gateway/actor.py` default fails closed (401) · 01 T-01.15 (C03) must call `install_actor_resolver` with its session lookup
+- `gateway.denied` Audit Log entry not written · `gateway/authorize.py` · T-02.04 (02 phase B) after T-01.06
 - `core.money` · `backend/aigri/rules/_compat.py` (05 A) · swap when T-01.08 merges (01 B), delete the file
 - `core.audit.export` · `bench/audit_chain.py` `UnavailableSource`/`FakeAuditSource` (16) · swap when T-01.06 merges; needs `export_rows(from_ts, to_ts)` or adapter change
 - `core.hashing` · `bench/audit_chain.py` local `canonical_json`/`entry_hash`/`verify_rows` (16) · swap when T-01.05 merges, delete the copy
@@ -76,6 +78,8 @@ Lane B contracts this lane needs will not be built in this run (out of scope): C
 
 ## Raised
 
+- R-018 · 02 role mapping of "Person roles" cells; default (a) as encoded in the parity test
+- R-017 · 02 placement of cross-cutting tools incl. `clock.move` in `nudges/tools.py`; default (a) keep
 - R-016 · 05 synthetic Sinar Mas event dates in a deadline test; default (a) keep, replace from seed
 - R-015 · 05 `expected_payout` signature and `fit` 4-decimal string; default (a) keep, confirm at T-05.09
 - R-014 · 05 `loss_categories` shape for AUTP/AUTS/K; default (a) keep fixture shape
