@@ -9,7 +9,7 @@ No dependencies beyond `core.money` and `core.hashing` (feature 01, Phase B). If
 
 ## Phase B: functions
 
-- [ ] **T-05.03** [P] `sum_insured` with stages and per-head caps. FR-05.1.
+- [x] **T-05.03** [P] `sum_insured` with stages and per-head caps. FR-05.1.
 - [ ] **T-05.04** [P] `premium` with scheme subsidy split. FR-05.2.
 - [ ] **T-05.05** [P] `loss_category`. FR-05.5.
 - [ ] **T-05.06** [P] `deadlines` (calendar and business days, pack time zone). FR-05.4.
