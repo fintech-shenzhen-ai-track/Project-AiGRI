@@ -16,15 +16,15 @@ Paused because PAUSE_AT = every-merge. 01 phase A's code is merged (`e8d86f3`); 
 
 ## Status
 
-Wave 0–1, before M1. Resumed during the pause at developer A's request while Docker Desktop moves its disk image to `/Volumes/RolfStuffs` (Docker is down, so no DB). Running: 05 phase B (pure library) and 01 phase B (pure tasks first: T-01.05, T-01.07, T-01.08, T-01.09; DB tasks T-01.06, T-01.11, T-01.12, T-01.14 ticked only after `REQUIRE_DB=1` passes; T-01.10 waits on R-007; T-01.13 needs `make up`). C06, C07, C24 ticked; C01 waits on `make up`. Lane PR #4 open.
+Wave 0–1, before M1. Resumed during the pause at developer A's request while Docker Desktop moves its disk image to `/Volumes/RolfStuffs` (Docker is down, so no DB). Docker came back but its disk image did NOT move (still on `/`, 4.1 GiB free); compose `db` restarted. 05 phase B merged (C16). Running: 01 phase B (pure tasks first: T-01.05, T-01.07, T-01.08, T-01.09; DB tasks T-01.06, T-01.11, T-01.12, T-01.14 ticked only after `REQUIRE_DB=1` passes; T-01.10 waits on R-007; T-01.13 needs `make up`). C06, C07, C24 ticked; C01 waits on `make up`. Lane PR #4 open.
 
 ## Running
 
-- 05 phase B (T-05.03–T-05.10, C16) · `feat/05-rules-engine-pb` · new worktree · 2026-10-20
 - 01 phase B (T-01.05–T-01.14 except T-01.10, T-01.13) · `feat/01-foundation-pb` · new worktree · 2026-10-20
 
 ## Merged
 
+- 05 phase B · `b56deb6` · ticked T-05.03–T-05.10 (Done when re-run on lane/a with the DB: 124 passed, no xfail; hero gold 190.400.000 / 187.800.000) · C16 delivered. No fix round. Reviewer: R-015 (a) matches FR-05.7/FR-05.8; business days Mon–Fri without holidays follows FR-05.4 (holidays are roadmap); `expected_payout` rounds per class then once at the end, so T-15.07 calibration must use this same function. Leftover: unused `not_built` helper in `backend/tests/rules/records.py`.
 - 02 phase A · `574ce93` · ticked T-02.01–T-02.03 (Done when re-run on lane/a: parity and router-graph tests pass, 60 passed) · C07 delivered. One fix round (feature 14 tools moved from `core/` to `nudges/tools.py`; resolver owner is 01 T-01.15; `fastapi>=0.151`). Route code uses `Annotated[Authorized, Depends(gate("x"))]` or `dependencies=[...]` (ruff B008).
 - 05 phase A · `2b1e269` · ticked T-05.01, T-05.02 (Done when re-run on lane/a: 29 passed, 56 xfailed strict for phase B) · C06 delivered. Two fix rounds (invented fixture texts; product names, synthetic AUTS/K scheme rule id `SYNTHETIC scheme rule (AUTS/K)` to replace if a spec gives a real one). Phase B must drop the xfail markers and switch `rules_fn` lazy imports to real ones.
 - 16 T-16.01 · `a5784b6` · ticked T-16.01 (Done when re-run on lane/a: `make bench` wrote a results folder, 9 suites "not run", audit "not available") · C24 delivered (board `a8dce42`). One fix round (`datetime.now` fallback). Feature 16's later tasks (T-16.02+) reuse branch `feat/16-bench-pall`.
@@ -38,7 +38,7 @@ Wave 0–1, before M1. Resumed during the pause at developer A's request while D
 
 - actor resolver · `backend/aigri/gateway/actor.py` default fails closed (401) · 01 T-01.15 (C03) must call `install_actor_resolver` with its session lookup
 - `gateway.denied` Audit Log entry not written · `gateway/authorize.py` · T-02.04 (02 phase B) after T-01.06
-- `core.money` · `backend/aigri/rules/_compat.py` (05 A) · swap when T-01.08 merges (01 B), delete the file
+- `core.money`, `core.packs` (time zone), `core.hashing` (`canonical_json`) · `backend/aigri/rules/_compat.py` (05 A and B), used by `sum_insured.py`, `premium.py`, `amount.py`, `expected.py`, `deadlines.py`, `model.py`, `trail.py` · swap when 01 B merges (T-01.05, T-01.08, T-01.09), delete the file; `canonical_json` must match `core.hashing` byte for byte
 - `core.audit.export` · `bench/audit_chain.py` `UnavailableSource`/`FakeAuditSource` (16) · swap when T-01.06 merges; needs `export_rows(from_ts, to_ts)` or adapter change
 - `core.hashing` · `bench/audit_chain.py` local `canonical_json`/`entry_hash`/`verify_rows` (16) · swap when T-01.05 merges, delete the copy
 
@@ -80,6 +80,8 @@ Lane B contracts this lane needs will not be built in this run (out of scope): C
 
 ## Raised
 
+- R-020 · 05 per-asset deductible on a total-loss line; default (a) applies
+- R-019 · 05 `per_policy` franchise/deductible formula; default (a) keep, teammate review
 - R-018 · 02 role mapping of "Person roles" cells; default (a) as encoded in the parity test
 - R-017 · 02 placement of cross-cutting tools incl. `clock.move` in `nudges/tools.py`; default (a) keep
 - R-016 · 05 synthetic Sinar Mas event dates in a deadline test; default (a) keep, replace from seed
