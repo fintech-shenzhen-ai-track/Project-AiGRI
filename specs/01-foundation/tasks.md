@@ -11,7 +11,7 @@ Legend: `[P]` can run in parallel with other `[P]` tasks in the same phase. Each
 
 ## Phase B: core services
 
-- [ ] **T-01.05** `core.hashing` with RFC 8785 test vectors and `sha256_payload`. Test first. Done when: RFC vectors pass; property test shows key order does not change the hash.
+- [x] **T-01.05** `core.hashing` with RFC 8785 test vectors and `sha256_payload`. Test first. Done when: RFC vectors pass; property test shows key order does not change the hash.
 - [ ] **T-01.06** `core.audit.append/verify/export` with advisory-lock serialisation and the UPDATE/DELETE trigger. FR-01.11. Test first. Done when: 1.000 concurrent appends produce a valid chain; tampering is detected at the right `seq`.
 - [ ] **T-01.07** [P] `core.clock` real and demo modes; ban `datetime.now()` outside it (lint test). FR-01.9.
 - [ ] **T-01.08** [P] `core.money` (Decimal, minor units, D-37 rounding, D-38 exponent) with table tests.
