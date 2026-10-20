@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from decimal import Decimal
 
-from aigri.rules._compat import round_half_up
+from aigri.rules._numeric import round_half_up
 from aigri.rules.model import PolicyRecordView, PremiumSplit, SchemeSpec
 
 

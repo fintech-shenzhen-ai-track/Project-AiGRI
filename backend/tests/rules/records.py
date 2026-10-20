@@ -11,18 +11,12 @@ from collections.abc import Callable
 from copy import deepcopy
 from typing import Any
 
-import pytest
-
 
 def rules_fn(module: str, name: str) -> Callable[..., Any]:
     """Import a phase B function lazily so the test fails (xfail) until the task lands."""
     mod = importlib.import_module(f"aigri.rules.{module}")
     fn: Callable[..., Any] = getattr(mod, name)
     return fn
-
-
-def not_built(task: str) -> pytest.MarkDecorator:
-    return pytest.mark.xfail(strict=True, reason=f"{task} not built")
 
 
 def c(clause_id: str) -> dict[str, Any]:
