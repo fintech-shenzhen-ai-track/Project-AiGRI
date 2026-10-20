@@ -20,5 +20,5 @@ No dependencies beyond `core.money` and `core.hashing` (feature 01, Phase B). If
 
 ## Phase C: assurance
 
-- [ ] **T-05.11** Property tests (monotonicity, boundaries, line sums) and 100% branch coverage gate. Non-functional.
+- [x] **T-05.11** Property tests (monotonicity, boundaries, line sums) and 100% branch coverage gate. Non-functional.
 - [ ] **T-05.12** Counterfactual cases for the bench (feature 16): each claim scenario with one fact changed (planting date, variety, date of loss, assessed %) and the gold flip or non-flip, reviewed by the accounting teammate.

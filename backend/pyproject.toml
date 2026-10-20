@@ -31,6 +31,7 @@ dev = [
   "types-pyyaml",
   "types-jsonschema",
   "boto3-stubs",
+  "pytest-cov>=7.1.0",
 ]
 
 [tool.uv]
