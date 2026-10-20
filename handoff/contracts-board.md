@@ -10,7 +10,7 @@ Lanes: **A** = Platform, trust and money. **B** = Journeys and portals. **T** = 
 | C02 | `format-cases.json` (T-01.10) | A | B | Pack formatters in the UI (T-03.05) | 0 | [ ] |
 | C03 | Auth endpoints and session cookie (T-01.15), OpenAPI exported | A | B | Typed API client (T-03.04), sign-in c01 (T-03.16) | 0 | [ ] |
 | C04 | `system.css` port and icon sprite (T-03.02) | B | A | Any screen A builds | 0 | [x] |
-| C05 | Core components (T-03.06–T-03.12) and `lib/api` (T-03.04) | B | A | i02 (T-04.14), c08 (T-08.11), c13 and i06 (T-12.10, T-12.11), underwriting (T-08.12) | 0–1 | [ ] |
+| C05 | Core components (T-03.06–T-03.12) and `lib/api` (T-03.04) | B | A | i02 (T-04.14), c08 (T-08.11), c13 and i06 (T-12.10, T-12.11), underwriting (T-08.12) | 0–1 | [x] |
 | C06 | Rules engine model and gold tests (T-05.01, T-05.02) | A | B | Curation and claims test setup | 0 | [ ] |
 | C07 | Tool registry, tags and `gate()` (T-02.01–T-02.03) | A | B | Every backend route B writes (06, 07, 09, 11, 13, 14) | 1 | [ ] |
 | C08 | Wallet adapter and wallet-creation interface (T-12.02, T-12.03) | A | B | Onboarding finish (T-06.03) | 1 | [ ] |
