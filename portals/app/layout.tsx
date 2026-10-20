@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 import { IconSprite } from "@/components/icons/sprite";
+import { ToastRegion } from "@/components/Toast";
 import "../styles/system.css";
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <IconSprite />
         {children}
+        <ToastRegion />
       </body>
     </html>
   );

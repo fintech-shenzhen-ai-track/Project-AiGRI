@@ -61,7 +61,7 @@ export function Tabs({ tabs, "aria-label": ariaLabel, value, defaultValue, onVal
   const select = (id: string, focus: boolean) => {
     if (value === undefined) setInner(id);
     onValueChange?.(id);
-    if (focus) requestAnimationFrame(() => root.current?.querySelector<HTMLElement>(`[data-tab-id="${CSS.escape(id)}"]`)?.focus());
+    if (focus) root.current?.querySelector<HTMLElement>(`[data-tab-id="${CSS.escape(id)}"]`)?.focus();
   };
 
   const onKey = (e: KeyboardEvent<HTMLButtonElement>, index: number) => {

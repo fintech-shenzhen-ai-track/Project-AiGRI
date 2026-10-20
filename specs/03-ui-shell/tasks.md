@@ -13,7 +13,7 @@
 - [x] **T-03.06** [P] Buttons, fields, inputs, selects, choices, checks, switch, seg, chips, upload, OTP.
 - [x] **T-03.07** [P] Cards, stat, kv, meter, policy card, cite, demo note, sandbox pill, ins-mark, avatar, hash.
 - [x] **T-03.08** [P] Table (with stack mode, flagged rows, clickable rows), pills, tabs with ink bar, banners, empty, skeleton, error state, check list.
-- [ ] **T-03.09** [P] Modal, sheet (bottom on mobile, right panel on desktop), toasts, disclosure, flow + stepper, timeline.
+- [x] **T-03.09** [P] Modal, sheet (bottom on mobile, right panel on desktop), toasts, disclosure, flow + stepper, timeline.
 - [ ] **T-03.10** [P] Charts (bars, line+area, stacked bar, sparkline, threshold line, "Show as table").
 - [ ] **T-03.11** [P] Map component with `schematic` and `maplibre` renderers, legend, map label, controls; Terra Draw polygon drawing in the `maplibre` renderer. D-13.
 - [ ] **T-03.12** [P] Satellite compare, photo grid and photo chip, consent block, count-up, sun-rise mark.
