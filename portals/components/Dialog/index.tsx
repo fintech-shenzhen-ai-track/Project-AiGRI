@@ -94,7 +94,7 @@ export function Dialog({ kind, open, onOpenChange, title, footer, children, clos
         } catch {
           el.removeAttribute("open");
         }
-        if (!document.querySelector("dialog[open]")) root.classList.remove("has-dialog");
+        if (!document.querySelector("dialog[open]:not(.is-static)")) root.classList.remove("has-dialog");
         trigger.current?.focus({ preventScroll: true });
         trigger.current = null;
       };
@@ -113,7 +113,7 @@ export function Dialog({ kind, open, onOpenChange, title, footer, children, clos
   // Never leave the page scroll-locked if the dialog unmounts while open.
   useEffect(
     () => () => {
-      if (!document.querySelector("dialog[open]")) document.documentElement.classList.remove("has-dialog");
+      if (!document.querySelector("dialog[open]:not(.is-static)")) document.documentElement.classList.remove("has-dialog");
     },
     [],
   );

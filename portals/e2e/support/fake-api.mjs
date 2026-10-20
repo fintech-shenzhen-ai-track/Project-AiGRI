@@ -2,7 +2,14 @@
 // It follows specs/01-foundation/plan.md "Auth endpoints": GET /api/v1/auth/me answers 200 with the actor, or 401
 // with the standard error body. The session cookie is `fake_session=<role>`. Swap for the real API by setting
 // E2E_BASE_URL to a running stack (see playwright.config.ts).
+import { readFileSync } from "node:fs";
 import { createServer } from "node:http";
+import path from "node:path";
+import { parse } from "yaml";
+
+// GET /api/v1/packs/{code} (specs/01-foundation/plan.md): the country pack as JSON. Served from the repo's
+// packs/*.yaml so the stand-in and the real API return the same document.
+const PACKS_DIR = path.resolve(import.meta.dirname, "../../../packs");
 
 const port = Number(process.env.FAKE_API_PORT ?? 3101);
 
@@ -35,6 +42,15 @@ createServer((req, res) => {
     }
     res.end(JSON.stringify({ ...actor, membership: { id: "m-1", role }, role, pack_code: "ID" }));
     return;
+  }
+  const pack = /^[/]api[/]v1[/]packs[/]([A-Z]{2})$/.exec(url.pathname);
+  if (pack) {
+    try {
+      res.end(JSON.stringify(parse(readFileSync(path.join(PACKS_DIR, `${pack[1]}.yaml`), "utf8"))));
+      return;
+    } catch {
+      // fall through to 404
+    }
   }
   res.statusCode = 404;
   res.end(JSON.stringify({ error: { code: "not_found", message: "Not found.", details: {} } }));
