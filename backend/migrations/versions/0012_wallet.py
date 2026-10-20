@@ -10,8 +10,8 @@ Ledger rules enforced in the database (FR-12.2, FR-12.4), as defence in depth wi
 - a posted payout needs ``trigger_event_seq`` pointing to a ``claim.approved`` Audit Log event
   for the same claim (``audit_events.object_id``) and the same amount and currency.
 
-Ledger writes span tenants (a payout debits the Insurer Wallet and credits the Client Wallet), so
-the wallet module posts under the ``superadmin`` database role setting; tenant sessions only read.
+Tenant columns on ledger_entries are copied from the wallet by trigger, never trusted from the caller.
+Posting privilege (which database role writes cross-tenant ledger rows) is decided in phase B.
 """
 
 from alembic import op
@@ -139,12 +139,20 @@ def upgrade() -> None:
         CREATE FUNCTION wallet_ledger_check_entry() RETURNS trigger LANGUAGE plpgsql AS $$
         DECLARE
           w wallets%ROWTYPE;
+          t wallet_txns%ROWTYPE;
           prev bigint;
         BEGIN
+          SELECT * INTO t FROM wallet_txns WHERE id = NEW.txn_id;
+          IF NOT FOUND OR t.status <> 'posted' THEN
+            RAISE EXCEPTION 'ledger entries need a posted txn (txn % is %)',
+              NEW.txn_id, coalesce(t.status, 'missing') USING ERRCODE = 'check_violation';
+          END IF;
           SELECT * INTO w FROM wallets WHERE id = NEW.wallet_id FOR UPDATE;
           IF NOT FOUND THEN
             RAISE EXCEPTION 'ledger entry for unknown wallet %', NEW.wallet_id;
           END IF;
+          NEW.insurer_id := w.insurer_id;
+          NEW.client_id := w.client_id;
           IF NEW.currency <> w.currency THEN
             RAISE EXCEPTION 'ledger entry currency % does not match wallet currency %',
               NEW.currency, w.currency;
@@ -175,12 +183,34 @@ def upgrade() -> None:
         DECLARE
           total bigint;
           n integer;
+          t wallet_txns%ROWTYPE;
+          debits integer;
+          credits integer;
         BEGIN
           SELECT coalesce(sum(amount_minor), 0), count(*) INTO total, n
             FROM ledger_entries WHERE txn_id = NEW.txn_id;
           IF total <> 0 OR n < 2 THEN
             RAISE EXCEPTION 'ledger entries of txn % must be 2 or more and sum to zero (% over %)',
               NEW.txn_id, total, n USING ERRCODE = 'check_violation';
+          END IF;
+          SELECT * INTO t FROM wallet_txns WHERE id = NEW.txn_id;
+          IF t.kind = 'payout' THEN
+            -- exactly one debit of the amount on an insurer wallet, one credit on the claimant's
+            -- client wallet (or the external rail account), in the txn currency
+            SELECT count(*) FILTER (WHERE e.amount_minor = -t.amount_minor
+                                      AND w.owner_type = 'insurer'
+                                      AND (t.insurer_id IS NULL OR w.insurer_id = t.insurer_id)),
+                   count(*) FILTER (WHERE e.amount_minor = t.amount_minor
+                                      AND ((w.owner_type = 'client'
+                                            AND (t.client_id IS NULL OR w.client_id = t.client_id))
+                                           OR w.owner_type = 'platform_external'))
+              INTO debits, credits
+              FROM ledger_entries e JOIN wallets w ON w.id = e.wallet_id
+              WHERE e.txn_id = NEW.txn_id AND e.currency = t.currency;
+            IF n <> 2 OR debits <> 1 OR credits <> 1 THEN
+              RAISE EXCEPTION 'payout txn % must debit the insurer and credit the client by %',
+                NEW.txn_id, t.amount_minor USING ERRCODE = 'check_violation';
+            END IF;
           END IF;
           RETURN NULL;
         END $$"""

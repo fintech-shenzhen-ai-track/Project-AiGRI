@@ -62,7 +62,7 @@ class ClientWalletOut(BaseModel):
     wallet_id: str
     balance: Money
     sandbox: bool = True
-    country_label: str  # "Indonesia · IDR", from the pack
+    country_label: str  # "<pack name> · <currency code>", from the pack
     season: SeasonSummary
     accounts: list[PayoutAccountOut]
     payout_arrived: TxnOut | None = None  # only when a payout arrived since the last visit

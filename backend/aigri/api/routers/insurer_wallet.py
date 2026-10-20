@@ -5,7 +5,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, Query
 
 from aigri.api.errors import ApiError
-from aigri.core import clock
+from aigri.core import clock, packs
 from aigri.gateway.authorize import Authorized
 from aigri.gateway.deps import gate
 from aigri.wallet.models import (
@@ -38,7 +38,7 @@ def _not_built() -> ApiError:
 
 @router.get("", response_model=InsurerWalletOut)
 async def get_wallet(_: Annotated[Authorized, Depends(gate("insurer.read"))]) -> InsurerWalletOut:
-    zero = Money(amount_minor=0, currency="IDR")
+    zero = Money(amount_minor=0, currency=packs.default_pack().currency.code)
     now = clock.now()
     return InsurerWalletOut(
         wallet_id=_ZERO_WALLET_ID,
@@ -91,7 +91,7 @@ async def set_alert_level(
 async def reconciliation(
     _: Annotated[Authorized, Depends(gate("insurer.read"))], product: str | None = None
 ) -> ReconciliationOut:
-    zero = Money(amount_minor=0, currency="IDR")
+    zero = Money(amount_minor=0, currency=packs.default_pack().currency.code)
     return ReconciliationOut(
         product=product,
         premiums_in=zero,

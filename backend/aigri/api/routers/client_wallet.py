@@ -6,6 +6,7 @@ from typing import Annotated, Literal
 from fastapi import APIRouter, Depends, Query, Response
 
 from aigri.api.errors import ApiError
+from aigri.core import packs
 from aigri.gateway.authorize import Authorized
 from aigri.gateway.deps import gate
 from aigri.wallet.models import (
@@ -32,11 +33,12 @@ def _not_built() -> ApiError:
 
 @router.get("", response_model=ClientWalletOut)
 async def get_wallet(_: Annotated[Authorized, Depends(gate("client.read"))]) -> ClientWalletOut:
-    zero = Money(amount_minor=0, currency="IDR")
+    pack = packs.default_pack()
+    zero = Money(amount_minor=0, currency=pack.currency.code)
     return ClientWalletOut(
         wallet_id=_ZERO_WALLET_ID,
         balance=zero,
-        country_label="Indonesia · IDR",
+        country_label=f"{pack.name} · {pack.currency.code}",
         season=SeasonSummary(premiums_paid=zero, payouts_received=zero, withdrawn=zero),
         accounts=[],
     )

@@ -220,3 +220,98 @@ async def test_tenant_isolation_on_wallets(test_db: TestDb, world: World) -> Non
             await app.execute("delete from ledger_entries")
     finally:
         await app.close()
+
+
+async def _approved_payout_txn(w: World, amount: int = 400) -> uuid.UUID:
+    c = str(uuid.uuid4())
+    seq = await _approval(w.conn, w.cur, c, amount, "claim.approved")
+    return await w.txn("payout", f"payout:{c}", amount, seq=seq, ref={"claim_id": c})
+
+
+async def _new_client(w: World) -> uuid.UUID:
+    return uuid.UUID(
+        str(
+            await w.conn.fetchval(
+                "insert into clients (country, kind, name) values ('ID','agri_business','o')"
+                " returning id"
+            )
+        )
+    )
+
+
+async def test_entries_need_a_posted_txn(world: World) -> None:
+    await _fund(world, 1000)
+    for status in ("pending_funds", "failed"):
+        c = str(uuid.uuid4())
+        t = await world.txn("payout", f"payout:{c}", 400, status=status, ref={"claim_id": c})
+        with pytest.raises(asyncpg.CheckViolationError):
+            async with world.conn.transaction():
+                await world.entry(t, world.ins_w, -400, 600)
+                await world.entry(t, world.cli_w, 400, 400)
+
+
+async def test_payout_entries_must_match_amount_and_wallets(world: World) -> None:
+    await _fund(world, 1000)
+    t = await _approved_payout_txn(world)  # a smaller movement than the approved amount
+    with pytest.raises(asyncpg.CheckViolationError):
+        async with world.conn.transaction():
+            await world.entry(t, world.ins_w, -300, 700)
+            await world.entry(t, world.cli_w, 300, 300)
+    async with world.conn.transaction():
+        f = await world.txn("top_up", f"tu:{uuid.uuid4()}", 500)
+        await world.entry(f, world.ext_w, -500, await world.balance(world.ext_w) - 500)
+        await world.entry(f, world.cli_w, 500, 500)
+    t = await _approved_payout_txn(world)  # wrong direction: the client wallet is debited
+    with pytest.raises(asyncpg.CheckViolationError):
+        async with world.conn.transaction():
+            await world.entry(t, world.cli_w, -400, 100)
+            await world.entry(t, world.ins_w, 400, await world.balance(world.ins_w) + 400)
+    t = await _approved_payout_txn(world)  # a third leg
+    with pytest.raises(asyncpg.CheckViolationError):
+        async with world.conn.transaction():
+            await world.entry(t, world.ins_w, -400, 600)
+            await world.entry(t, world.cli_w, 300, 800)
+            await world.entry(t, world.cli_w, 100, 900)
+    other = await _new_client(world)  # credited client is not the one the txn names
+    c = str(uuid.uuid4())
+    seq = await _approval(world.conn, world.cur, c, 400, "claim.approved")
+    named = uuid.UUID(
+        str(
+            await world.conn.fetchval(
+                "insert into wallet_txns (kind, idempotency_key, amount_minor, currency,"
+                " trigger_event_seq, trigger_ref, client_id) values ('payout', $1, 400, $2, $3,"
+                " $4::jsonb, $5) returning id",
+                f"payout:{c}",
+                world.cur,
+                seq,
+                json.dumps({"claim_id": c}),
+                other,
+            )
+        )
+    )
+    with pytest.raises(asyncpg.CheckViolationError):
+        async with world.conn.transaction():
+            await world.entry(named, world.ins_w, -400, 600)
+            await world.entry(named, world.cli_w, 400, 900)
+
+
+async def test_tenant_columns_come_from_the_wallet(world: World) -> None:
+    other = await _new_client(world)
+    async with world.conn.transaction():
+        t = await world.txn("funding", f"fund:{uuid.uuid4()}", 100)
+        for wallet, amt in ((world.ext_w, -100), (world.ins_w, 100)):
+            await world.conn.execute(
+                "insert into ledger_entries (txn_id, wallet_id, amount_minor, currency,"
+                " balance_after_minor, client_id) values ($1,$2,$3,'" + world.cur + "',$3,$4)",
+                t,
+                wallet,
+                amt,
+                other,
+            )
+    rows = await world.conn.fetch(
+        "select wallet_id, client_id, insurer_id from ledger_entries where txn_id=$1", t
+    )
+    by_wallet = {r["wallet_id"]: r for r in rows}
+    assert by_wallet[world.ext_w]["client_id"] is None
+    assert by_wallet[world.ins_w]["client_id"] is None
+    assert by_wallet[world.ins_w]["insurer_id"] == world.ins

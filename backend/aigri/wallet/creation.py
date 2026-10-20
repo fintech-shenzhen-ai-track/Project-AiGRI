@@ -4,9 +4,9 @@
 ``create_insurer_wallet`` when an Insurer is created. Both are idempotent: asking twice for the
 same owner and currency returns the same wallet and writes one ``wallet.created`` entry.
 
-``WalletService`` is the real implementation. It needs a connection whose session may write wallet
-rows (the wallet module posts under the ``superadmin`` database role setting, see migration 0012),
-the partner adapter, and an audit writer. ``AuditPort`` stands in for ``core.audit`` until 01 phase
+``WalletService`` is the real implementation. It runs in the caller's own tenant session: the
+tenant policy lets a session create its own wallet, so no elevated role is involved. It also needs
+the partner adapter and an audit writer. ``AuditPort`` stands in for ``core.audit`` until 01 phase
 B part 2 lands; wire the real writer in then.
 """
 
