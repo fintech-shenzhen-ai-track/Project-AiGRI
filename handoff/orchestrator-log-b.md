@@ -4,11 +4,9 @@ Run settings: SCOPE = lane B (03, 06, 07, 09, 11, 13, 14, 17, 18) · MAX_IMPLEME
 
 ## Waiting for now (2026-10-20)
 
-**C01 is not ticked on `origin/main`.** Lane A's T-01.02 (`make up` healthy) fails because the `minio/minio` image cannot be pulled (R-005, open, needs a person to confirm default (a): build MinIO from source). Developer A must resolve R-005, pass T-01.02 and tick C01. Until then: no shared stack runs, so lane B checks that need the full stack stay unticked. Also waiting on C02 (`format-cases.json`, T-01.10) and C03 (auth endpoints, T-01.15) from 01 phase B, which has not started.
+**C01 is not ticked on `origin/main`** (lane A, R-005 MinIO image). Stack-dependent checks stay open until it lands. Also waiting on C02 (T-01.10) and C03 (T-01.15) from 01 phase B.
 
-**Dispatch failed (2026-10-20):** the implementer's automatic worktree is refused because this session was started from the `documents` path (lower case) while git resolves `Documents` (capital D). The agent definition forces `isolation: worktree`, so it fails every time. Needs a person: restart Claude Code from `C:/Users/Desirre Barbosa/Documents/4th Yr 1st Sem/side quest/aigri/repository/aigri` (capital D) and resume. Worktree `.claude/worktrees/03-ui-shell-pa` on `feat/03-ui-shell-pa` was pre-created and has no commits; remove it (`git worktree remove .claude/worktrees/03-ui-shell-pa && git branch -d feat/03-ui-shell-pa`) before re-dispatching.
-
-**Override (2026-10-20, by the person running lane B):** 03 phase A is dispatched before C01 is ticked, because it is frontend only and does not need MinIO. Stack-dependent checks stay open until C01 lands.
+**Resumed (2026-10-20)** from the capital-D `Documents` path; the worktree casing problem is gone. Removed the empty stale worktree `03-ui-shell-pa` and branch `feat/03-ui-shell-pa` (no commits). Re-dispatched 03 phase A under the person's override (frontend only, does not need MinIO).
 
 ## Pause summary (2026-10-20, lane B start: nothing dispatched)
 
@@ -18,11 +16,11 @@ Housekeeping for a person: local `main` has two unpushed commits (`2cdaa31` and 
 
 ## Status
 
-Wave 0, before M1. 03 phase A approved to start (gate overridden) but NOT running: dispatch fails on path casing and needs a restart from the `Documents` path. Nothing merged. Waiting for C01 on `origin/main` (lane A, R-005).
+Wave 0, before M1. 03 phase A running (gate on C01 overridden by the person). Nothing merged. Waiting for C01 on `origin/main` (lane A, R-005).
 
 ## Running
 
-(none; the 03 phase A dispatch failed, see top)
+- 03 phase A (T-03.01–T-03.05, delivers C04) · `feat/03-ui-shell-pa` (harness branch `worktree-agent-a067ce0b3c6226b23`) · `.claude/worktrees/agent-a067ce0b3c6226b23` · 2026-10-20
 
 ## Merged
 
@@ -43,7 +41,7 @@ Wave 0, before M1. 03 phase A approved to start (gate overridden) but NOT runnin
 
 ## Waiting on people
 
-- Restart Claude Code from the `Documents` (capital D) path so implementer worktrees work · developer B · then resume from this log
+- (resolved 2026-10-20) Restarted from the `Documents` path; worktrees work
 - C01 (T-01.02 `make up` healthy) · developer A · resolve R-005 (MinIO image), finish 01 phase A checks, tick C01 on `origin/main`
 - Native PostgreSQL services hold localhost:5432 (from the lane A log) · developer A · stop them or remap the compose `db` port
 - (resolved 2026-10-20) Docker installed and running; GNU make installed; pnpm 12.14.0, Node v24.10.0
