@@ -4,7 +4,7 @@
 
 - [x] **T-02.01** `gateway.registry` and `Tool` model; registry loader; empty `tools.py` stubs in every module folder with the tool names and tiers from `tools-and-tiers.md`. FR-02.1. Done when: the parity test passes.
 - [x] **T-02.02** `gateway.tags` (`Tagged[T]`, origins, propagation, readers). FR-02.6. Test first with property tests.
-- [ ] **T-02.03** `gate(...)` FastAPI dependency and the router-graph test. FR-02.2, US-02.1. Done when: a deliberately ungated test route makes the test fail.
+- [x] **T-02.03** `gate(...)` FastAPI dependency and the router-graph test. FR-02.2, US-02.1. Done when: a deliberately ungated test route makes the test fail.
 
 ## Phase B: enforcement
 
