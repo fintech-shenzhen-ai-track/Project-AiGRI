@@ -15,7 +15,6 @@ import subprocess
 import sys
 from collections.abc import Callable
 from dataclasses import dataclass, field
-from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -55,12 +54,9 @@ class SuiteContext:
 
 
 def _utc_now() -> str:
-    try:
-        from aigri.core.clock import now
+    from aigri.core.clock import now
 
-        return now().strftime("%Y-%m-%dT%H:%M:%SZ")
-    except ImportError:  # pragma: no cover
-        return datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
+    return now().strftime("%Y-%m-%dT%H:%M:%SZ")
 
 
 def git_short_hash() -> str:
