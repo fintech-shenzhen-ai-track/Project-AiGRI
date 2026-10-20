@@ -12,23 +12,28 @@ Paused because PAUSE_AT = every-merge. 01 phase A's code is merged (`e8d86f3`); 
 
 ## Status
 
-Wave 0, before M1. Nothing running. 01 phase A merged with T-01.02 and T-01.03 open (Docker down). Next once main is verified with the stack: 01 phase B and 05 phase A in parallel (05 A depends only on 01 A), then 16 (bench runner, C24) as a third slot.
+Wave 0, before M1. Resumed 2026-10-20 after PR #1 (lane A) and PR #2 (lane B, 03 phase A, C04) merged into `main`; synced `origin/main` into `lane/a` (no conflicts, no compose or migration changes); `make lint` and `REQUIRE_DB=1 make test` green on `lane/a` (10 passed; frontend halves skipped, no pnpm). C01 still unticked: T-01.02 (`make up`) blocked on R-005. Running: 01 phase A finish (T-01.02 via R-005 default (a) + R-009 default (a); tick T-01.03), 05 phase A (C06), 16 T-16.01 (C24). Plan: when 01 A finish is approved, the orchestrator brings up the shared stack from that branch's compose file (project `aigri`); if all healthy, the implementer ticks T-01.02, then merge and tick C01, then dispatch 02 phase A (C07) and 01 phase B in parallel.
+
 
 ## Running
 
-(none)
+- 01 phase A finish (T-01.02, tick T-01.03) · `feat/01-foundation-pa` · worktree: agent-managed (agent a72203db3fdfab5b6) · 2026-10-20
+- 05 phase A (T-05.01–T-05.02, C06) · `feat/05-rules-engine-pa` · agent ad5abbe8d9f981c4d · 2026-10-20
+- 16 all, this round T-16.01 (C24) · `feat/16-bench-pall` · agent a856f01b4b760f7f8 · 2026-10-20
 
 ## Merged
 
+- Lane PR #2 (lane B: 03 phase A, C04) merged into `main` 2026-10-20; synced into `lane/a`.
+- Lane PR #1 (lane A: 01 phase A, C01 pending) merged into `main` 2026-10-20.
 - 01 phase A · `e8d86f3` · ticked T-01.01, T-01.04 (T-01.02, T-01.03 open: need `make up` and `REQUIRE_DB=1 make test` on main) · C01 not yet confirmed. One fix round (T-01.02 was ticked on `docker compose config` only).
 
 ## Fakes to swap
 
-(none)
+(expected from the running work orders: 05 A local `core.money`/`core.hashing` interfaces → swap when 01 phase B merges; 16 fake `core.audit.export` → swap when T-01.06 merges. Confirm locations from the reports.)
 
 ## Blocked
 
-- C01 confirmation (T-01.02, T-01.03) · Docker daemon down; first commit of 01 phase B ticks them once the orchestrator's checks pass on main · since 2026-10-20
+- C01 confirmation (T-01.02) · R-005 (MinIO image); being fixed by 01 A finish · since 2026-10-20
 
 ## Queue (lane A, in priority order once C01 is confirmed)
 
@@ -47,7 +52,8 @@ Lane B contracts this lane needs will not be built in this run (out of scope): C
 
 ## Waiting on people
 
-- Docker daemon not running · developer A · start Docker Desktop (blocks `make up`, T-01.02, T-01.03, C01, and every later work order)
+- R-005 MinIO image · developer A · confirm default (a) (build from source, applied in 01 A finish) or pick another option
+- Model size · developer A · machine has 16 GB RAM; D-10 suggests `LLM_MODEL=qwen3:8b` in `.env` on small machines (not changed by the orchestrator)
 - A native Postgres (not this project's) listens on localhost:5432 · developer A · stop it or remap the compose `db` port, so `make up` and the test DB work
 - `pnpm` not installed (Node is v26, AGENTS.md says Node 24 LTS) · developer A · install pnpm (and Node 24 if the pin matters); until then the frontend halves of `make lint`, `make test`, `make openapi` are skipped
 - T-15.01 fixture transcription (money tables) · accounting teammate · `seed/fixtures/*.yaml` written and reviewed
@@ -61,6 +67,10 @@ Lane B contracts this lane needs will not be built in this run (out of scope): C
 
 ## Raised
 
+- R-009 · (lane B) portals service needs `API_INTERNAL_URL` and `SANDBOX`; default (a) applied in 01 A finish
+- R-008 · (lane B) format-cases.json wire shape; default (a) `{id, kind, pack, args[], expected}`; tell 01 phase B (T-01.10)
+- R-007 · (lane B) compact-money decimals in pack schema; default (a) edits `specs/00-shared/schemas/country-pack.schema.json` (team file); needs a person before T-01.10
+- R-006 · (lane B) `middleware.ts` vs `proxy.ts`; lane B
 - R-005 · `minio/minio` image not pullable, `make up` fails; default (a): build MinIO from source
 
 - R-004 · pgvector missing from `postgis/postgis:16-3.4` for `record_clauses.embedding`; no default; decide before 04 Phase B
