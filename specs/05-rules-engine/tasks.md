@@ -4,7 +4,7 @@ No dependencies beyond `core.money` and `core.hashing` (feature 01, Phase B). If
 
 ## Phase A: contracts
 
-- [ ] **T-05.01** `rules/model.py` dataclasses and `PolicyRecordView.from_body(dict)` with schema validation. FR-05.9.
+- [x] **T-05.01** `rules/model.py` dataclasses and `PolicyRecordView.from_body(dict)` with schema validation. FR-05.9.
 - [ ] **T-05.02** Write all gold tests from the plan (failing). Test first.
 
 ## Phase B: functions
