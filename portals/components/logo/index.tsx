@@ -1,4 +1,4 @@
-import type { CSSProperties } from "react";
+import type { CSSProperties, Ref } from "react";
 
 // Inline SVG logos from system-preview/PLAN.md 4.6. Never an <img src=".svg">. No insurer logos exist (Constitution X.2).
 
@@ -62,16 +62,20 @@ export function LogoSymbol({
   sunRise = false,
   className,
   title,
+  ref,
 }: {
   size?: number;
   sunRise?: boolean;
   className?: string;
   title?: string;
+  /** For the reveal observer (SunRiseMark). */
+  ref?: Ref<SVGSVGElement>;
 }) {
   const rowClass = sunRise ? "sr-row" : undefined;
   const cls = [sunRise ? "sun-rise rv" : null, className].filter(Boolean).join(" ") || undefined;
   return (
     <svg
+      ref={ref}
       viewBox="0 0 256 256"
       width={size}
       height={size}

@@ -47,3 +47,8 @@ export function useReveal<T extends Element = HTMLElement>(): [RefCallback<T>, b
   }, []);
   return [ref, seen];
 }
+
+/** For tests: forget the shared observer so a test can install its own IntersectionObserver. */
+export function resetRevealObserver(): void {
+  observer = null;
+}
