@@ -2,9 +2,9 @@
 
 Run settings: SCOPE = lane B (03, 06, 07, 09, 11, 13, 14, 17, 18) · MAX_IMPLEMENTERS = 3 · MAX_FIX_ROUNDS = 2 · PAUSE_AT = every-merge · LANE_BRANCH = lane/b (created from `origin/main` at `c75b9a4`, 2026-10-20). Lane B runs on its own log here, not in the lane A log.
 
-## Waiting (2026-10-20)
+## Running (2026-10-20)
 
-The person approved 03 phase C (override of the C01 gate), to start once PR #3 is merged into `main`. Waiting for developer A to review PR #3.
+PR #3 merged into `main` (`2c1f742`) and synced into `lane/b` (no product changes). 03 phase C dispatched under the person's override of the C01 gate; sign-in, me, clock, badges, inbox and push subscription are built against marked C03 stand-ins.
 
 ## Pause summary (2026-10-20, after 03 phase B merge)
 
@@ -28,14 +28,15 @@ Housekeeping for a person: local `main` has two unpushed commits (`2cdaa31` and 
 
 ## Status
 
-Wave 0, before M1. 03 phases A and B merged (C04, C05). PR #3 open to `main`, waiting for review. 03 phase C approved by the person to start after PR #3 merges. C01 still not ticked on `origin/main`. Waiting for C01 on `origin/main` (lane A, R-005).
+Wave 0, before M1. 03 phases A and B merged (C04, C05). C04 and C05 on `main` via PRs #2 and #3. 03 phase C running. C01 still not ticked on `origin/main`. Waiting for C01 on `origin/main` (lane A, R-005).
 
 ## Running
 
-(none)
+- 03 phase C (T-03.15–T-03.19) · `feat/03-ui-shell-pc` · `.claude/worktrees/agent-af8150a9f1b13ba09` · 2026-10-20
 
 ## Merged
 
+- Lane merge PR #3 (`lane/b` → `main`, `2c1f742`) · C05 reached `main`
 - 03 phase B · `70f011b` · T-03.06–T-03.14 · C05
 - Lane merge PR #2 (`lane/b` → `main`, `29b606e`) · C04 reached `main`
 - 03 phase A · `fb038da` · T-03.01, T-03.02, T-03.03, T-03.04 (T-03.05 built, unticked: C02 stand-in) · C04
@@ -51,7 +52,8 @@ Wave 0, before M1. 03 phases A and B merged (C04, C05). PR #3 open to `main`, wa
 
 - (overridden 2026-10-20) 03 phase A gate on C01; dispatched anyway, merged
 - (overridden 2026-10-20) 03 phase B gate on C01; dispatched, merged
-- 03 phase C/D and other features: lane gate on C01 (section 10); need the person's override or C01 ticked
+- (overridden 2026-10-20) 03 phase C gate on C01; dispatched
+- 03 phase D and other features: lane gate on C01 (section 10); need the person's override or C01 ticked
 
 ## Queue (once C01 is ticked)
 
