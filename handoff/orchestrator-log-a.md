@@ -17,9 +17,10 @@ Wave 0, before M1. Resumed again 2026-10-20 (new orchestrator session; the three
 
 ## Running
 
-- 01 phase A finish (T-01.02, tick T-01.03) · `feat/01-foundation-pa` · worktree: agent-managed (agent a72203db3fdfab5b6) · 2026-10-20
-- 05 phase A (T-05.01–T-05.02, C06) · `feat/05-rules-engine-pa` · agent ad5abbe8d9f981c4d · 2026-10-20
-- 16 all, this round T-16.01 (C24) · `feat/16-bench-pall` · agent a856f01b4b760f7f8 · 2026-10-20
+- 02 phase A (T-02.01–T-02.03, C07) · `feat/02-gateway-agent-pa` · new worktree · 2026-10-20
+- 05 phase A fix round 1 (reviewer: two invented fixture clause texts in `backend/tests/rules/records.py`) · `feat/05-rules-engine-pa` · new worktree · 2026-10-20
+- 16 T-16.01 fix round 1 (reviewer: `datetime.now` fallback in `bench/runner.py`) · `feat/16-bench-pall` · new worktree · 2026-10-20
+- 01 phase A finish · `feat/01-foundation-pa` · `.claude/worktrees/agent-a72203db3fdfab5b6` · static review running; live `make up` blocked on disk space (see Blocked). Plan: merge with T-01.02 open if approved, so 01 B can start; tick T-01.02 later in a small work order once `make up` is healthy.
 
 ## Merged
 
@@ -30,10 +31,13 @@ Wave 0, before M1. Resumed again 2026-10-20 (new orchestrator session; the three
 
 ## Fakes to swap
 
-(expected from the running work orders: 05 A local `core.money`/`core.hashing` interfaces → swap when 01 phase B merges; 16 fake `core.audit.export` → swap when T-01.06 merges. Confirm locations from the reports.)
+- `core.money` · `backend/aigri/rules/_compat.py` (05 A) · swap when T-01.08 merges (01 B), delete the file
+- `core.audit.export` · `bench/audit_chain.py` `UnavailableSource`/`FakeAuditSource` (16) · swap when T-01.06 merges; needs `export_rows(from_ts, to_ts)` or adapter change
+- `core.hashing` · `bench/audit_chain.py` local `canonical_json`/`entry_hash`/`verify_rows` (16) · swap when T-01.05 merges, delete the copy
 
 ## Blocked
 
+- T-01.02 live check (`make up`) · host root disk has 2.4 GiB free; Docker failed with an I/O error writing the 2.6 GB Ollama layer · since 2026-10-20
 - C01 confirmation (T-01.02) · R-005 (MinIO image); being fixed by 01 A finish · since 2026-10-20
 
 ## Queue (lane A, in priority order once C01 is confirmed)
@@ -53,6 +57,7 @@ Lane B contracts this lane needs will not be built in this run (out of scope): C
 
 ## Waiting on people
 
+- Disk space for Docker · developer A · host `/` has 2.4 GiB free (Docker Desktop's disk lives there); free space or move Docker's disk image to `/Volumes/RolfStuffs` (50 GiB free). The Ollama image plus `qwen3` models need well over 10 GB. Unblocks T-01.02 and C01.
 - R-005 MinIO image · developer A · confirm default (a) (build from source, applied in 01 A finish) or pick another option
 - Model size · developer A · machine has 16 GB RAM; D-10 suggests `LLM_MODEL=qwen3:8b` in `.env` on small machines (not changed by the orchestrator)
 - A native Postgres (not this project's) listens on localhost:5432 · developer A · stop it or remap the compose `db` port, so `make up` and the test DB work
