@@ -5,7 +5,7 @@ Legend: `[P]` can run in parallel with other `[P]` tasks in the same phase. Each
 ## Phase A: contracts (merge first; other features start after this phase)
 
 - [x] **T-01.01** Monorepo skeleton: `backend/` (uv project), `portals/` placeholder, `mock_services/`, `packs/` (files already present), `seed/`, `bench/`, `Makefile` with all targets (bench stub). FR-01.1. Done when: `make lint` and `make test` run green on the empty skeleton.
-- [ ] **T-01.02** `docker-compose.yml` with all services and health checks; `.env.example` documenting every key in plan "Config keys". FR-01.2, FR-01.3. Done when: `make up` brings every container to healthy (portals can serve a placeholder page).
+- [x] **T-01.02** `docker-compose.yml` with all services and health checks; `.env.example` documenting every key in plan "Config keys". FR-01.2, FR-01.3. Done when: `make up` brings every container to healthy (portals can serve a placeholder page).
 - [ ] **T-01.03** Alembic setup with owner and app roles; migration `0001_core` creating identity, platform-core tables from `data-model.md` and the `apply_tenant_policy` helper. FR-01.7, FR-01.8. Done when: `alembic upgrade head` on an empty DB succeeds and `aigri_app` cannot `UPDATE audit_events`.
 - [ ] **T-01.04** API app shell: error format, request id, `GET /api/v1/health`, router registry file. FR-01.15, API conventions. Done when: `make openapi` produces `openapi.json` with the health route.
 

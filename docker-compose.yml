@@ -1,0 +1,192 @@
+name: aigri
+
+x-backend-env: &backend-env
+  DATABASE_URL: ${DATABASE_URL}
+  DATABASE_OWNER_URL: ${DATABASE_OWNER_URL}
+  SANDBOX: ${SANDBOX:-false}
+  CLOCK_MODE: ${CLOCK_MODE:-real}
+  DEFAULT_PACK: ${DEFAULT_PACK:-ID}
+  SESSION_SECRET: ${SESSION_SECRET}
+  DEV_TOKEN: ${DEV_TOKEN:-}
+  MINIO_ENDPOINT: ${MINIO_ENDPOINT:-http://minio:9000}
+  MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
+  MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+  MINIO_BUCKET: ${MINIO_BUCKET:-aigri-evidence}
+  MOCK_SMS_URL: ${MOCK_SMS_URL:-http://mock-sms:8000}
+  MOCK_EMAIL_URL: ${MOCK_EMAIL_URL:-http://mock-email:8000}
+  MOCK_WALLET_URL: ${MOCK_WALLET_URL:-http://mock-wallet:8000}
+  WORKER_URL: ${WORKER_URL:-http://worker:8001}
+  LLM_PROVIDER: ${LLM_PROVIDER:-ollama}
+  LLM_BASE_URL: ${LLM_BASE_URL:-http://ollama:11434}
+  LLM_MODEL: ${LLM_MODEL:-qwen3:14b}
+  LLM_VISION_MODEL: ${LLM_VISION_MODEL:-qwen3-vl:8b}
+  LLM_FALLBACK_PROVIDER: ${LLM_FALLBACK_PROVIDER:-}
+  LLM_FALLBACK_BASE_URL: ${LLM_FALLBACK_BASE_URL:-}
+  LLM_FALLBACK_MODEL: ${LLM_FALLBACK_MODEL:-}
+  LLM_FALLBACK_API_KEY: ${LLM_FALLBACK_API_KEY:-}
+  VAPID_PUBLIC_KEY: ${VAPID_PUBLIC_KEY:-}
+  VAPID_PRIVATE_KEY: ${VAPID_PRIVATE_KEY:-}
+  PHASH_MAX_DISTANCE: ${PHASH_MAX_DISTANCE:-8}
+  CURATION_THETA: ${CURATION_THETA:-0.50}
+  AIGRI_APP_PASSWORD: ${AIGRI_APP_PASSWORD:-aigri_app}
+
+services:
+  db:
+    image: postgis/postgis:16-3.4
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-aigri}
+      POSTGRES_USER: ${POSTGRES_USER:-aigri_owner}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-aigri_owner}
+    ports:
+      - "5432:5432"
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  ollama:
+    image: ollama/ollama:latest
+    environment:
+      LLM_MODEL: ${LLM_MODEL:-qwen3:14b}
+      LLM_VISION_MODEL: ${LLM_VISION_MODEL:-qwen3-vl:8b}
+    entrypoint: ["/bin/sh", "/docker/ollama-entrypoint.sh"]
+    volumes:
+      - ollama:/root/.ollama
+      - ./docker:/docker:ro
+    ports:
+      - "11434:11434"
+    healthcheck:
+      test: ["CMD", "/bin/sh", "/docker/ollama-health.sh"]
+      interval: 15s
+      timeout: 10s
+      retries: 240
+      start_period: 60s
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ACCESS_KEY}
+      MINIO_ROOT_PASSWORD: ${MINIO_SECRET_KEY}
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - miniodata:/data
+    healthcheck:
+      test: ["CMD", "mc", "ready", "local"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  migrate:
+    build:
+      context: ./backend
+      additional_contexts:
+        packs: ./packs
+    command: ["alembic", "upgrade", "head"]
+    environment: *backend-env
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  api:
+    build:
+      context: ./backend
+      additional_contexts:
+        packs: ./packs
+    command: ["uvicorn", "aigri.api.app:app", "--host", "0.0.0.0", "--port", "8000"]
+    environment: *backend-env
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health', timeout=5)"]
+      interval: 10s
+      timeout: 10s
+      retries: 20
+      start_period: 10s
+
+  worker:
+    build:
+      context: ./backend
+      additional_contexts:
+        packs: ./packs
+    command: ["python", "-m", "aigri.workers.runner"]
+    environment: *backend-env
+    depends_on:
+      db:
+        condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8001/health', timeout=5)"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 10s
+
+  portals:
+    build: ./portals
+    environment:
+      NEXT_PUBLIC_API_BASE: ${NEXT_PUBLIC_API_BASE:-http://localhost:8000/api/v1}
+    ports:
+      - "3000:3000"
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+  mock-sms:
+    build:
+      context: ./mock_services
+      args:
+        SERVICE: sms
+    ports:
+      - "8101:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=5)"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  mock-email:
+    build:
+      context: ./mock_services
+      args:
+        SERVICE: email
+    ports:
+      - "8102:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=5)"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  mock-wallet:
+    build:
+      context: ./mock_services
+      args:
+        SERVICE: wallet
+    ports:
+      - "8103:8000"
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=5)"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  dbdata:
+  ollama:
+  miniodata:
