@@ -48,21 +48,23 @@ class World:
         seq: int | None = None,
         ref: dict[str, Any] | None = None,
         status: str = "posted",
+        parties: bool | None = None,
     ) -> uuid.UUID:
+        with_parties = kind == "payout" if parties is None else parties
         return uuid.UUID(
             str(
                 await self.conn.fetchval(
                     "insert into wallet_txns (kind, idempotency_key, amount_minor, currency,"
-                    " trigger_event_seq, trigger_ref, status) values ($1,$2,$3,'"
-                    + self.cur
-                    + "',$4,$5::jsonb,"
-                    " $6) returning id",
+                    " trigger_event_seq, trigger_ref, status, insurer_id, client_id)"
+                    " values ($1,$2,$3,'" + self.cur + "',$4,$5::jsonb, $6, $7, $8) returning id",
                     kind,
                     key,
                     amount,
                     seq,
                     json.dumps(ref or {}),
                     status,
+                    self.ins if with_parties else None,
+                    self.cli if with_parties else None,
                 )
             )
         )
@@ -279,13 +281,14 @@ async def test_payout_entries_must_match_amount_and_wallets(world: World) -> Non
         str(
             await world.conn.fetchval(
                 "insert into wallet_txns (kind, idempotency_key, amount_minor, currency,"
-                " trigger_event_seq, trigger_ref, client_id) values ('payout', $1, 400, $2, $3,"
-                " $4::jsonb, $5) returning id",
+                " trigger_event_seq, trigger_ref, client_id, insurer_id) values ('payout', $1, 400,"
+                " $2, $3, $4::jsonb, $5, $6) returning id",
                 f"payout:{c}",
                 world.cur,
                 seq,
                 json.dumps({"claim_id": c}),
                 other,
+                world.ins,
             )
         )
     )
@@ -315,3 +318,37 @@ async def test_tenant_columns_come_from_the_wallet(world: World) -> None:
     assert by_wallet[world.ext_w]["client_id"] is None
     assert by_wallet[world.ins_w]["client_id"] is None
     assert by_wallet[world.ins_w]["insurer_id"] == world.ins
+
+
+async def test_payout_must_name_insurer_and_client(world: World) -> None:
+    await _fund(world, 1000)
+    for ins, cli in ((None, world.cli), (world.ins, None), (None, None)):
+        c = str(uuid.uuid4())
+        seq = await _approval(world.conn, world.cur, c, 400, "claim.approved")
+        with pytest.raises(asyncpg.CheckViolationError):
+            async with world.conn.transaction():
+                t = uuid.UUID(
+                    str(
+                        await world.conn.fetchval(
+                            "insert into wallet_txns (kind, idempotency_key, amount_minor,"
+                            " currency, trigger_event_seq, trigger_ref, insurer_id, client_id)"
+                            " values ('payout', $1, 400, '" + world.cur + "', $2, $3::jsonb, $4,"
+                            " $5) returning id",
+                            f"payout:{c}",
+                            seq,
+                            json.dumps({"claim_id": c}),
+                            ins,
+                            cli,
+                        )
+                    )
+                )
+                await world.entry(t, world.ins_w, -400, 600)
+                await world.entry(t, world.cli_w, 400, 400)
+
+
+async def test_payout_to_external_needs_client_and_matching_insurer(world: World) -> None:
+    await _fund(world, 1000)
+    t = await _approved_payout_txn(world)  # parties set; rail credit to platform_external is fine
+    async with world.conn.transaction():
+        await world.entry(t, world.ins_w, -400, 600)
+        await world.entry(t, world.ext_w, 400, await world.balance(world.ext_w) + 400)

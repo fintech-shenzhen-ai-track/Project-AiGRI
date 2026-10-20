@@ -95,7 +95,9 @@ def upgrade() -> None:
           CONSTRAINT payout_needs_trigger CHECK (
             kind <> 'payout' OR status <> 'posted'
             OR (trigger_event_seq IS NOT NULL AND trigger_ref ? 'claim_id'
-                AND idempotency_key = 'payout:' || (trigger_ref ->> 'claim_id')))
+                AND idempotency_key = 'payout:' || (trigger_ref ->> 'claim_id'))),
+          CONSTRAINT payout_names_parties CHECK (
+            kind <> 'payout' OR (insurer_id IS NOT NULL AND client_id IS NOT NULL))
         )"""
     )
     op.execute(
@@ -199,11 +201,12 @@ def upgrade() -> None:
             -- client wallet (or the external rail account), in the txn currency
             SELECT count(*) FILTER (WHERE e.amount_minor = -t.amount_minor
                                       AND w.owner_type = 'insurer'
-                                      AND (t.insurer_id IS NULL OR w.insurer_id = t.insurer_id)),
+                                      AND w.insurer_id = t.insurer_id),
                    count(*) FILTER (WHERE e.amount_minor = t.amount_minor
                                       AND ((w.owner_type = 'client'
-                                            AND (t.client_id IS NULL OR w.client_id = t.client_id))
-                                           OR w.owner_type = 'platform_external'))
+                                            AND w.client_id = t.client_id)
+                                           OR (w.owner_type = 'platform_external'
+                                               AND t.client_id IS NOT NULL)))
               INTO debits, credits
               FROM ledger_entries e JOIN wallets w ON w.id = e.wallet_id
               WHERE e.txn_id = NEW.txn_id AND e.currency = t.currency;
@@ -237,6 +240,12 @@ def upgrade() -> None:
           IF NOT FOUND OR ev.action <> 'claim.approved' THEN
             RAISE EXCEPTION 'payout trigger seq % is not a claim.approved event',
               NEW.trigger_event_seq USING ERRCODE = 'check_violation';
+          END IF;
+          -- The audit row's own tenant columns, when set, must name the same parties.
+          IF (ev.insurer_id IS NOT NULL AND ev.insurer_id IS DISTINCT FROM NEW.insurer_id)
+             OR (ev.client_id IS NOT NULL AND ev.client_id IS DISTINCT FROM NEW.client_id) THEN
+            RAISE EXCEPTION 'payout parties differ from the approval event'
+              USING ERRCODE = 'check_violation';
           END IF;
           IF ev.object_id <> (NEW.trigger_ref ->> 'claim_id') THEN
             RAISE EXCEPTION 'payout approval is for another claim'
