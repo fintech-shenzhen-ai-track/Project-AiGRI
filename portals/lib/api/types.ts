@@ -4,6 +4,108 @@
  */
 
 export interface paths {
+    "/api/v1/client/wallet": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Wallet */
+        get: operations["get_wallet_api_v1_client_wallet_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/client/wallet/payout-accounts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Change Payout Account */
+        post: operations["change_payout_account_api_v1_client_wallet_payout_accounts_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/client/wallet/statement.csv": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Statement Csv */
+        get: operations["statement_csv_api_v1_client_wallet_statement_csv_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/client/wallet/top-up": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Top Up */
+        post: operations["top_up_api_v1_client_wallet_top_up_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/client/wallet/transactions": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Transactions */
+        get: operations["list_transactions_api_v1_client_wallet_transactions_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/client/wallet/withdrawals": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Withdraw */
+        post: operations["withdraw_api_v1_client_wallet_withdrawals_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/health": {
         parameters: {
             query?: never;
@@ -13,6 +115,108 @@ export interface paths {
         };
         /** Get Health */
         get: operations["get_health"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/insurer/wallet": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Wallet */
+        get: operations["get_wallet_api_v1_insurer_wallet_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/insurer/wallet/alert-level": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Set Alert Level */
+        put: operations["set_alert_level_api_v1_insurer_wallet_alert_level_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/insurer/wallet/funding": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Fund */
+        post: operations["fund_api_v1_insurer_wallet_funding_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/insurer/wallet/money-in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Money In */
+        get: operations["list_money_in_api_v1_insurer_wallet_money_in_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/insurer/wallet/payouts": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List Payouts */
+        get: operations["list_payouts_api_v1_insurer_wallet_payouts_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/insurer/wallet/reconciliation": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Reconciliation */
+        get: operations["reconciliation_api_v1_insurer_wallet_reconciliation_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -59,6 +263,13 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AlertLevelIn */
+        AlertLevelIn: {
+            /** Currency */
+            currency: string;
+            /** Low Balance Alert Minor */
+            low_balance_alert_minor: number;
+        };
         /** AreaUnit */
         AreaUnit: {
             /**
@@ -70,6 +281,24 @@ export interface components {
             label: string;
             /** Per Hectare */
             per_hectare: number;
+        };
+        /** ClientWalletOut */
+        ClientWalletOut: {
+            /** Accounts */
+            accounts: components["schemas"]["PayoutAccountOut"][];
+            balance: components["schemas"]["Money"];
+            /** Country Label */
+            country_label: string;
+            payout_arrived?: components["schemas"]["TxnOut"] | null;
+            previous_balance?: components["schemas"]["Money"] | null;
+            /**
+             * Sandbox
+             * @default true
+             */
+            sandbox: boolean;
+            season: components["schemas"]["SeasonSummary"];
+            /** Wallet Id */
+            wallet_id: string;
         };
         /** CompactUnit */
         CompactUnit: {
@@ -125,6 +354,24 @@ export interface components {
             /** Thousands */
             thousands: string;
         };
+        /** FundingIn */
+        FundingIn: {
+            /** Amount Minor */
+            amount_minor: number;
+            /** Currency */
+            currency: string;
+        };
+        /** FundingOut */
+        FundingOut: {
+            balance: components["schemas"]["Money"];
+            /**
+             * Replayed
+             * @default false
+             */
+            replayed: boolean;
+            /** Txn Id */
+            txn_id: string;
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
@@ -155,6 +402,109 @@ export interface components {
              * @enum {string}
              */
             status: "ok" | "degraded";
+        };
+        /** InsurerPayoutOut */
+        InsurerPayoutOut: {
+            amount: components["schemas"]["Money"];
+            /** Claim Id */
+            claim_id: string;
+            /** Claim No */
+            claim_no: string;
+            /** Client Name */
+            client_name: string;
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /** Payout No */
+            payout_no: string;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "posted" | "failed" | "pending_funds";
+            /** Trigger Event Seq */
+            trigger_event_seq: number | null;
+            /** Trigger Label */
+            trigger_label: string;
+            /** Txn Id */
+            txn_id: string;
+        };
+        /** InsurerPayoutPage */
+        InsurerPayoutPage: {
+            /** Items */
+            items: components["schemas"]["InsurerPayoutOut"][];
+            /** Next Cursor */
+            next_cursor?: string | null;
+        };
+        /** InsurerWalletOut */
+        InsurerWalletOut: {
+            balance: components["schemas"]["Money"];
+            /** Integrity */
+            integrity: components["schemas"]["IntegrityCheck"][];
+            low_balance_alert?: components["schemas"]["Money"] | null;
+            money_in_this_month: components["schemas"]["Money"];
+            payouts_this_month: components["schemas"]["Money"];
+            pending_funds: components["schemas"]["Money"];
+            /**
+             * Sandbox
+             * @default true
+             */
+            sandbox: boolean;
+            /** Wallet Id */
+            wallet_id: string;
+        };
+        /** IntegrityCheck */
+        IntegrityCheck: {
+            /**
+             * Checked At
+             * Format: date-time
+             */
+            checked_at: string;
+            /**
+             * Code
+             * @enum {string}
+             */
+            code: "payouts_without_approval" | "double_payouts" | "ledger_audit_mismatch" | "account_change_before_payout";
+            /** Count */
+            count: number;
+            /** Label */
+            label: string;
+            /** Ok */
+            ok: boolean;
+        };
+        /** Money */
+        Money: {
+            /** Amount Minor */
+            amount_minor: number;
+            /** Currency */
+            currency: string;
+        };
+        /** MoneyInOut */
+        MoneyInOut: {
+            amount: components["schemas"]["Money"];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "funding" | "escrow_release";
+            /** Title */
+            title: string;
+            /** Txn Id */
+            txn_id: string;
+        };
+        /** MoneyInPage */
+        MoneyInPage: {
+            /** Items */
+            items: components["schemas"]["MoneyInOut"][];
+            /** Next Cursor */
+            next_cursor?: string | null;
         };
         /** Pack */
         Pack: {
@@ -206,6 +556,64 @@ export interface components {
             /** Name */
             name: string;
         };
+        /** PayoutAccountChangeIn */
+        PayoutAccountChangeIn: {
+            /** Account Name */
+            account_name: string;
+            /** Account Number */
+            account_number: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "bank" | "ewallet";
+            /**
+             * Make Default
+             * @default false
+             */
+            make_default: boolean;
+            /** Otp Code */
+            otp_code: string;
+            /** Provider */
+            provider: string;
+            /** Rail */
+            rail: string;
+        };
+        /** PayoutAccountChangeOut */
+        PayoutAccountChangeOut: {
+            account: components["schemas"]["PayoutAccountOut"];
+            /**
+             * Hold Until
+             * Format: date-time
+             */
+            hold_until: string;
+        };
+        /** PayoutAccountOut */
+        PayoutAccountOut: {
+            /** Account Name */
+            account_name: string;
+            /** Changed At */
+            changed_at?: string | null;
+            /** Hold Until */
+            hold_until?: string | null;
+            /** Id */
+            id: string;
+            /** Is Default */
+            is_default: boolean;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "bank" | "ewallet";
+            /** Masked Number */
+            masked_number: string;
+            /** Provider */
+            provider: string;
+            /** Rail */
+            rail: string;
+            /** Verified */
+            verified: boolean;
+        };
         /** PublicScheme */
         PublicScheme: {
             /** Code */
@@ -214,6 +622,39 @@ export interface components {
             gloss: string;
             /** Name */
             name: string;
+        };
+        /** ReconciliationLine */
+        ReconciliationLine: {
+            amount: components["schemas"]["Money"];
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "premium" | "payout" | "refund";
+            /** Ref Id */
+            ref_id: string;
+            /**
+             * Ref Type
+             * @enum {string}
+             */
+            ref_type: "policy" | "claim";
+            running_balance: components["schemas"]["Money"];
+            /**
+             * When
+             * Format: date-time
+             */
+            when: string;
+        };
+        /** ReconciliationOut */
+        ReconciliationOut: {
+            /** Lines */
+            lines: components["schemas"]["ReconciliationLine"][];
+            payouts_out: components["schemas"]["Money"];
+            premiums_in: components["schemas"]["Money"];
+            /** Product */
+            product: string | null;
+            refunds: components["schemas"]["Money"];
+            running_balance: components["schemas"]["Money"];
         };
         /** Region */
         Region: {
@@ -236,6 +677,12 @@ export interface components {
             /** Short */
             short: string;
         };
+        /** SeasonSummary */
+        SeasonSummary: {
+            payouts_received: components["schemas"]["Money"];
+            premiums_paid: components["schemas"]["Money"];
+            withdrawn: components["schemas"]["Money"];
+        };
         /** SetupStep */
         SetupStep: {
             /** Done */
@@ -255,6 +702,53 @@ export interface components {
             /** Label */
             label: string;
         };
+        /** TopUpIn */
+        TopUpIn: {
+            /** Amount Minor */
+            amount_minor: number;
+            /** Currency */
+            currency: string;
+        };
+        /** TxnOut */
+        TxnOut: {
+            amount: components["schemas"]["Money"];
+            balance_after: components["schemas"]["Money"];
+            /**
+             * Created At
+             * Format: date-time
+             */
+            created_at: string;
+            /**
+             * Direction
+             * @enum {string}
+             */
+            direction: "in" | "out";
+            /** Id */
+            id: string;
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "top_up" | "premium" | "escrow_release" | "refund" | "payout" | "withdrawal" | "funding";
+            /** Ref Id */
+            ref_id?: string | null;
+            /** Ref Type */
+            ref_type?: ("policy" | "claim" | "purchase") | null;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "posted" | "failed" | "pending_funds";
+            /** Title */
+            title: string;
+        };
+        /** TxnPage */
+        TxnPage: {
+            /** Items */
+            items: components["schemas"]["TxnOut"][];
+            /** Next Cursor */
+            next_cursor?: string | null;
+        };
         /** ValidationError */
         ValidationError: {
             /** Context */
@@ -268,6 +762,34 @@ export interface components {
             /** Error Type */
             type: string;
         };
+        /** WithdrawalIn */
+        WithdrawalIn: {
+            /** Amount Minor */
+            amount_minor: number;
+            /** Currency */
+            currency: string;
+            /** Payout Account Id */
+            payout_account_id: string;
+        };
+        /** WithdrawalOut */
+        WithdrawalOut: {
+            amount: components["schemas"]["Money"];
+            fee: components["schemas"]["Money"];
+            /** Rail */
+            rail: string;
+            /**
+             * Replayed
+             * @default false
+             */
+            replayed: boolean;
+            /**
+             * Status
+             * @enum {string}
+             */
+            status: "posted" | "failed";
+            /** Txn Id */
+            txn_id: string;
+        };
     };
     responses: never;
     parameters: never;
@@ -277,6 +799,178 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    get_wallet_api_v1_client_wallet_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ClientWalletOut"];
+                };
+            };
+        };
+    };
+    change_payout_account_api_v1_client_wallet_payout_accounts_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PayoutAccountChangeIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PayoutAccountChangeOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    statement_csv_api_v1_client_wallet_statement_csv_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    top_up_api_v1_client_wallet_top_up_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TopUpIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TxnOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_transactions_api_v1_client_wallet_transactions_get: {
+        parameters: {
+            query?: {
+                filter?: "all" | "in" | "out";
+                cursor?: string | null;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TxnPage"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    withdraw_api_v1_client_wallet_withdrawals_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["WithdrawalIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["WithdrawalOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     get_health: {
         parameters: {
             query?: never;
@@ -293,6 +987,187 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HealthResponse"];
+                };
+            };
+        };
+    };
+    get_wallet_api_v1_insurer_wallet_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InsurerWalletOut"];
+                };
+            };
+        };
+    };
+    set_alert_level_api_v1_insurer_wallet_alert_level_put: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AlertLevelIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InsurerWalletOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    fund_api_v1_insurer_wallet_funding_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["FundingIn"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["FundingOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_money_in_api_v1_insurer_wallet_money_in_get: {
+        parameters: {
+            query?: {
+                cursor?: string | null;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MoneyInPage"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    list_payouts_api_v1_insurer_wallet_payouts_get: {
+        parameters: {
+            query?: {
+                cursor?: string | null;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InsurerPayoutPage"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    reconciliation_api_v1_insurer_wallet_reconciliation_get: {
+        parameters: {
+            query?: {
+                product?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ReconciliationOut"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };
