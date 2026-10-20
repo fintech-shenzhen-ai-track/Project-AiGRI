@@ -16,11 +16,13 @@ Paused because PAUSE_AT = every-merge. 01 phase A's code is merged (`e8d86f3`); 
 
 ## Status
 
-Wave 0–1, before M1. Resumed during the pause at developer A's request while Docker Desktop moves its disk image to `/Volumes/RolfStuffs` (Docker is down, so no DB). Docker came back but its disk image did NOT move (still on `/`, 4.1 GiB free); compose `db` restarted. 05 phase B merged (C16). Running: 01 phase B (pure tasks first: T-01.05, T-01.07, T-01.08, T-01.09; DB tasks T-01.06, T-01.11, T-01.12, T-01.14 ticked only after `REQUIRE_DB=1` passes; T-01.10 waits on R-007; T-01.13 needs `make up`). C06, C07, C24 ticked; C01 waits on `make up`. Lane PR #4 open.
+Wave 1, before M1. Docker restarts while developer A retries moving its disk image (still on `/`, 4.1 GiB free); compose `db` restarted by hand after each. Merged today: 01 A finish, 16 T-16.01 (C24), 05 A (C06), 02 A (C07), 05 B (C16), 01 B part 1 (hashing, clock, money, packs). Running: 01 B part 2 (DB tasks), 05 swap onto real core, 12 A (C08). C01 waits on `make up`; T-01.10 (C02) waits on R-007. Lane PR #4 open.
 
 ## Running
 
-- 01 phase B part 2 (DB tasks T-01.06, T-01.11, T-01.12, T-01.14) · `feat/01-foundation-pb` (kept after part 1 merge) · `.claude/worktrees/agent-a1f1fd5aa4ac94f72` · 2026-10-20
+- 01 phase B part 2 (DB tasks T-01.06, T-01.11, T-01.12, T-01.14) · `feat/01-foundation-pb` · `.claude/worktrees/agent-a1f1fd5aa4ac94f72` · 2026-10-20
+- 05 swap: `rules/_compat.py` → core.money/packs/hashing · `feat/05-rules-engine-pswap` · new worktree · 2026-10-20
+- 12 phase A (T-12.01–T-12.03, C08) · `feat/12-wallet-pa` · new worktree · 2026-10-20
 
 ## Merged
 
