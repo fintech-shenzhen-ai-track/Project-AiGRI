@@ -1,6 +1,58 @@
 {
   "components": {
     "schemas": {
+      "AreaUnit": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "enum": [
+              "ha",
+              "rai"
+            ],
+            "title": "Code",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          },
+          "per_hectare": {
+            "title": "Per Hectare",
+            "type": "number"
+          }
+        },
+        "required": [
+          "code",
+          "label",
+          "per_hectare"
+        ],
+        "title": "AreaUnit",
+        "type": "object"
+      },
+      "CompactUnit": {
+        "additionalProperties": false,
+        "properties": {
+          "at_least": {
+            "title": "At Least",
+            "type": "number"
+          },
+          "divide_by": {
+            "title": "Divide By",
+            "type": "number"
+          },
+          "suffix": {
+            "title": "Suffix",
+            "type": "string"
+          }
+        },
+        "required": [
+          "at_least",
+          "suffix",
+          "divide_by"
+        ],
+        "title": "CompactUnit",
+        "type": "object"
+      },
       "ComponentHealth": {
         "properties": {
           "detail": {
@@ -29,6 +81,156 @@
         "title": "ComponentHealth",
         "type": "object"
       },
+      "Currency": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "pattern": "^[A-Z]{3}$",
+            "title": "Code",
+            "type": "string"
+          },
+          "compact_units": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/CompactUnit"
+            },
+            "title": "Compact Units",
+            "type": "array"
+          },
+          "display_decimals": {
+            "maximum": 3.0,
+            "minimum": 0.0,
+            "title": "Display Decimals",
+            "type": "integer"
+          },
+          "minor_unit_exponent": {
+            "maximum": 3.0,
+            "minimum": 0.0,
+            "title": "Minor Unit Exponent",
+            "type": "integer"
+          },
+          "symbol": {
+            "title": "Symbol",
+            "type": "string"
+          },
+          "symbol_spacing": {
+            "default": "none",
+            "enum": [
+              "none",
+              "space"
+            ],
+            "title": "Symbol Spacing",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "symbol",
+          "display_decimals",
+          "minor_unit_exponent"
+        ],
+        "title": "Currency",
+        "type": "object"
+      },
+      "Formats": {
+        "additionalProperties": false,
+        "properties": {
+          "date": {
+            "title": "Date",
+            "type": "string"
+          },
+          "datetime": {
+            "title": "Datetime",
+            "type": "string"
+          },
+          "decimal": {
+            "maxLength": 1,
+            "title": "Decimal",
+            "type": "string"
+          },
+          "phone_example": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Phone Example"
+          },
+          "thousands": {
+            "maxLength": 1,
+            "title": "Thousands",
+            "type": "string"
+          }
+        },
+        "required": [
+          "decimal",
+          "thousands",
+          "date",
+          "datetime"
+        ],
+        "title": "Formats",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HazardSource": {
+        "additionalProperties": false,
+        "properties": {
+          "access": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Access"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "warnings",
+              "forecast",
+              "hazard_map",
+              "disaster_records",
+              "flood_map",
+              "satellite",
+              "cyclone"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "kind"
+        ],
+        "title": "HazardSource",
+        "type": "object"
+      },
       "HealthResponse": {
         "properties": {
           "components": {
@@ -52,6 +254,333 @@
           "components"
         ],
         "title": "HealthResponse",
+        "type": "object"
+      },
+      "Pack": {
+        "additionalProperties": false,
+        "properties": {
+          "alert_loss_probability": {
+            "anyOf": [
+              {
+                "maximum": 1.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Alert Loss Probability"
+          },
+          "area_unit": {
+            "$ref": "#/components/schemas/AreaUnit"
+          },
+          "code": {
+            "pattern": "^[A-Z]{2}$",
+            "title": "Code",
+            "type": "string"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/Currency"
+          },
+          "data_law": {
+            "title": "Data Law",
+            "type": "string"
+          },
+          "format": {
+            "$ref": "#/components/schemas/Formats"
+          },
+          "hazard_sources": {
+            "items": {
+              "$ref": "#/components/schemas/HazardSource"
+            },
+            "title": "Hazard Sources",
+            "type": "array"
+          },
+          "insurers": {
+            "items": {
+              "$ref": "#/components/schemas/PackInsurer"
+            },
+            "title": "Insurers",
+            "type": "array"
+          },
+          "live_since": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Live Since"
+          },
+          "locale": {
+            "title": "Locale",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "payout_rails": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Payout Rails",
+            "type": "array"
+          },
+          "public_schemes": {
+            "items": {
+              "$ref": "#/components/schemas/PublicScheme"
+            },
+            "title": "Public Schemes",
+            "type": "array"
+          },
+          "regions": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Region"
+            },
+            "title": "Regions",
+            "type": "array"
+          },
+          "regulator": {
+            "$ref": "#/components/schemas/Regulator"
+          },
+          "setup_steps": {
+            "items": {
+              "$ref": "#/components/schemas/SetupStep"
+            },
+            "title": "Setup Steps",
+            "type": "array"
+          },
+          "status": {
+            "enum": [
+              "live",
+              "planned"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "timezones": {
+            "items": {
+              "$ref": "#/components/schemas/Timezone"
+            },
+            "minItems": 1,
+            "title": "Timezones",
+            "type": "array"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "status",
+          "currency",
+          "locale",
+          "format",
+          "area_unit",
+          "timezones",
+          "regulator",
+          "data_law",
+          "payout_rails",
+          "hazard_sources",
+          "public_schemes",
+          "insurers",
+          "setup_steps"
+        ],
+        "title": "Pack",
+        "type": "object"
+      },
+      "PackInsurer": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "pattern": "^[A-Z]{3}$",
+            "title": "Code",
+            "type": "string"
+          },
+          "initials": {
+            "title": "Initials",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "initials"
+        ],
+        "title": "PackInsurer",
+        "type": "object"
+      },
+      "PublicScheme": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "gloss": {
+            "title": "Gloss",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "gloss"
+        ],
+        "title": "PublicScheme",
+        "type": "object"
+      },
+      "Region": {
+        "additionalProperties": false,
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "level": {
+            "enum": [
+              "province",
+              "regency",
+              "district"
+            ],
+            "title": "Level",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "parent": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent"
+          }
+        },
+        "required": [
+          "code",
+          "name",
+          "level"
+        ],
+        "title": "Region",
+        "type": "object"
+      },
+      "Regulator": {
+        "additionalProperties": false,
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "short": {
+            "title": "Short",
+            "type": "string"
+          }
+        },
+        "required": [
+          "short",
+          "name"
+        ],
+        "title": "Regulator",
+        "type": "object"
+      },
+      "SetupStep": {
+        "additionalProperties": false,
+        "properties": {
+          "done": {
+            "title": "Done",
+            "type": "boolean"
+          },
+          "step": {
+            "title": "Step",
+            "type": "string"
+          }
+        },
+        "required": [
+          "step",
+          "done"
+        ],
+        "title": "SetupStep",
+        "type": "object"
+      },
+      "Timezone": {
+        "additionalProperties": false,
+        "properties": {
+          "default": {
+            "default": false,
+            "title": "Default",
+            "type": "boolean"
+          },
+          "iana": {
+            "title": "Iana",
+            "type": "string"
+          },
+          "label": {
+            "title": "Label",
+            "type": "string"
+          }
+        },
+        "required": [
+          "iana",
+          "label"
+        ],
+        "title": "Timezone",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
         "type": "object"
       }
     }
@@ -80,6 +609,73 @@
         "summary": "Get Health",
         "tags": [
           "health"
+        ]
+      }
+    },
+    "/api/v1/packs": {
+      "get": {
+        "operationId": "list_packs_api_v1_packs_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Pack"
+                  },
+                  "title": "Response List Packs Api V1 Packs Get",
+                  "type": "array"
+                }
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "List Packs",
+        "tags": [
+          "packs"
+        ]
+      }
+    },
+    "/api/v1/packs/{code}": {
+      "get": {
+        "operationId": "get_pack_api_v1_packs__code__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "code",
+            "required": true,
+            "schema": {
+              "title": "Code",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Pack"
+                }
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Get Pack",
+        "tags": [
+          "packs"
         ]
       }
     }

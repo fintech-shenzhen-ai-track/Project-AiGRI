@@ -10,6 +10,7 @@ from fastapi import APIRouter
 
 ROUTER_MODULES: list[str] = [
     "health",  # 01
+    "packs",  # 01
 ]
 
 

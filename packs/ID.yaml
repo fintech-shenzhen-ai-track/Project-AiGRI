@@ -1,5 +1,7 @@
 # Indonesia country pack (live). Values from system-preview/PLAN.md 2.1 and screen a05.
-# Region codes are BPS codes; verify them against BPS before production (task T-01.09).
+# Region codes are BPS codes. Verified 2026-10-20 (T-01.09) against the BPS Master Wilayah service,
+# https://sig.bps.go.id/rest-bridging/getwilayah (level=provinsi / level=kabupaten, field kode_bps):
+# all 8 codes and names below match; no change was needed.
 code: ID
 name: Indonesia
 status: live
