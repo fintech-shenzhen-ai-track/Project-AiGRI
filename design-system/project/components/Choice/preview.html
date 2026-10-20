@@ -1,0 +1,31 @@
+<!-- @dsCard group="Forms" height=520 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Choice preview</title>
+<style>.pv{padding:16px 20px}</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><symbol id="i-building" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21V4a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v17"/><path d="M15 9h3a1 1 0 0 1 1 1v11M3 21h18M9 7h2M9 11h2M9 15h2"/></symbol><symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></symbol><symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol></defs></svg>
+<div class="pv stack-sm">
+  <div class="grid-2">
+    <button class="choice is-sel" type="button" aria-pressed="true"><span class="ico-dot" style="background:var(--white)"><svg class="i" aria-hidden="true"><use href="#i-building"/></svg></span><span class="h-card">Agri business</span><span class="small muted">A CV, UD, PT or other registered business</span><span class="choice-badge"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span></button>
+    <button class="choice" type="button" aria-pressed="false"><span class="ico-dot" style="background:var(--white)"><svg class="i" aria-hidden="true"><use href="#i-user"/></svg></span><span class="h-card">Individual farmer</span><span class="small muted">You farm in your own name</span></button>
+  </div>
+  <div class="wrap-row" style="gap:28px;margin-top:8px">
+    <label class="check"><input type="checkbox" checked><span class="check-box"></span><span>I agree to share this data</span></label>
+    <label class="check"><input type="checkbox"><span class="check-box"></span><span>Unchecked</span></label>
+    <label class="check"><input type="checkbox" disabled><span class="check-box"></span><span>Disabled</span></label>
+  </div>
+  <div class="wrap-row" style="gap:28px">
+    <label class="radio"><input type="radio" name="r" checked><span class="radio-box"></span><span>Wallet</span></label>
+    <label class="radio"><input type="radio" name="r"><span class="radio-box"></span><span>BI-FAST</span></label>
+    <label class="row" style="gap:12px"><span class="switch"><input type="checkbox" role="switch" checked aria-label="Push alerts"><span class="switch-ui"></span></span>Push alerts</label>
+    <label class="row" style="gap:12px"><span class="switch"><input type="checkbox" role="switch" aria-label="SMS alerts"><span class="switch-ui"></span></span>SMS alerts</label>
+  </div>
+  <div class="wrap-row" style="gap:28px">
+    <div class="seg" role="group" aria-label="Range"><button type="button" aria-pressed="true">This season</button><button type="button" aria-pressed="false">Next 16 days</button></div>
+    <div class="wrap-row"><button class="chip is-sel" type="button" aria-pressed="true">Flood</button><button class="chip is-sel" type="button" aria-pressed="true">Drought</button><button class="chip" type="button" aria-pressed="false">Pest and disease</button></div>
+  </div>
+</div>
+
+</body>
+</html>

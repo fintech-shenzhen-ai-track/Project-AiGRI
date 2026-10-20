@@ -1,2 +1,5 @@
 *.zip
-docs
+.env
+.claude/worktrees/
+.claude/settings.local.json
+.DS_Store

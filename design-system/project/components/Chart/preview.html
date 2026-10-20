@@ -1,0 +1,39 @@
+<!-- @dsCard group="Data" height=400 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Chart preview</title>
+<style>.pv{padding:16px 20px}</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs></defs></svg>
+<div class="pv">
+  <div class="grid-2">
+    <div class="card card-w card-lg">
+      <h3 class="h-card" style="margin-bottom:16px">Flood chance by parcel</h3>
+      <svg class="chart" viewBox="0 0 420 220" role="img" aria-label="Flood chance by parcel: DMK-01 31%, DMK-02 28%, DMK-03 24%, DMK-04 19%, DMK-05 14%, DMK-06 6%">
+        <line class="axis" x1="0" y1="180" x2="420" y2="180"/>
+        <rect class="bar is-risk" x="10" y="40" width="44" height="140" rx="6"/><text class="bar-label" x="32" y="30">31%</text>
+        <rect class="bar is-risk" x="80" y="54" width="44" height="126" rx="6"/><text class="bar-label" x="102" y="44">28%</text>
+        <rect class="bar is-risk" x="150" y="72" width="44" height="108" rx="6"/><text class="bar-label" x="172" y="62">24%</text>
+        <rect class="bar" x="220" y="94" width="44" height="86" rx="6"/><text class="bar-label" x="242" y="84">19%</text>
+        <rect class="bar" x="290" y="117" width="44" height="63" rx="6"/><text class="bar-label" x="312" y="107">14%</text>
+        <rect class="bar" x="360" y="153" width="44" height="27" rx="6"/><text class="bar-label" x="382" y="143">6%</text>
+        <text class="axis" x="32" y="204">DMK-01</text><text class="axis" x="102" y="204">DMK-02</text><text class="axis" x="172" y="204">DMK-03</text><text class="axis" x="242" y="204">DMK-04</text><text class="axis" x="312" y="204">DMK-05</text><text class="axis" x="382" y="204">DMK-06</text>
+      </svg>
+      <button class="btn btn-ghost btn-sm" type="button" style="margin-top:8px">Show as table</button>
+    </div>
+    <div class="card card-w card-lg">
+      <h3 class="h-card" style="margin-bottom:16px">Rain forecast, mm per day</h3>
+      <svg class="chart" viewBox="0 0 420 220" role="img" aria-label="Rain forecast 9 to 24 January. Highest 40 mm on 17 January. No day above the 50 mm heavy-rain level.">
+        <line class="axis" x1="0" y1="180" x2="420" y2="180"/>
+        <line class="threshold" x1="0" y1="40" x2="420" y2="40"/><text class="threshold" x="0" y="30">BMKG heavy-rain level 50 mm/day</text>
+        <path class="area is-water" d="M0 180 0 138 28 114 56 150 84 96 112 80 140 130 168 156 196 90 224 62 252 74 280 130 308 150 336 168 364 134 392 98 420 90 420 180Z"/>
+        <path class="line is-water" d="M0 138 28 114 56 150 84 96 112 80 140 130 168 156 196 90 224 62 252 74 280 130 308 150 336 168 364 134 392 98 420 90"/>
+        <text class="axis" x="14" y="204">9 Jan</text><text class="axis" x="210" y="204">17 Jan</text><text class="axis" x="400" y="204">24 Jan</text>
+      </svg>
+      <p class="small muted" style="margin-top:8px">Highest: 40 mm on 17 Jan. No day above the heavy-rain level yet.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

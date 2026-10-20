@@ -1,0 +1,67 @@
+# Indonesia country pack (live). Values from system-preview/PLAN.md 2.1 and screen a05.
+# Region codes are BPS codes; verify them against BPS before production (task T-01.09).
+code: ID
+name: Indonesia
+status: live
+live_since: "2026-01-02"
+currency:
+  code: IDR
+  symbol: "Rp"
+  symbol_spacing: none
+  display_decimals: 0
+  minor_unit_exponent: 0
+  compact_units:
+    - {at_least: 1000000000, suffix: " M", divide_by: 1000000000}   # miliar
+    - {at_least: 1000000, suffix: " jt", divide_by: 1000000}        # juta
+locale: id-ID
+format:
+  decimal: ","
+  thousands: "."
+  date: "D MMM YYYY"
+  datetime: "D MMM YYYY, HH:mm z"
+  phone_example: "+62 812-2741-0938"
+area_unit: {code: ha, label: "ha", per_hectare: 1}
+timezones:
+  - {iana: Asia/Jakarta, label: WIB, default: true}
+  - {iana: Asia/Makassar, label: WITA}
+  - {iana: Asia/Jayapura, label: WIT}
+regulator: {short: OJK, name: "Otoritas Jasa Keuangan"}
+data_law: "UU PDP, Law 27/2022 on Personal Data Protection"
+payout_rails: ["BI-FAST", "Virtual account", "GoPay", "OVO", "DANA"]
+hazard_sources:
+  - {id: bmkg, name: "BMKG early warnings and forecasts", kind: warnings}
+  - {id: bnpb_inarisk, name: "BNPB InaRISK hazard maps", kind: hazard_map}
+  - {id: bnpb_dibi, name: "BNPB DIBI disaster records", kind: disaster_records}
+  - {id: gfm, name: "Copernicus Global Flood Monitoring", kind: flood_map}
+  - {id: s1, name: "Sentinel-1 radar (Microsoft Planetary Computer)", kind: satellite}
+  - {id: s2, name: "Sentinel-2 optical (Microsoft Planetary Computer)", kind: satellite}
+  - {id: open_meteo, name: "Open-Meteo", kind: forecast}
+  - {id: gdacs, name: "GDACS", kind: cyclone}
+public_schemes:
+  - {code: AUTP, name: "Asuransi Usaha Tani Padi", gloss: "AUTP, the national rice insurance scheme"}
+  - {code: "AUTS/K", name: "Asuransi Usaha Ternak Sapi/Kerbau", gloss: "AUTS/K, the national cattle and buffalo scheme"}
+regions:
+  - {code: "33", name: "Central Java", level: province}
+  - {code: "3321", name: "Demak", level: regency, parent: "33"}
+  - {code: "3315", name: "Grobogan", level: regency, parent: "33"}
+  - {code: "3319", name: "Kudus", level: regency, parent: "33"}
+  - {code: "3318", name: "Pati", level: regency, parent: "33"}
+  - {code: "3320", name: "Jepara", level: regency, parent: "33"}
+  - {code: "35", name: "East Java", level: province}
+  - {code: "3523", name: "Tuban", level: regency, parent: "35"}
+insurers:
+  - {code: JSD, name: "Asuransi Jasindo", initials: JS}
+  - {code: ASK, name: "Askrindo", initials: AK}
+  - {code: SMI, name: "Asuransi Sinar Mas", initials: SM}
+  - {code: ACA, name: "Asuransi Central Asia (ACA)", initials: ACA}
+setup_steps:
+  - {step: "Currency and formats", done: true}
+  - {step: "Area units", done: true}
+  - {step: "Regulator review", done: true}
+  - {step: "Data law and DPA template", done: true}
+  - {step: "Payout rails", done: true}
+  - {step: "Hazard data feeds", done: true}
+  - {step: "Satellite coverage check", done: true}
+  - {step: "Insurer onboarding", done: true}
+  - {step: "Pilot clients", done: true}
+alert_loss_probability: 0.30

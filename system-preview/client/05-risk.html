@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Risk · AiGRI</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: map parcel styling (system.css has the map shell and labels only) */
+.pc{fill:var(--parcel);stroke:#fff;stroke-width:2;cursor:pointer}
+.pc.risk{fill:var(--parcel-risk)}
+.ol{fill:none;stroke:var(--ink);stroke-width:4;stroke-linejoin:round;opacity:0;pointer-events:none;transition:opacity 200ms ease}
+.pg.is-sel .ol{opacity:1}
+.map-svg text.map-label.mid{font-size:22px;fill:#fff;stroke:rgba(31,42,27,.6);stroke-width:4px}
+.lbl-sc{transform-box:fill-box;transform-origin:50% 100%}
+.lbl-in{transform-box:fill-box;transform-origin:50% 100%;animation:lblpop 240ms var(--ease-out) both}
+@keyframes lblpop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
+@media (max-width:600px){.lbl-sc{transform:scale(1.55)}.map-svg text.map-label{font-size:24px}.map-svg text.map-label.mid{font-size:26px}}
+@media (prefers-reduced-motion:reduce){.lbl-in{animation:none}}
+/* local: c05 map box, chart text size on phones, cta band */
+.map-c5{height:340px}
+.risk-grid{gap:32px;align-items:start}
+.cta-band{align-items:center;flex-wrap:wrap}
+@media (max-width:600px){ .map-c5{height:320px} svg.chart .bar-label,svg.chart text.axis,svg.chart text.threshold{font-size:18px} .cta-band{align-items:stretch} .cta-band .btn{width:100%} }
+</style>
+</head>
+<body data-portal="client" data-page="risk">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="09-home.html" aria-label="AiGRI home">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Client</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="home" href="09-home.html"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+      <a class="nav-item" data-nav="farm" href="03-parcels.html"><svg class="i" aria-hidden="true"><use href="#i-farm"/></svg>My farm</a>
+      <a class="nav-item" data-nav="risk" href="05-risk.html"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg>Risk</a>
+      <a class="nav-item" data-nav="cover" href="06-policies.html"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+      <a class="nav-item" data-nav="claims" href="12-claim-status.html"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+      <a class="nav-item" data-nav="wallet" href="13-wallet.html"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+      <a class="nav-item" data-nav="alerts" href="10-alert.html"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg>Alerts<span class="nav-badge is-need">1</span></a>
+    </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span>
+      <div class="me"><span class="avatar">SW</span><span class="me-text"><span class="me-name">Ibu Sri Wahyuni</span><span class="me-meta">CV Tani Makmur Demak</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="mbar">
+      <a class="logo-link" href="09-home.html" aria-label="AiGRI home"><svg viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/><rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/><rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/><circle fill="#FFCB3D" cx="196" cy="58" r="46"/></svg></a>
+      <span class="mbar-title">Your risk</span>
+      <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+    </header>
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><span aria-current="page">Risk</span></nav>
+      <div class="topbar-actions">
+        <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+        <span class="avatar" aria-hidden="true">SW</span>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+      <div class="page-head">
+        <p class="eyebrow rv">Risk forecast · 9 Jan 2026</p>
+        <h1 class="title rv" style="--i:1">Flood is your biggest risk this season</h1>
+        <p class="lead rv" style="--i:2">Based on BMKG forecasts, ten years of local flood records and where your parcels sit. It's an estimate, not a promise.</p>
+        <div class="page-actions rv" style="--i:3"><div class="seg" data-seg data-seg-target="#riskPanels" role="group" aria-label="Forecast range"><span class="seg-thumb"></span><button type="button" data-value="season" aria-pressed="true">This season</button><button type="button" data-value="16d" aria-pressed="false">Next 16 days</button></div></div>
+      </div>
+
+      <div class="stack-lg">
+      <div class="grid-3">
+        <div class="card rv"><div class="row" style="gap:12px"><span class="ico-dot is-alert"><svg class="i" aria-hidden="true"><use href="#i-flood"/></svg></span><h2 class="h-card">Flood</h2></div><p class="num-l" style="margin-top:16px">34%</p><p style="margin-top:8px"><span class="pill pill-alert">High</span></p><p class="small muted" style="margin-top:12px">chance of a damaging flood on at least one parcel by 30 Apr 2026</p></div>
+        <div class="card rv"><div class="row" style="gap:12px"><span class="ico-dot is-info"><svg class="i" aria-hidden="true"><use href="#i-sun"/></svg></span><h2 class="h-card">Drought</h2></div><p class="num-l" style="margin-top:16px">6%</p><p style="margin-top:8px"><span class="pill pill-ok">Low</span></p><p class="small muted" style="margin-top:12px">irrigation supply is reliable in Demak in this season</p></div>
+        <div class="card rv"><div class="row" style="gap:12px"><span class="ico-dot is-need"><svg class="i" aria-hidden="true"><use href="#i-bug"/></svg></span><h2 class="h-card">Pest and disease</h2></div><p class="num-l" style="margin-top:16px">11%</p><p style="margin-top:8px"><span class="pill pill-need">Moderate</span></p><p class="small muted" style="margin-top:12px">brown planthopper risk rises after heavy rain</p></div>
+      </div>
+
+      <div id="riskPanels">
+        <div data-seg-panel="season"><div class="card card-lg rv"><h2 class="h-section" style="margin-bottom:20px">Flood chance by parcel</h2>
+          <div class="grid-2 risk-grid">
+            <div><svg class="chart" data-draw viewBox="0 0 420 220" role="img" aria-label="Flood chance by parcel: DMK-01 31%, DMK-02 28%, DMK-03 24%, DMK-04 19%, DMK-05 14%, DMK-06 6%"><line class="axis" x1="0" y1="180" x2="420" y2="180"/><rect class="bar is-risk draw-bar" style="--i:0" x="10" y="40" width="44" height="140" rx="6"/><text class="bar-label" style="--i:0" x="32" y="30">31%</text><rect class="bar is-risk draw-bar" style="--i:1" x="80" y="54" width="44" height="126" rx="6"/><text class="bar-label" style="--i:1" x="102" y="44">28%</text><rect class="bar is-risk draw-bar" style="--i:2" x="150" y="72" width="44" height="108" rx="6"/><text class="bar-label" style="--i:2" x="172" y="62">24%</text><rect class="bar draw-bar" style="--i:3" x="220" y="94" width="44" height="86" rx="6"/><text class="bar-label" style="--i:3" x="242" y="84">19%</text><rect class="bar draw-bar" style="--i:4" x="290" y="117" width="44" height="63" rx="6"/><text class="bar-label" style="--i:4" x="312" y="107">14%</text><rect class="bar draw-bar" style="--i:5" x="360" y="153" width="44" height="27" rx="6"/><text class="bar-label" style="--i:5" x="382" y="143">6%</text><text class="axis" x="32" y="204">DMK-01</text><text class="axis" x="102" y="204">DMK-02</text><text class="axis" x="172" y="204">DMK-03</text><text class="axis" x="242" y="204">DMK-04</text><text class="axis" x="312" y="204">DMK-05</text><text class="axis" x="382" y="204">DMK-06</text></svg>
+              <button class="btn btn-ghost btn-sm" type="button" data-toggle="riskTable" aria-expanded="false" style="margin-top:8px">Show as table</button>
+              <table class="table chart-table" id="riskTable" hidden><thead><tr><th>Parcel</th><th class="r">Chance of a damaging flood</th></tr></thead><tbody><tr><td class="id">DMK-01</td><td class="num">31%</td></tr><tr><td class="id">DMK-02</td><td class="num">28%</td></tr><tr><td class="id">DMK-03</td><td class="num">24%</td></tr><tr><td class="id">DMK-04</td><td class="num">19%</td></tr><tr><td class="id">DMK-05</td><td class="num">14%</td></tr><tr><td class="id">DMK-06</td><td class="num">6%</td></tr></tbody></table></div>
+            <div><div class="map map-c5"><svg class="map-svg" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Schematic map of Demak. DMK-01, DMK-02 and DMK-03 are shown in orange as the highest flood chance."><rect width="800" height="520" fill="#EEF2EA"/><path d="M0 0H800V62C700 92 600 52 500 78S250 92 0 62Z" fill="#CFE0EC"/><path d="M640 520C650 440 600 400 560 340S470 200 470 76" fill="none" stroke="#CFE0EC" stroke-width="22" stroke-linecap="round"/><path d="M300 520C300 440 330 340 380 290S440 250 466 200" fill="none" stroke="#CFE0EC" stroke-width="14" stroke-linecap="round"/><path d="M0 330H800M330 90V520" stroke="#fff" stroke-width="4" fill="none"/><g class="pg" data-id="DMK-01"><polygon class="pc risk" points="520,140 590,128 612,180 560,206 516,180"/><polygon class="ol" points="520,140 590,128 612,180 560,206 516,180"/></g><g class="pg" data-id="DMK-02"><polygon class="pc risk" points="530,214 596,212 606,268 548,290 520,252"/><polygon class="ol" points="530,214 596,212 606,268 548,290 520,252"/></g><g class="pg" data-id="DMK-03"><polygon class="pc risk" points="588,302 648,294 666,348 618,374 582,342"/><polygon class="ol" points="588,302 648,294 666,348 618,374 582,342"/></g><g class="pg" data-id="DMK-04"><polygon class="pc" points="570,400 640,396 650,452 590,470 560,440"/><polygon class="ol" points="570,400 640,396 650,452 590,470 560,440"/></g><g class="pg" data-id="DMK-05"><polygon class="pc" points="190,380 250,372 266,420 214,444 180,418"/><polygon class="ol" points="190,380 250,372 266,420 214,444 180,418"/></g><g class="pg" data-id="DMK-06"><polygon class="pc" points="200,175 262,168 280,218 228,240 190,214"/><polygon class="ol" points="200,175 262,168 280,218 228,240 190,214"/></g><text class="map-label mid" x="560" y="175" text-anchor="middle">01</text><text class="map-label mid" x="560" y="255" text-anchor="middle">02</text><text class="map-label mid" x="620" y="340" text-anchor="middle">03</text><text class="map-label mid" x="602" y="440" text-anchor="middle">04</text><text class="map-label mid" x="220" y="415" text-anchor="middle">05</text><text class="map-label mid" x="232" y="211" text-anchor="middle">06</text></svg></div>
+              <div class="legend" style="margin-top:12px"><span><i class="swatch" style="--c:var(--parcel-risk)"></i>Top three chances</span><span><i class="swatch" style="--c:var(--parcel)"></i>Other parcels</span></div>
+              <p class="meta" style="margin-top:4px">Schematic map. Not to scale.</p></div>
+          </div></div></div>
+        <div data-seg-panel="16d" hidden><div class="card card-lg"><h2 class="h-section" style="margin-bottom:20px">Rain forecast, 9–24 Jan 2026</h2>
+          <div class="grid-2 risk-grid">
+            <div><svg class="chart" data-draw viewBox="0 0 420 220" role="img" aria-label="Rain forecast 9 to 24 January. Highest 40 mm on 17 January. No day above the 50 mm heavy-rain level."><line class="axis" x1="0" y1="180" x2="420" y2="180"/><line class="threshold" x1="0" y1="40" x2="420" y2="40"/><text class="threshold" x="0" y="30">BMKG heavy-rain level</text><path class="area is-water" d="M0 146.4 L28 129.6 L56 154.8 L84 110 L112 93.2 L140 140.8 L168 157.6 L196 118.4 L224 68 L252 82 L280 126.8 L308 149.2 L336 160.4 L364 138 L392 101.6 L420 87.6 L420 180 L0 180Z"/><path class="line is-water draw-line" pathLength="1" d="M0 146.4 L28 129.6 L56 154.8 L84 110 L112 93.2 L140 140.8 L168 157.6 L196 118.4 L224 68 L252 82 L280 126.8 L308 149.2 L336 160.4 L364 138 L392 101.6 L420 87.6"/><circle cx="224" cy="68" r="5" fill="#2F5F86"/><text class="bar-label" x="224" y="54">40 mm</text><text class="axis" x="16" y="204">9 Jan</text><text class="axis" x="224" y="204">17 Jan</text><text class="axis" x="404" y="204">24 Jan</text></svg><p class="meta" style="margin-top:8px">mm per day. Highest: 40 mm on 17 Jan. No day above the heavy-rain level yet.</p></div>
+            <div class="stack-sm"><div class="stat"><span class="label">Highest day</span><span class="num-l">40 mm</span><span class="meta">17 Jan 2026</span></div><div class="stat"><span class="label">BMKG heavy-rain level</span><span class="num-l">50 mm/day</span><span class="meta">No forecast day reaches it</span></div></div>
+          </div></div></div>
+      </div>
+
+      <div class="card"><h2 class="h-section" style="margin-bottom:16px">Why these numbers</h2><div class="stack-sm">
+        <details class="disc"><summary>Where your parcels are</summary><div class="disc-body"><div class="disc-inner"><p>Your parcels sit on low-lying land along the Wulan river. They are 0,4–3,1 km from the river, and the closest ones flood first.</p></div></div></details>
+        <details class="disc"><summary>What the records say</summary><div class="disc-body"><div class="disc-inner"><p>BNPB DIBI records show Demak had floods in 2020, 2021, 2023 and 2024.</p></div></div></details>
+        <details class="disc"><summary>What the forecast says</summary><div class="disc-body"><div class="disc-inner"><p>The BMKG seasonal outlook expects above-normal rain from January to March 2026.</p></div></div></details>
+      </div></div>
+
+      <div class="card"><h2 class="h-section" style="margin-bottom:8px">Sources</h2><dl class="kv">
+        <div><dt>Weather</dt><dd>BMKG seasonal outlook, issued 2 Jan 2026</dd></div>
+        <div><dt>Forecast</dt><dd>Open-Meteo ensemble, 9 Jan 2026, 06:00 WIB</dd></div>
+        <div><dt>Hazard map</dt><dd>BNPB InaRISK flood hazard map</dd></div>
+        <div><dt>Records</dt><dd>BNPB DIBI records 2015–2025</dd></div>
+        <div><dt>Your farm</dt><dd>Your 6 parcel boundaries</dd></div>
+      </dl></div>
+
+      <div class="card card-cream card-lg row-between cta-band"><h2 class="h-section">Cover that fits this risk</h2><a class="btn btn-y" href="06-policies.html">See ranked policies</a></div>
+      </div>
+    </main>
+  </div>
+</div>
+<nav class="tabbar" aria-label="Main">
+  <a class="tab" data-nav="home alerts" href="09-home.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+  <a class="tab" data-nav="farm risk" href="03-parcels.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-farm"/></svg>Farm</a>
+  <a class="tab" data-nav="cover" href="06-policies.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+  <a class="tab" data-nav="claims" href="12-claim-status.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+  <a class="tab" data-nav="wallet" href="13-wallet.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+</nav>
+
+
+<script src="../shared/system.js"></script>
+</body>
+</html>

@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Claim CLM-26-000418 · Jasindo on AiGRI</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: decision column is a fixed 380px so the editable table fits; the right card sticks below the topbar */
+.split-dec{grid-template-columns:minmax(0,1fr) 380px}
+.split-dec>.dec{position:sticky;top:88px}
+.split-dec .page-head{grid-template-columns:minmax(0,1fr)}
+.split-dec .page-head>.page-actions{grid-column:1;grid-row:auto;margin-top:12px;align-self:start}
+.split-dec .page-head .btn-ghost{padding-left:0}
+/* local: citation chip inside a check-list row */
+.check-list .li-t{flex:1;min-width:0}
+.check-list .cite{margin-left:auto}
+/* local: white inputs on the grey decision card */
+.dec .textarea,.dec .affix{background:var(--white)}
+.dec .affix:focus-within{background:var(--white)}
+.dtable th,.dtable td{padding-left:6px;padding-right:6px}
+.dtable td{height:48px}
+.dtable tbody tr,.dtable tbody tr:nth-child(even){--row:var(--white)}
+.dtable tbody tr.is-flag{--row:var(--need-bg)}
+.dtable tbody tr.has-chg td:first-child{border-radius:var(--r-sm) 0 0 0}
+.dtable tbody tr.has-chg td:last-child{border-radius:0 var(--r-sm) 0 0}
+.dtable tbody tr.chg td{height:auto;padding:0 6px 10px;border-radius:0 0 var(--r-sm) var(--r-sm)}
+.dtable .affix{background:var(--surface-2)}
+.dtable tr.is-flag .affix{background:var(--white)}
+.dtable .lp{height:40px;width:92px;padding:0 10px}
+.dtable .lp .input{text-align:right}
+[data-fade]{transition:opacity 120ms ease}
+html[data-still] [data-fade]{transition:none}
+/* local: 3-column evidence grid and an overlay pill on photos */
+.pg3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.photo-pill{position:absolute;left:8px;top:8px;min-height:26px}
+.atable th,.atable td{padding-left:4px;padding-right:4px;white-space:nowrap}
+.atable td{height:52px}
+.atable th{font-size:12px;letter-spacing:.04em}
+@media (prefers-reduced-motion:reduce){[data-fade]{transition:none}}
+</style>
+</head>
+<body data-portal="insurer" data-page="claims">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="01-dashboard.html" aria-label="Jasindo on AiGRI, dashboard">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Asuransi Jasindo</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="dashboard" href="01-dashboard.html"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Dashboard</a>
+      <a class="nav-item" data-nav="products" href="02-publish-policy.html"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg>Products</a>
+      <a class="nav-item" data-nav="underwriting" href="#" data-stub="The underwriting queue is not part of this prototype."><svg class="i" aria-hidden="true"><use href="#i-shield-check"/></svg>Underwriting<span class="nav-badge">4</span></a>
+      <a class="nav-item" data-nav="claims" href="03-claims-queue.html" aria-current="page"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Claims<span class="nav-badge">41</span></a>
+      <a class="nav-item" data-nav="portfolio" href="05-portfolio.html"><svg class="i" aria-hidden="true"><use href="#i-layers"/></svg>Portfolio</a>
+      <a class="nav-item" data-nav="wallet" href="06-payouts.html"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet &amp; payouts</a>
+    </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span>
+      <div class="me"><span class="avatar">DP</span><span class="me-text"><span class="me-name">Dimas Prasetyo</span><span class="me-meta">Claims adjuster · Jasindo</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="03-claims-queue.html">Claims</a><span class="crumb-sep">›</span><span aria-current="page">CLM-26-000418</span></nav>
+      <div class="topbar-actions">
+        <span class="meta only-desktop" style="margin-right:8px">Tuesday 24 Feb 2026, 14:10 WIB</span>
+        <input class="input" type="search" placeholder="Search claims, clients, policies" aria-label="Search claims, clients, policies">
+        <a class="icon-btn" href="#" data-stub="Notifications open here." aria-label="Notifications"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg></a>
+        <span class="avatar" aria-hidden="true">DP</span>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+
+      <div class="split split-dec">
+        <div class="stack">
+          <div class="page-head" style="margin-bottom:8px">
+            <p style="margin-bottom:12px"><span class="pill pill-pending" id="statusPill">Under review</span></p>
+            <p class="eyebrow">CLM-26-000418 · submitted 16 Feb 2026 · resubmitted 20 Feb 2026</p>
+            <h1 class="title">CV Tani Makmur Demak</h1>
+            <p class="lead">Rice · 5 of 6 insured parcels · 40,5 ha · Central Java floods, Feb 2026 · policy POL-JSD-26-004127 (Rice Flood &amp; Drought Cover)</p>
+            <div class="page-actions"><a class="btn btn-ghost" href="../admin/06-audit-log.html">Audit trail (admin view, demo)<svg class="i i-sm" aria-hidden="true"><use href="#i-external"/></svg></a></div>
+          </div>
+
+          <section class="card rv" aria-label="AiGRI pre-check">
+            <h2 class="h-card">AiGRI pre-check</h2>
+            <ul class="check-list" style="margin-top:16px">
+              <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span class="li-t">Policy active on the loss date (10 Jan – 30 Apr 2026)</span><button class="cite" type="button" data-toast="Clause 3.1: policy period" data-tone="info">Clause 3.1</button></li>
+              <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span class="li-t">Peril covered: flood</span><button class="cite" type="button" data-toast="Clause 4.1: flood is a covered peril" data-tone="info">Clause 4.1</button></li>
+              <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span class="li-t">Notice on time: filed 16 Feb, due 21 Feb</span><button class="cite" type="button" data-toast="Clause 8.1: notice within 7 days after the event ends" data-tone="info">Clause 8.1</button></li>
+              <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span class="li-t">5 parcels match insured boundaries</span></li>
+              <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span class="li-t">16 photos with time and GPS inside the parcels</span></li>
+              <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span class="li-t">No reused photos (perceptual-hash check)</span></li>
+              <li class="is-need"><svg class="i" aria-hidden="true"><use href="#i-alert"/></svg><span class="li-t">DMK-05: radar shows no flood (low confidence, dense canopy); 5 ground photos show standing water. Your call.</span></li>
+              <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span class="li-t">Info request of 19 Feb answered with 2 photos on 20 Feb</span></li>
+            </ul>
+            <p class="meta" style="margin-top:16px">Pre-check drafts only. It never approves or denies.</p>
+          </section>
+
+          <section class="card card-lg rv" aria-label="Damage assessment">
+            <h2 class="h-section" style="margin-bottom:20px">Damage assessment</h2>
+            <div class="map" style="height:303px"><svg class="map-svg" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Schematic map of Demak with the five claimed parcels and the Sentinel-1 flood extent of 8 February. DMK-01 to DMK-04 are under water, DMK-05 only at its edge, DMK-06 is outside the flood."><rect width="800" height="520" fill="#EEF2EA"/><path d="M0 0H800V60C700 90 600 50 500 76S250 90 0 60Z" fill="#CFE0EC"/><path d="M640 520C650 440 600 400 560 340S470 200 470 76" fill="none" stroke="#CFE0EC" stroke-width="22" stroke-linecap="round"/><path d="M300 520C300 440 330 340 380 280S420 200 420 140" fill="none" stroke="#CFE0EC" stroke-width="14" stroke-linecap="round"/><path d="M0 330H800M330 90V520" stroke="#fff" stroke-width="4" fill="none"/><polygon points="520,100 590,88 612,140 560,156 516,134" fill="#5D9253"/><polygon points="536,200 606,194 620,252 562,270 528,240" fill="#5D9253"/><polygon points="610,290 672,282 698,338 644,364 604,330" fill="#5D9253"/><polygon points="570,400 640,396 650,452 590,470 560,440" fill="#5D9253"/><polygon points="190,380 250,372 266,420 214,444 180,418" fill="#5D9253"/><polygon points="150,190 214,182 232,230 182,256 140,228" fill="#C9CEC6"/><path d="M486 70C560 62 640 70 676 100L690 180C700 230 724 262 736 312C744 360 722 400 700 430C690 470 676 500 640 512L540 512C530 470 548 430 556 396C520 372 506 332 506 290C506 240 492 200 488 150Z" fill="#2F5F86" opacity=".85"/><path d="M556 400C470 410 380 430 330 440L292 520L330 520C336 480 350 462 400 452C450 446 520 440 560 436Z" fill="#2F5F86" opacity=".85"/><path d="M330 440C310 436 290 428 268 420L266 408C290 412 320 420 334 428Z" fill="#2F5F86" opacity=".85"/><polygon points="520,100 590,88 612,140 560,156 516,134" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><polygon points="536,200 606,194 620,252 562,270 528,240" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><polygon points="610,290 672,282 698,338 644,364 604,330" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><polygon points="570,400 640,396 650,452 590,470 560,440" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><polygon points="190,380 250,372 266,420 214,444 180,418" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><polygon points="150,190 214,182 232,230 182,256 140,228" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><text class="map-label" x="556" y="132" text-anchor="middle" style="font-size:22px">DMK-01</text><text class="map-label" x="572" y="240" text-anchor="middle" style="font-size:22px">DMK-02</text><text class="map-label" x="650" y="328" text-anchor="middle" style="font-size:22px">DMK-03</text><text class="map-label" x="606" y="438" text-anchor="middle" style="font-size:22px">DMK-04</text><text class="map-label" x="220" y="412" text-anchor="middle" style="font-size:22px">DMK-05</text><text class="map-label" x="186" y="224" text-anchor="middle" style="font-size:22px">DMK-06</text><text class="map-label" x="470" y="176" text-anchor="end" style="font-size:21px">Karanganyar</text><text class="map-label" x="300" y="360" text-anchor="start" style="font-size:21px">Demak</text><text class="map-label" x="190" y="480" text-anchor="start" style="font-size:21px">Wonosalam</text><text class="map-label" x="100" y="170" text-anchor="start" style="font-size:21px">Mijen</text></svg>
+              <div class="map-ctrl"><button class="icon-btn" type="button" aria-label="Zoom in"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button><button class="icon-btn" type="button" aria-label="Zoom out"><svg class="i" aria-hidden="true"><use href="#i-minus"/></svg></button></div>
+            </div>
+            <div class="legend" style="margin-top:12px"><span><i class="swatch" style="--c:var(--parcel)"></i>Claimed parcel</span><span><i class="swatch" style="--c:var(--water)"></i>Flood extent, Sentinel-1 8 Feb</span><span><i class="swatch" style="--c:var(--parcel-off)"></i>DMK-06, outside the flood</span></div>
+            <p class="meta" style="margin-top:8px">Schematic map. Not to scale.</p>
+            <div class="table-wrap" style="margin-top:20px"><table class="table atable"><thead><tr><th>Parcel</th><th class="r">ha</th><th class="r">Flooded</th><th>Days</th><th class="r">NDVI</th><th>Confidence</th></tr></thead><tbody><tr><td class="id">DMK-01</td><td class="num">9,6</td><td class="num">92%</td><td>9 days</td><td class="num">0,72 → 0,18</td><td><span class="pill pill-ok">High</span></td></tr><tr><td class="id">DMK-02</td><td class="num">8,4</td><td class="num">78%</td><td>8 days</td><td class="num">0,70 → 0,26</td><td><span class="pill pill-ok">High</span></td></tr><tr><td class="id">DMK-03</td><td class="num">7,2</td><td class="num">64%</td><td>6 days</td><td class="num">0,69 → 0,35</td><td><span class="pill pill-ok">High</span></td></tr><tr><td class="id">DMK-04</td><td class="num">8,8</td><td class="num">41%</td><td>4 days</td><td class="num">0,71 → 0,49</td><td><span class="pill pill-info">Medium</span></td></tr><tr><td class="id">DMK-05</td><td class="num">6,5</td><td class="num"><span class="muted">Not detected</span></td><td>—</td><td class="num">0,68 → 0,55</td><td><span class="pill pill-need">Low</span></td></tr></tbody></table></div>
+            <p class="meta" style="margin-top:12px">Sources: S-1 2 Feb / 8 Feb / 14 Feb · S-2 28 Jan / 15 Feb · Copernicus GFM. DMK-05 confidence is Low because of dense canopy.</p>
+          </section>
+
+          <section class="card card-lg rv" aria-label="Before and after">
+            <h2 class="h-section">Before and after</h2>
+            <div class="tabs" data-tabs role="tablist" aria-label="Parcels" style="margin-top:16px"><button class="tab-btn" role="tab" id="st1" aria-controls="sp1" aria-selected="true" type="button">DMK-01</button><button class="tab-btn" role="tab" id="st2" aria-controls="sp2" aria-selected="false" type="button">DMK-02</button><button class="tab-btn" role="tab" id="st3" aria-controls="sp3" aria-selected="false" type="button">DMK-03</button><button class="tab-btn" role="tab" id="st4" aria-controls="sp4" aria-selected="false" type="button">DMK-04</button><button class="tab-btn" role="tab" id="st5" aria-controls="sp5" aria-selected="false" type="button">DMK-05</button><span class="tabs-ink" aria-hidden="true"></span></div>
+            <div class="tab-panel" id="sp1" role="tabpanel" aria-labelledby="st1" style="margin-top:20px">
+          <div class="sat" data-compare>
+            <div class="sat-layer sat-before"><svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="800" height="500" fill="#5D9253"/><rect x="0" y="0" width="400" height="250" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="0" width="400" height="250" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="0" y="250" width="400" height="250" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="250" width="400" height="250" fill="#4E7F45" stroke="#3E5E34" stroke-width="2"/><rect x="60" y="20" width="140" height="90" fill="#4E7F45" stroke="#3E5E34" stroke-width="2"/><rect x="520" y="30" width="160" height="70" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><rect x="680" y="140" width="100" height="100" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="30" y="300" width="150" height="100" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="470" y="300" width="120" height="130" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="660" y="330" width="120" height="140" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="250" y="430" width="200" height="60" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><path d="M0 250H800M400 0V500" stroke="#3E5E34" stroke-width="2" fill="none"/><path d="M0 120C200 150 500 90 800 130" stroke="#CFE0EC" stroke-width="16" fill="none"/><polygon points="170,110 600,100 640,400 200,410" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg></div>
+            <div class="sat-layer sat-after"><svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="800" height="500" fill="#5D9253"/><rect x="0" y="0" width="400" height="250" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="0" width="400" height="250" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="0" y="250" width="400" height="250" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="250" width="400" height="250" fill="#4E7F45" stroke="#3E5E34" stroke-width="2"/><rect x="60" y="20" width="140" height="90" fill="#4E7F45" stroke="#3E5E34" stroke-width="2"/><rect x="520" y="30" width="160" height="70" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><rect x="680" y="140" width="100" height="100" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="30" y="300" width="150" height="100" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="470" y="300" width="120" height="130" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="660" y="330" width="120" height="140" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="250" y="430" width="200" height="60" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><path d="M0 250H800M400 0V500" stroke="#3E5E34" stroke-width="2" fill="none"/><path d="M0 120C200 150 500 90 800 130" stroke="#CFE0EC" stroke-width="16" fill="none"/><path d="M40 40C200 20 600 30 760 50L770 385 C600 407 400 367 200 399 S60 387 30 377 Z" fill="#3D6F96" stroke="#3D6F96" stroke-width="12" stroke-linejoin="round"/><path d="M40 40C200 20 600 30 760 50L770 385 C600 407 400 367 200 399 S60 387 30 377 Z" fill="#2F5F86" opacity=".92"/><polygon points="170,110 600,100 640,400 200,410" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg></div>
+            <span class="sat-tag is-before">Before · 2 Feb · S-1</span>
+            <span class="sat-tag is-after">After · 8 Feb · S-1</span>
+            <span class="sat-handle" aria-hidden="true"></span>
+            <input class="sat-range" type="range" min="0" max="100" value="50" aria-label="Compare before and after for DMK-01">
+          </div>
+          <div class="sat-readings">
+            <div class="reading"><span class="label">Flooded (S-1 VV)</span><b>92%</b></div><div class="reading"><span class="label">Flood duration</span><b>9 days</b></div>
+            <div class="reading"><span class="label">NDVI before → after</span><b>0,72 → 0,18</b></div><div class="reading"><span class="label">Crop change</span><b>−75%</b></div>
+            <div class="reading"><span class="label">Confidence</span><span class="pill pill-ok">High</span></div>
+          </div>
+        </div><div class="tab-panel" id="sp2" role="tabpanel" aria-labelledby="st2" hidden style="margin-top:20px">
+          <div class="sat" data-compare>
+            <div class="sat-layer sat-before"><svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="800" height="500" fill="#5D9253"/><rect x="0" y="0" width="400" height="250" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="0" width="400" height="250" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="0" y="250" width="400" height="250" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="250" width="400" height="250" fill="#4E7F45" stroke="#3E5E34" stroke-width="2"/><rect x="60" y="20" width="140" height="90" fill="#4E7F45" stroke="#3E5E34" stroke-width="2"/><rect x="520" y="30" width="160" height="70" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><rect x="680" y="140" width="100" height="100" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="30" y="300" width="150" height="100" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="470" y="300" width="120" height="130" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="660" y="330" width="120" height="140" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="250" y="430" width="200" height="60" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><path d="M0 250H800M400 0V500" stroke="#3E5E34" stroke-width="2" fill="none"/><path d="M0 120C200 150 500 90 800 130" stroke="#CFE0EC" stroke-width="16" fill="none"/><polygon points="150,105 590,115 620,395 180,400" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg></div>
+            <div class="sat-layer sat-after"><svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="800" height="500" fill="#5D9253"/><rect x="0" y="0" width="400" height="250" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="0" width="400" height="250" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="0" y="250" width="400" height="250" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="250" width="400" height="250" fill="#4E7F45" stroke="#3E5E34" stroke-width="2"/><rect x="60" y="20" width="140" height="90" fill="#4E7F45" stroke="#3E5E34" stroke-width="2"/><rect x="520" y="30" width="160" height="70" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><rect x="680" y="140" width="100" height="100" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="30" y="300" width="150" height="100" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="470" y="300" width="120" height="130" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="660" y="330" width="120" height="140" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="250" y="430" width="200" height="60" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><path d="M0 250H800M400 0V500" stroke="#3E5E34" stroke-width="2" fill="none"/><path d="M0 120C200 150 500 90 800 130" stroke="#CFE0EC" stroke-width="16" fill="none"/><path d="M40 40C200 20 600 30 760 50L770 341 C600 363 400 323 200 355 S60 343 30 333 Z" fill="#3D6F96" stroke="#3D6F96" stroke-width="12" stroke-linejoin="round"/><path d="M40 40C200 20 600 30 760 50L770 341 C600 363 400 323 200 355 S60 343 30 333 Z" fill="#2F5F86" opacity=".92"/><polygon points="150,105 590,115 620,395 180,400" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg></div>
+            <span class="sat-tag is-before">Before · 2 Feb · S-1</span>
+            <span class="sat-tag is-after">After · 8 Feb · S-1</span>
+            <span class="sat-handle" aria-hidden="true"></span>
+            <input class="sat-range" type="range" min="0" max="100" value="50" aria-label="Compare before and after for DMK-02">
+          </div>
+          <div class="sat-readings">
+            <div class="reading"><span class="label">Flooded (S-1 VV)</span><b>78%</b></div><div class="reading"><span class="label">Flood duration</span><b>8 days</b></div>
+            <div class="reading"><span class="label">NDVI before → after</span><b>0,70 → 0,26</b></div><div class="reading"><span class="label">Crop change</span><b>−63%</b></div>
+            <div class="reading"><span class="label">Confidence</span><span class="pill pill-ok">High</span></div>
+          </div>
+        </div><div class="tab-panel" id="sp3" role="tabpanel" aria-labelledby="st3" hidden style="margin-top:20px">
+          <div class="sat" data-compare>
+            <div class="sat-layer sat-before"><svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="800" height="500" fill="#5D9253"/><rect x="0" y="0" width="400" height="250" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="0" width="400" height="250" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="0" y="250" width="400" height="250" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="250" width="400" height="250" fill="#4E7F45" stroke="#3E5E34" stroke-width="2"/><rect x="60" y="20" width="140" height="90" fill="#4E7F45" stroke="#3E5E34" stroke-width="2"/><rect x="520" y="30" width="160" height="70" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><rect x="680" y="140" width="100" height="100" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="30" y="300" width="150" height="100" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="470" y="300" width="120" height="130" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="660" y="330" width="120" height="140" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="250" y="430" width="200" height="60" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><path d="M0 250H800M400 0V500" stroke="#3E5E34" stroke-width="2" fill="none"/><path d="M0 120C200 150 500 90 800 130" stroke="#CFE0EC" stroke-width="16" fill="none"/><polygon points="200,100 640,110 600,405 160,395" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg></div>
+            <div class="sat-layer sat-after"><svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="800" height="500" fill="#5D9253"/><rect x="0" y="0" width="400" height="250" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="0" width="400" height="250" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="0" y="250" width="400" height="250" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="250" width="400" height="250" fill="#4E7F45" stroke="#3E5E34" stroke-width="2"/><rect x="60" y="20" width="140" height="90" fill="#4E7F45" stroke="#3E5E34" stroke-width="2"/><rect x="520" y="30" width="160" height="70" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><rect x="680" y="140" width="100" height="100" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="30" y="300" width="150" height="100" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="470" y="300" width="120" height="130" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="660" y="330" width="120" height="140" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="250" y="430" width="200" height="60" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><path d="M0 250H800M400 0V500" stroke="#3E5E34" stroke-width="2" fill="none"/><path d="M0 120C200 150 500 90 800 130" stroke="#CFE0EC" stroke-width="16" fill="none"/><path d="M40 40C200 20 600 30 760 50L770 298 C600 320 400 280 200 312 S60 300 30 290 Z" fill="#3D6F96" stroke="#3D6F96" stroke-width="12" stroke-linejoin="round"/><path d="M40 40C200 20 600 30 760 50L770 298 C600 320 400 280 200 312 S60 300 30 290 Z" fill="#2F5F86" opacity=".92"/><polygon points="200,100 640,110 600,405 160,395" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg></div>
+            <span class="sat-tag is-before">Before · 2 Feb · S-1</span>
+            <span class="sat-tag is-after">After · 8 Feb · S-1</span>
+            <span class="sat-handle" aria-hidden="true"></span>
+            <input class="sat-range" type="range" min="0" max="100" value="50" aria-label="Compare before and after for DMK-03">
+          </div>
+          <div class="sat-readings">
+            <div class="reading"><span class="label">Flooded (S-1 VV)</span><b>64%</b></div><div class="reading"><span class="label">Flood duration</span><b>6 days</b></div>
+            <div class="reading"><span class="label">NDVI before → after</span><b>0,69 → 0,35</b></div><div class="reading"><span class="label">Crop change</span><b>−49%</b></div>
+            <div class="reading"><span class="label">Confidence</span><span class="pill pill-ok">High</span></div>
+          </div>
+        </div><div class="tab-panel" id="sp4" role="tabpanel" aria-labelledby="st4" hidden style="margin-top:20px">
+          <div class="sat" data-compare>
+            <div class="sat-layer sat-before"><svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="800" height="500" fill="#5D9253"/><rect x="0" y="0" width="400" height="250" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="0" width="400" height="250" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="0" y="250" width="400" height="250" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="250" width="400" height="250" fill="#4E7F45" stroke="#3E5E34" stroke-width="2"/><rect x="60" y="20" width="140" height="90" fill="#4E7F45" stroke="#3E5E34" stroke-width="2"/><rect x="520" y="30" width="160" height="70" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><rect x="680" y="140" width="100" height="100" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="30" y="300" width="150" height="100" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="470" y="300" width="120" height="130" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="660" y="330" width="120" height="140" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="250" y="430" width="200" height="60" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><path d="M0 250H800M400 0V500" stroke="#3E5E34" stroke-width="2" fill="none"/><path d="M0 120C200 150 500 90 800 130" stroke="#CFE0EC" stroke-width="16" fill="none"/><polygon points="180,110 580,100 650,390 220,410" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg></div>
+            <div class="sat-layer sat-after"><svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="800" height="500" fill="#5D9253"/><rect x="0" y="0" width="400" height="250" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="0" width="400" height="250" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="0" y="250" width="400" height="250" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="250" width="400" height="250" fill="#4E7F45" stroke="#3E5E34" stroke-width="2"/><rect x="60" y="20" width="140" height="90" fill="#4E7F45" stroke="#3E5E34" stroke-width="2"/><rect x="520" y="30" width="160" height="70" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><rect x="680" y="140" width="100" height="100" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="30" y="300" width="150" height="100" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="470" y="300" width="120" height="130" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="660" y="330" width="120" height="140" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="250" y="430" width="200" height="60" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><path d="M0 250H800M400 0V500" stroke="#3E5E34" stroke-width="2" fill="none"/><path d="M0 120C200 150 500 90 800 130" stroke="#CFE0EC" stroke-width="16" fill="none"/><path d="M40 40C200 20 600 30 760 50L770 227 C600 249 400 209 200 241 S60 229 30 219 Z" fill="#3D6F96" stroke="#3D6F96" stroke-width="12" stroke-linejoin="round"/><path d="M40 40C200 20 600 30 760 50L770 227 C600 249 400 209 200 241 S60 229 30 219 Z" fill="#2F5F86" opacity=".92"/><polygon points="180,110 580,100 650,390 220,410" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg></div>
+            <span class="sat-tag is-before">Before · 2 Feb · S-1</span>
+            <span class="sat-tag is-after">After · 8 Feb · S-1</span>
+            <span class="sat-handle" aria-hidden="true"></span>
+            <input class="sat-range" type="range" min="0" max="100" value="50" aria-label="Compare before and after for DMK-04">
+          </div>
+          <div class="sat-readings">
+            <div class="reading"><span class="label">Flooded (S-1 VV)</span><b>41%</b></div><div class="reading"><span class="label">Flood duration</span><b>4 days</b></div>
+            <div class="reading"><span class="label">NDVI before → after</span><b>0,71 → 0,49</b></div><div class="reading"><span class="label">Crop change</span><b>−31%</b></div>
+            <div class="reading"><span class="label">Confidence</span><span class="pill pill-info">Medium</span></div>
+          </div>
+        </div><div class="tab-panel" id="sp5" role="tabpanel" aria-labelledby="st5" hidden style="margin-top:20px">
+          <div class="sat" data-compare>
+            <div class="sat-layer sat-before"><svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="800" height="500" fill="#5D9253"/><rect x="0" y="0" width="400" height="250" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="0" width="400" height="250" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="0" y="250" width="400" height="250" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="250" width="400" height="250" fill="#4E7F45" stroke="#3E5E34" stroke-width="2"/><rect x="60" y="20" width="140" height="90" fill="#4E7F45" stroke="#3E5E34" stroke-width="2"/><rect x="520" y="30" width="160" height="70" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><rect x="680" y="140" width="100" height="100" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="30" y="300" width="150" height="100" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="470" y="300" width="120" height="130" fill="#6FA463" stroke="#3E5E34" stroke-width="2"/><rect x="660" y="330" width="120" height="140" fill="#5D9253" stroke="#3E5E34" stroke-width="2"/><rect x="250" y="430" width="200" height="60" fill="#7DAF6C" stroke="#3E5E34" stroke-width="2"/><path d="M0 250H800M400 0V500" stroke="#3E5E34" stroke-width="2" fill="none"/><path d="M0 120C200 150 500 90 800 130" stroke="#CFE0EC" stroke-width="16" fill="none"/><polygon points="170,120 610,105 630,400 190,405" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg></div>
+            <div class="sat-layer sat-after"><svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="800" height="500" fill="#7E9A6F"/><rect x="0" y="0" width="400" height="250" fill="#8BA67C" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="0" width="400" height="250" fill="#7E9A6F" stroke="#3E5E34" stroke-width="2"/><rect x="0" y="250" width="400" height="250" fill="#93AE86" stroke="#3E5E34" stroke-width="2"/><rect x="400" y="250" width="400" height="250" fill="#6F8C61" stroke="#3E5E34" stroke-width="2"/><rect x="60" y="20" width="140" height="90" fill="#6F8C61" stroke="#3E5E34" stroke-width="2"/><rect x="520" y="30" width="160" height="70" fill="#93AE86" stroke="#3E5E34" stroke-width="2"/><rect x="680" y="140" width="100" height="100" fill="#8BA67C" stroke="#3E5E34" stroke-width="2"/><rect x="30" y="300" width="150" height="100" fill="#7E9A6F" stroke="#3E5E34" stroke-width="2"/><rect x="470" y="300" width="120" height="130" fill="#8BA67C" stroke="#3E5E34" stroke-width="2"/><rect x="660" y="330" width="120" height="140" fill="#7E9A6F" stroke="#3E5E34" stroke-width="2"/><rect x="250" y="430" width="200" height="60" fill="#93AE86" stroke="#3E5E34" stroke-width="2"/><path d="M0 250H800M400 0V500" stroke="#3E5E34" stroke-width="2" fill="none"/><path d="M0 120C200 150 500 90 800 130" stroke="#CFE0EC" stroke-width="16" fill="none"/><polygon points="170,120 610,105 630,400 190,405" fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/></svg></div>
+            <span class="sat-tag is-before">Before · 2 Feb · S-1</span>
+            <span class="sat-tag is-after">After · 8 Feb · S-1</span>
+            <span class="sat-handle" aria-hidden="true"></span>
+            <input class="sat-range" type="range" min="0" max="100" value="50" aria-label="Compare before and after for DMK-05">
+          </div>
+          <div class="sat-readings">
+            <div class="reading"><span class="label">Flooded (S-1 VV)</span><b>Not detected</b></div><div class="reading"><span class="label">Flood duration</span><b>—</b></div>
+            <div class="reading"><span class="label">NDVI before → after</span><b>0,68 → 0,55</b></div><div class="reading"><span class="label">Crop change</span><b>−19%</b></div>
+            <div class="reading"><span class="label">Confidence</span><span class="pill pill-need">Low</span></div>
+          </div><p class="small muted" style="margin-top:12px">Radar can miss water under dense rice. Low confidence here; the 5 ground photos show standing water, and the adjuster decides.</p>
+        </div>
+          </section>
+
+          <section class="card rv" aria-label="Ground photos">
+            <div class="row-between" style="margin-bottom:16px"><h2 class="h-card">Ground photos (16)</h2><button class="btn btn-ghost btn-sm" type="button" data-stub="Showing 8 of 16 photos in this prototype.">Show all 16</button></div>
+            <div class="photo-grid pg3"><div class="photo rv" style="--i:0" title="14 Feb 2026, 07:12 WIB · −6.8318, 110.7041 · sha256 3be1…a40f"><img src="../../landing-preview/flooded.jpg" alt="Ground photo of the parcel, DMK-01 · 14 Feb, 07:12" loading="lazy" style="object-position:20% 40%"><span class="photo-chip">DMK-01 · 14 Feb, 07:12</span></div><div class="photo rv" style="--i:1" title="4 Feb 2026, 07:05 WIB · −6.8316, 110.7043 · sha256 91c4…2e7d"><img src="../../landing-preview/hero.jpg" alt="Ground photo of the parcel, DMK-01 · 4 Feb, 07:05 (before)" loading="lazy" style="object-position:30% 60%"><span class="photo-chip">DMK-01 · 4 Feb, 07:05 (before)</span></div><div class="photo rv" style="--i:2" title="14 Feb 2026, 08:02 WIB · −6.8478, 110.7118 · sha256 c07a…5b13"><img src="../../landing-preview/flooded.jpg" alt="Ground photo of the parcel, DMK-02 · 14 Feb, 08:02" loading="lazy" style="object-position:60% 70%"><span class="photo-chip">DMK-02 · 14 Feb, 08:02</span></div><div class="photo rv" style="--i:3" title="15 Feb 2026, 07:20 WIB · −6.8806, 110.7395 · sha256 5d22…e9f0"><img src="../../landing-preview/flooded.jpg" alt="Ground photo of the parcel, DMK-03 · 15 Feb, 07:20" loading="lazy" style="object-position:80% 30%"><span class="photo-chip">DMK-03 · 15 Feb, 07:20</span></div><div class="photo rv" style="--i:4" title="15 Feb 2026, 08:14 WIB · −6.9150, 110.7263 · sha256 a8e3…17cb"><img src="../../landing-preview/flooded.jpg" alt="Ground photo of the parcel, DMK-04 · 15 Feb, 08:14" loading="lazy" style="object-position:40% 85%"><span class="photo-chip">DMK-04 · 15 Feb, 08:14</span></div><div class="photo rv" style="--i:5" title="15 Feb 2026, 06:58 WIB · −6.9040, 110.6610 · sha256 f61b…8d02"><img src="../../landing-preview/flooded.jpg" alt="Ground photo of the parcel, DMK-05 · 15 Feb, 06:58" loading="lazy" style="object-position:10% 60%"><span class="photo-chip">DMK-05 · 15 Feb, 06:58</span></div><div class="photo rv" style="--i:5" title="20 Feb 2026, 07:31 WIB · −6.9041, 110.6608 · sha256 2c9d…b671"><img src="../../landing-preview/flooded.jpg" alt="Ground photo of the parcel, DMK-05 · 20 Feb, 07:31" loading="lazy" style="object-position:70% 55%"><span class="pill pill-info photo-pill">Added 20 Feb</span><span class="photo-chip">DMK-05 · 20 Feb, 07:31</span></div><div class="photo rv" style="--i:5" title="20 Feb 2026, 07:33 WIB · −6.9039, 110.6609 · sha256 7ee0…4a58"><img src="../../landing-preview/flooded.jpg" alt="Ground photo of the parcel, DMK-05 · 20 Feb, 07:33" loading="lazy" style="object-position:50% 20%"><span class="pill pill-info photo-pill">Added 20 Feb</span><span class="photo-chip">DMK-05 · 20 Feb, 07:33</span></div></div>
+            <p class="meta" style="margin-top:12px">Every photo records time, place and a fingerprint when it is taken. Hover a photo for its details.</p>
+          </section>
+
+          <section class="card rv" aria-label="What you can see">
+            <h2 class="h-card">What you can see</h2>
+            <p class="small muted" style="margin-top:8px">Only the 6 parcels covered by POL-JSD-26-004127 and this claim's evidence. Data shared with consent on 10 Jan 2026 (payload <span class="mono">a91c3f0e…77e3</span>).</p>
+          </section>
+        </div>
+
+        <aside class="card dec rv" aria-label="Decision" style="--i:1">
+          <p class="label">Proposed amount (rules engine)</p>
+          <p class="num-l" style="color:var(--muted);margin-top:8px">Rp190.400.000</p>
+          <div class="table-wrap" style="margin-top:16px"><table class="table dtable"><thead><tr><th>Parcel</th><th>Loss</th><th class="r">Amount</th></tr></thead><tbody><tr data-si="76800000" data-prop="92"><td class="id">DMK-01</td><td><div class="affix lp"><input class="input" inputmode="decimal" value="92" aria-label="Loss percent for DMK-01"><span class="affix-suf">%</span></div></td><td class="num"><span data-amt data-fade>Rp76.800.000</span></td></tr><tr class="chg" hidden><td colspan="3"><span class="pill pill-need">Changed from 20%</span></td></tr><tr data-si="67200000" data-prop="75"><td class="id">DMK-02</td><td><div class="affix lp"><input class="input" inputmode="decimal" value="75" aria-label="Loss percent for DMK-02"><span class="affix-suf">%</span></div></td><td class="num"><span data-amt data-fade>Rp50.400.000</span></td></tr><tr class="chg" hidden><td colspan="3"><span class="pill pill-need">Changed from 20%</span></td></tr><tr data-si="57600000" data-prop="55"><td class="id">DMK-03</td><td><div class="affix lp"><input class="input" inputmode="decimal" value="55" aria-label="Loss percent for DMK-03"><span class="affix-suf">%</span></div></td><td class="num"><span data-amt data-fade>Rp31.680.000</span></td></tr><tr class="chg" hidden><td colspan="3"><span class="pill pill-need">Changed from 20%</span></td></tr><tr data-si="70400000" data-prop="30"><td class="id">DMK-04</td><td><div class="affix lp"><input class="input" inputmode="decimal" value="30" aria-label="Loss percent for DMK-04"><span class="affix-suf">%</span></div></td><td class="num"><span data-amt data-fade>Rp21.120.000</span></td></tr><tr class="chg" hidden><td colspan="3"><span class="pill pill-need">Changed from 20%</span></td></tr><tr data-si="52000000" data-prop="20" class="is-flag has-chg"><td class="id">DMK-05</td><td><div class="affix lp"><input class="input" inputmode="decimal" value="15" aria-label="Loss percent for DMK-05"><span class="affix-suf">%</span></div></td><td class="num"><span data-amt data-fade>Rp7.800.000</span></td></tr><tr class="chg is-flag"><td colspan="3"><span class="pill pill-need">Changed from 20%</span></td></tr></tbody></table></div>
+          <p class="meta" style="margin-top:12px">Total ≥90% pays 100% (Clause 6.3). Losses under 10% not paid (Clause 6.2).</p>
+
+          <div class="field" id="reasonField" style="margin-top:20px">
+            <label class="field-label" for="reason">Reason for change <span class="meta">(required)</span></label>
+            <textarea class="textarea" id="reason" style="min-height:96px">Field photos show partial lodging; plants are recovering.</textarea>
+            <span class="field-hint">Recorded in the audit log with your name.</span>
+          </div>
+
+          <dl class="kv" style="margin-top:12px">
+            <div><dt>Proposed</dt><dd class="num">Rp190.400.000</dd></div>
+            <div><dt>Your final</dt><dd class="num"><b data-fade id="finalAmt" style="font-size:22px;letter-spacing:-0.01em">Rp187.800.000</b></dd></div>
+            <div><dt>Difference</dt><dd class="num" data-fade id="diffAmt">−Rp2.600.000</dd></div>
+          </dl>
+
+          <div class="stack-sm" id="decisionActions" style="margin-top:16px">
+            <button class="btn btn-y btn-lg btn-block" type="button" id="approveBtn" data-open="approveModal">Approve Rp187.800.000</button>
+            <button class="btn btn-soft btn-block" type="button" data-open="infoSheet">Request more information</button>
+            <button class="btn btn-danger btn-block" type="button" data-open="denySheet">Deny</button>
+          </div>
+          <div class="card-ink card" id="approvedCard" hidden style="margin-top:16px">
+            <p class="h-card">Approved by you at 14:30 WIB</p>
+            <p class="small" style="margin-top:6px;color:rgba(255,255,255,.86)">Payout PAY-26-00318 sent at 14:32.</p>
+            <a class="btn btn-ghost" style="margin-top:12px;padding-left:0" href="06-payouts.html">Go to payouts<svg class="i i-sm" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+          </div>
+          <p class="small muted" style="margin-top:16px">When you approve, <span id="approveAmt2">Rp187.800.000</span> leaves your Jasindo wallet for the client's AiGRI wallet automatically. AiGRI can't change the amount.</p>
+          <p class="meta" style="margin-top:12px">Decision due 6 Mar 2026 (14 days from the complete packet on 20 Feb, Clause 9.1).</p>
+        </aside>
+      </div>
+    </main>
+  </div>
+</div>
+<dialog class="modal" id="approveModal" aria-labelledby="amT">
+  <div class="sheet-grab"></div>
+  <div class="ov-head"><h2 class="h-section" id="amT">Approve <span id="amAmt">Rp187.800.000</span>?</h2></div>
+  <div class="ov-body">
+    <dl class="kv">
+      <div><dt>Client</dt><dd>CV Tani Makmur Demak</dd></div>
+      <div><dt>From</dt><dd>Jasindo wallet <span class="meta">Balance Rp4.100.440.000</span></dd></div>
+      <div><dt>To</dt><dd>Client's AiGRI wallet</dd></div>
+      <div><dt>Reason</dt><dd>Field photos show partial lodging; plants are recovering.</dd></div>
+    </dl>
+  </div>
+  <div class="ov-foot"><button class="btn btn-soft" type="button" data-close>Cancel</button><button class="btn btn-ink" type="button" id="confirmApprove" data-close>Approve</button></div>
+</dialog>
+<dialog class="sheet" id="infoSheet" aria-labelledby="isT">
+  <div class="sheet-grab"></div>
+  <div class="ov-head"><h2 class="h-section" id="isT">Request more information</h2><button class="icon-btn" type="button" data-close aria-label="Close"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="ov-body stack-sm">
+    <p><span class="pill pill-info"><svg class="i-sm" aria-hidden="true"><use href="#i-file-pen"/></svg>Drafted by AiGRI, edit before sending</span></p>
+    <div class="field"><label class="field-label" for="infoMsg">Message to the client</label><textarea class="textarea" id="infoMsg">Please add a close-up ground photo of DMK-04 showing the water line on the plants.</textarea></div>
+  </div>
+  <div class="ov-foot"><button class="btn btn-ink" type="button" data-close data-toast="Request sent to CV Tani Makmur Demak. The settlement clock pauses until they reply." data-tone="ok">Send request</button></div>
+</dialog>
+<dialog class="sheet" id="denySheet" aria-labelledby="dsT">
+  <div class="sheet-grab"></div>
+  <div class="ov-head"><h2 class="h-section" id="dsT">Deny this claim</h2><button class="icon-btn" type="button" data-close aria-label="Close"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="ov-body stack-sm">
+    <div class="field"><label class="field-label" for="denyReason">Reason</label><div class="select-wrap"><select class="select" id="denyReason"><option>Peril not covered</option><option>Notice late</option><option>Asset not insured</option><option>Evidence doesn't support loss</option><option>Other</option></select></div></div>
+    <div class="field"><label class="field-label" for="denyMsg">Explain to the client</label><textarea class="textarea" id="denyMsg" placeholder="Say what you found and which clause applies"></textarea></div>
+    <p class="small muted">AiGRI never denies a claim for missing satellite data. The client can appeal.</p>
+  </div>
+  <div class="ov-foot"><button class="btn btn-danger" type="button" data-close data-toast="Not sent in this demo." data-tone="alert">Deny claim</button></div>
+</dialog>
+<script src="../shared/system.js"></script>
+<script>(function(){
+  var rows=[].slice.call(document.querySelectorAll('.dtable tr[data-si]'));
+  var PROPOSED=190400000;
+  var finalEl=document.getElementById('finalAmt'),diffEl=document.getElementById('diffAmt'),btn=document.getElementById('approveBtn');
+  var reason=document.getElementById('reasonField'),modalAmt=document.getElementById('amAmt'),amt2=document.getElementById('approveAmt2');
+  function money(n){return window.AG?AG.fmt.money(n):String(n);}
+  function setText(el,t){
+    if(!el||el.textContent===t)return;
+    if(window.AG&&AG.reduced()){el.textContent=t;return;}
+    el.style.opacity='0';
+    setTimeout(function(){el.textContent=t;el.style.opacity='1';},120);
+  }
+  function pct(r){var v=parseFloat(String(r.querySelector('input').value).replace(',','.'));if(isNaN(v))v=0;return Math.max(0,Math.min(100,v));}
+  function amount(r){var si=+r.getAttribute('data-si'),p=pct(r);return p>=90?si:(p<10?0:Math.round(si*p/100));}
+  function recalc(){
+    var total=0,changed=false;
+    rows.forEach(function(r){
+      var a=amount(r);total+=a;
+      var prop=+r.getAttribute('data-prop'),diff=pct(r)!==prop;
+      if(diff)changed=true;
+      setText(r.querySelector('[data-amt]'),money(a));
+      var chg=r.nextElementSibling;
+      r.classList.toggle('is-flag',diff);r.classList.toggle('has-chg',diff);
+      if(chg){chg.hidden=!diff;chg.classList.toggle('is-flag',diff);var p=chg.querySelector('.pill');if(p)p.textContent='Changed from '+prop+'%';}
+    });
+    var d=total-PROPOSED;
+    setText(finalEl,money(total));
+    setText(diffEl,d===0?'Rp0':money(d,{sign:true}));
+    setText(btn,'Approve '+money(total));
+    setText(modalAmt,money(total));setText(amt2,money(total));
+    if(reason)reason.hidden=!changed;
+    return total;
+  }
+  rows.forEach(function(r){r.querySelector('input').addEventListener('input',recalc);});
+  var ok=document.getElementById('confirmApprove');
+  if(ok)ok.addEventListener('click',function(){
+    var total=recalc();
+    var pill=document.getElementById('statusPill');
+    pill.className='pill pill-ok';setText(pill,'Approved');
+    document.getElementById('decisionActions').hidden=true;
+    var card=document.getElementById('approvedCard');
+    card.hidden=false;card.classList.add('rv');
+    requestAnimationFrame(function(){requestAnimationFrame(function(){card.classList.add('in');});});
+    rows.forEach(function(r){r.querySelector('input').readOnly=true;});
+    var rs=document.getElementById('reason');if(rs)rs.readOnly=true;
+    if(window.AG)AG.toast('Approved. '+money(total)+' is on its way to CV Tani Makmur Demak.',{tone:'ok'});
+  });
+})();</script>
+</body>
+</html>

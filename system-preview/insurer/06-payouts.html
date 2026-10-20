@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Wallet and payouts · Jasindo on AiGRI</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: payouts table needs 7 columns in 960px */
+.ptable th,.ptable td{padding-left:10px;padding-right:10px}
+.ptable td{line-height:1.35}
+.ptable td:nth-child(-n+3){white-space:nowrap}
+.wallet-hero .num-xl{overflow-wrap:anywhere}
+</style>
+</head>
+<body data-portal="insurer" data-page="wallet">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="01-dashboard.html" aria-label="Jasindo on AiGRI, dashboard">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Asuransi Jasindo</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="dashboard" href="01-dashboard.html"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Dashboard</a>
+      <a class="nav-item" data-nav="products" href="02-publish-policy.html"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg>Products</a>
+      <a class="nav-item" data-nav="underwriting" href="#" data-stub="The underwriting queue is not part of this prototype."><svg class="i" aria-hidden="true"><use href="#i-shield-check"/></svg>Underwriting<span class="nav-badge">4</span></a>
+      <a class="nav-item" data-nav="claims" href="03-claims-queue.html"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Claims<span class="nav-badge">41</span></a>
+      <a class="nav-item" data-nav="portfolio" href="05-portfolio.html"><svg class="i" aria-hidden="true"><use href="#i-layers"/></svg>Portfolio</a>
+      <a class="nav-item" data-nav="wallet" href="06-payouts.html" aria-current="page"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet &amp; payouts</a>
+    </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span>
+      <div class="me"><span class="avatar">WS</span><span class="me-text"><span class="me-name">Wulan Sari</span><span class="me-meta">Finance · Jasindo</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><span aria-current="page">Wallet &amp; payouts</span></nav>
+      <div class="topbar-actions">
+        <span class="meta only-desktop" style="margin-right:8px">Thursday 26 Feb 2026, 10:00 WIB</span>
+        <input class="input" type="search" placeholder="Search claims, clients, policies" aria-label="Search claims, clients, policies">
+        <a class="icon-btn" href="#" data-stub="Notifications open here." aria-label="Notifications"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg></a>
+        <span class="avatar" aria-hidden="true">WS</span>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+
+      <div class="page-head">
+        <p class="eyebrow rv">Finance</p>
+        <div class="row rv" style="--i:1;gap:16px;flex-wrap:wrap"><h1 class="title">Wallet and payouts</h1><span class="sandbox">Sandbox</span></div>
+        <p class="lead rv" style="--i:2">Payouts leave this wallet automatically when an adjuster approves a claim. Nobody, including AiGRI, can send one without that approval.</p>
+      </div>
+
+      <section class="split" aria-label="Balance and integrity">
+        <div class="wallet-hero rv">
+          <div class="wh-top"><span class="label">Jasindo wallet</span></div>
+          <p class="num-xl">Rp3.885.440.000</p>
+          <p class="meta">Funded from Bank Mandiri ••••0457 · alert below Rp1.000.000.000</p>
+          <div class="wh-actions"><button class="btn btn-w" type="button" data-open="fundSheet">Add funds</button><button class="btn btn-ghost" type="button" data-stub="Alert levels are not editable in this prototype.">Set alert level</button></div>
+        </div>
+        <div class="card rv" style="--i:1">
+          <h2 class="h-card">Integrity checks (live)</h2>
+          <ul class="check-list" style="margin-top:16px">
+            <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>0 payouts without an approval event</span></li>
+            <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>0 double payouts</span></li>
+            <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Ledger matches bank statement (last run 26 Feb, 06:00)</span></li>
+            <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>No payout-account changes in the 24 h before a payout</span></li>
+          </ul>
+        </div>
+      </section>
+
+      <section class="grid-3 section" aria-label="Totals">
+        <div class="stat rv"><span class="label">Paid since 1 Feb</span><span class="num-l">Rp412.600.000</span><span class="meta">21 payouts</span></div>
+        <div class="stat rv" style="--i:1"><span class="label">Premiums received this season</span><span class="num-l">Rp1,86 M</span><span class="meta">Written on Jasindo policies</span></div>
+        <div class="stat rv" style="--i:2"><span class="label">Approved, awaiting payout</span><span class="num-l">Rp0</span><span class="meta">Paid automatically on approval</span></div>
+      </section>
+
+      <section class="card card-lg section rv" aria-label="Payouts">
+        <div class="row-between" style="margin-bottom:16px"><h2 class="h-section">Payouts</h2><span class="meta">Latest 5 of 21 since 1 Feb 2026</span></div>
+        <div class="table-wrap"><table class="table ptable"><thead><tr><th>Time (WIB)</th><th>Payout ID</th><th>Claim</th><th>Client</th><th class="r">Amount</th><th>Trigger</th><th>Status</th></tr></thead><tbody><tr><td>26 Feb 2026, 09:41</td><td class="id">PAY-26-00327</td><td>CLM-26-000431</td><td>Pak Slamet Santoso</td><td class="num">Rp20.000.000</td><td>Approved by Dimas Prasetyo, 09:40</td><td><span class="pill pill-ok">Paid</span></td></tr><tr><td>26 Feb 2026, 09:12</td><td class="id">PAY-26-00326</td><td>CLM-26-000436</td><td>Pak Slamet Santoso</td><td class="num">Rp7.200.000</td><td>Approved by Dimas Prasetyo, 09:10</td><td><span class="pill pill-ok">Paid</span></td></tr><tr class="is-sel"><td>24 Feb 2026, 14:32</td><td class="id">PAY-26-00318</td><td><a href="04-claim-review.html">CLM-26-000418</a></td><td>CV Tani Makmur Demak</td><td class="num">Rp187.800.000</td><td>Approved by Dimas Prasetyo, 14:30</td><td><span class="pill pill-ok">Paid</span></td></tr><tr><td>23 Feb 2026, 16:05</td><td class="id">PAY-26-00311</td><td>CLM-26-000422</td><td>Ibu Siti Aminah</td><td class="num">Rp4.800.000</td><td>Approved by Dimas Prasetyo, 16:03</td><td><span class="pill pill-ok">Paid</span></td></tr><tr><td>22 Feb 2026, 11:20</td><td class="id">PAY-26-00305</td><td>CLM-26-000417</td><td>Bapak Suparman</td><td class="num">Rp6.000.000</td><td>Approved by Dimas Prasetyo, 11:18</td><td><span class="pill pill-ok">Paid</span></td></tr></tbody></table></div>
+      </section>
+
+      <section class="card section rv" aria-label="Money in">
+        <h2 class="h-card">Money in</h2>
+        <div style="margin-top:8px">
+          <div class="txn is-in"><span class="txn-icon"><svg class="i" aria-hidden="true"><use href="#i-arrow-down-left"/></svg></span><div><p class="txn-title">Premium · POL-JSD-26-004127 · CV Tani Makmur Demak</p><p class="meta">10 Jan 2026, 09:41 WIB</p></div><span class="txn-amt">+Rp13.440.000</span></div>
+          <div class="txn is-in"><span class="txn-icon"><svg class="i" aria-hidden="true"><use href="#i-arrow-down-left"/></svg></span><div><p class="txn-title">Wallet funding · Bank Mandiri ••••0457</p><p class="meta">2 Jan 2026</p></div><span class="txn-amt">+Rp5.000.000.000</span></div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+<dialog class="sheet" id="fundSheet" aria-labelledby="fsT">
+  <div class="sheet-grab"></div>
+  <div class="ov-head"><h2 class="h-section" id="fsT">Add funds</h2><button class="icon-btn" type="button" data-close aria-label="Close"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="ov-body stack">
+    <p class="small muted">Sandbox wallet. No real money moves.</p>
+    <div class="field"><label class="field-label" for="fundAmt">Amount</label><div class="affix"><span class="affix-pre">Rp</span><input class="input" id="fundAmt" value="1.000.000.000" inputmode="numeric"></div></div>
+    <div class="field"><label class="field-label" for="fundMethod">Method</label><input class="input" id="fundMethod" value="BI-FAST from Bank Mandiri ••••0457" readonly></div>
+  </div>
+  <div class="ov-foot"><button class="btn btn-y btn-block" type="button" data-close data-toast="Sandbox: funds added." data-tone="ok">Add Rp1.000.000.000</button></div>
+</dialog>
+<script src="../shared/system.js"></script>
+
+</body>
+</html>

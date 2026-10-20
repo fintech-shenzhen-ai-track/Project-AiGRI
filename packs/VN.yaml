@@ -1,0 +1,28 @@
+# Vietnam country pack (planned). Values from PLAN 2.1 and a05.
+code: VN
+name: Vietnam
+status: planned
+currency: {code: VND, symbol: "₫", symbol_spacing: none, display_decimals: 0, minor_unit_exponent: 0}
+locale: vi-VN
+format: {decimal: ",", thousands: ".", date: "D MMM YYYY", datetime: "D MMM YYYY, HH:mm z"}
+area_unit: {code: ha, label: "ha", per_hectare: 1}
+timezones: [{iana: Asia/Ho_Chi_Minh, label: ICT, default: true}]
+regulator: {short: "Insurance Supervisory Authority", name: "Ministry of Finance Insurance Supervisory Authority"}
+data_law: "Decree 13/2023 on personal data protection"
+payout_rails: ["NAPAS"]
+hazard_sources:
+  - {id: nchmf, name: "NCHMF", kind: warnings}
+  - {id: open_meteo, name: "Open-Meteo", kind: forecast}
+  - {id: gdacs, name: "GDACS", kind: cyclone}
+public_schemes: []
+insurers: []
+setup_steps:
+  - {step: "Currency and formats", done: true}
+  - {step: "Area units", done: false}
+  - {step: "Regulator review", done: false}
+  - {step: "Data law and DPA template", done: false}
+  - {step: "Payout rails", done: false}
+  - {step: "Hazard data feeds", done: false}
+  - {step: "Satellite coverage check", done: false}
+  - {step: "Insurer onboarding", done: false}
+  - {step: "Pilot clients", done: false}

@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aigri.local/schemas/purchase-packet.schema.json",
+  "title": "Purchase packet",
+  "description": "What the Client confirms when buying: the product version, named assets, period, money and exactly which data is shared with which insurer. Its hash binds the Tier 2 confirmation and the per-insurer consent.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["purchase_id", "quote_id", "client", "insurer", "record", "assets", "period", "sum_insured", "premium", "payment_method", "consent", "drafted_at"],
+  "properties": {
+    "purchase_id": { "type": "string" },
+    "quote_id": { "type": "string" },
+    "curation_run_id": { "type": "string" },
+    "client": {
+      "type": "object", "additionalProperties": false,
+      "required": ["client_id", "name"],
+      "properties": { "client_id": { "type": "string" }, "name": { "type": "string" }, "business_id": { "type": "string" } }
+    },
+    "insurer": {
+      "type": "object", "additionalProperties": false,
+      "required": ["insurer_id", "code", "name"],
+      "properties": { "insurer_id": { "type": "string" }, "code": { "type": "string" }, "name": { "type": "string" } }
+    },
+    "record": {
+      "type": "object", "additionalProperties": false,
+      "required": ["record_id", "record_key", "version", "product_name"],
+      "properties": { "record_id": { "type": "string" }, "record_key": { "type": "string" }, "version": { "type": "integer" }, "product_name": { "type": "string" } }
+    },
+    "assets": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["asset_type", "asset_id", "code", "sum_insured_minor"],
+        "properties": {
+          "asset_type": { "enum": ["parcel", "livestock_group"] },
+          "asset_id": { "type": "string" },
+          "code": { "type": "string" },
+          "area_ha": { "type": "string" },
+          "crop": { "type": "string" },
+          "variety": { "type": "string" },
+          "planting_date": { "type": "string", "format": "date" },
+          "species": { "type": "string" },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "sum_insured_minor": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "period": {
+      "type": "object", "additionalProperties": false,
+      "required": ["start", "end"],
+      "properties": { "start": { "type": "string", "format": "date" }, "end": { "type": "string", "format": "date" } }
+    },
+    "sum_insured": { "$ref": "#/$defs/money" },
+    "premium": { "$ref": "#/$defs/money" },
+    "premium_subsidy": { "$ref": "#/$defs/money" },
+    "premium_client_share": { "$ref": "#/$defs/money" },
+    "within_issuance_limits": { "type": "boolean" },
+    "payment_method": { "enum": ["aigri_wallet", "virtual_account"] },
+    "consent": {
+      "type": "object", "additionalProperties": false,
+      "required": ["share_with_insurer_id", "data_items"],
+      "properties": {
+        "share_with_insurer_id": { "type": "string" },
+        "data_items": {
+          "type": "array", "minItems": 1,
+          "items": { "enum": ["business_name", "business_id", "contact", "parcel_boundaries", "crops", "varieties", "planting_dates", "livestock_location", "ear_tags", "claims_under_this_policy"] }
+        },
+        "law": { "type": "string", "examples": ["UU PDP, Law 27/2022"] }
+      }
+    },
+    "drafted_at": { "type": "string", "format": "date-time" }
+  },
+  "$defs": {
+    "money": {
+      "type": "object", "additionalProperties": false,
+      "required": ["amount_minor", "currency"],
+      "properties": { "amount_minor": { "type": "integer", "minimum": 0 }, "currency": { "type": "string", "pattern": "^[A-Z]{3}$" } }
+    }
+  }
+}

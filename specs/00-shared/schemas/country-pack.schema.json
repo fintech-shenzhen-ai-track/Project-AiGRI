@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aigri.local/schemas/country-pack.schema.json",
+  "title": "Country pack",
+  "description": "Everything country-specific. Loaded from packs/<CODE>.yaml at startup and served to the PWA at /api/v1/packs/<code>. Components never hard-code any value that lives here (constitution Article IX).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["code", "name", "status", "currency", "locale", "format", "area_unit", "timezones", "regulator", "data_law", "payout_rails", "hazard_sources", "public_schemes", "insurers", "setup_steps"],
+  "properties": {
+    "code": { "type": "string", "pattern": "^[A-Z]{2}$" },
+    "name": { "type": "string" },
+    "status": { "enum": ["live", "planned"] },
+    "live_since": { "type": "string", "format": "date" },
+    "currency": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "symbol", "display_decimals", "minor_unit_exponent"],
+      "properties": {
+        "code": { "type": "string", "pattern": "^[A-Z]{3}$" },
+        "symbol": { "type": "string" },
+        "symbol_spacing": { "enum": ["none", "space"] },
+        "display_decimals": { "type": "integer", "minimum": 0, "maximum": 3 },
+        "minor_unit_exponent": { "type": "integer", "minimum": 0, "maximum": 3, "description": "ISO 4217 exponent used for amount_minor." },
+        "compact_units": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["at_least", "suffix", "divide_by"],
+            "properties": { "at_least": { "type": "number" }, "suffix": { "type": "string" }, "divide_by": { "type": "number" } }
+          }
+        }
+      }
+    },
+    "locale": { "type": "string", "examples": ["id-ID"] },
+    "format": {
+      "type": "object", "additionalProperties": false,
+      "required": ["decimal", "thousands", "date", "datetime"],
+      "properties": {
+        "decimal": { "type": "string", "maxLength": 1 },
+        "thousands": { "type": "string", "maxLength": 1 },
+        "date": { "type": "string", "examples": ["D MMM YYYY"] },
+        "datetime": { "type": "string", "examples": ["D MMM YYYY, HH:mm z"] },
+        "phone_example": { "type": "string" }
+      }
+    },
+    "area_unit": {
+      "type": "object", "additionalProperties": false,
+      "required": ["code", "label", "per_hectare"],
+      "properties": { "code": { "enum": ["ha", "rai"] }, "label": { "type": "string" }, "per_hectare": { "type": "number" } }
+    },
+    "timezones": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["iana", "label"],
+        "properties": { "iana": { "type": "string" }, "label": { "type": "string" }, "default": { "type": "boolean" } }
+      }
+    },
+    "regulator": {
+      "type": "object", "additionalProperties": false,
+      "required": ["short", "name"],
+      "properties": { "short": { "type": "string" }, "name": { "type": "string" } }
+    },
+    "data_law": { "type": "string" },
+    "payout_rails": { "type": "array", "items": { "type": "string" } },
+    "hazard_sources": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["id", "name", "kind"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "kind": { "enum": ["warnings", "forecast", "hazard_map", "disaster_records", "flood_map", "satellite", "cyclone"] },
+          "access": { "type": "string" }
+        }
+      }
+    },
+    "public_schemes": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["code", "name", "gloss"],
+        "properties": { "code": { "type": "string" }, "name": { "type": "string" }, "gloss": { "type": "string" } }
+      }
+    },
+    "regions": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["code", "name", "level"],
+        "properties": { "code": { "type": "string" }, "name": { "type": "string" }, "level": { "enum": ["province", "regency", "district"] }, "parent": { "type": "string" } }
+      }
+    },
+    "insurers": {
+      "type": "array",
+      "description": "Empty for planned packs. Never invent names.",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["code", "name", "initials"],
+        "properties": { "code": { "type": "string", "pattern": "^[A-Z]{3}$" }, "name": { "type": "string" }, "initials": { "type": "string" } }
+      }
+    },
+    "setup_steps": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["step", "done"],
+        "properties": { "step": { "type": "string" }, "done": { "type": "boolean" } }
+      }
+    },
+    "alert_loss_probability": { "type": "number", "minimum": 0, "maximum": 1 }
+  }
+}

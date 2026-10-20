@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aigri.local/schemas/curation-run.schema.json",
+  "title": "Curation run output",
+  "description": "Ranked shortlist for one Client. Deterministic: the same input snapshot gives byte-identical canonical JSON. No field here can come from a sponsorship or boost input; none exists.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["client_id", "formula_version", "risk_model_version", "theta", "input_hash", "ranked", "dropped", "computed_at"],
+  "properties": {
+    "client_id": { "type": "string" },
+    "formula_version": { "type": "string", "description": "Git commit hash or semantic version of curation/formula.py." },
+    "risk_model_version": { "type": "string" },
+    "theta": { "type": "string", "pattern": "^(0(\\.[0-9]{1,4})?|1(\\.0{1,4})?)$" },
+    "input_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "asset_summary": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "parcels": { "type": "integer" },
+        "area_ha": { "type": "string" },
+        "heads": { "type": "integer" },
+        "season_label": { "type": "string", "examples": ["MT1 2025/26"] }
+      }
+    },
+    "ranked": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["rank", "record_id", "record_key", "record_version", "insurer_code", "fit", "score", "premium", "sum_insured", "expected_payout", "reasons", "confidence"],
+        "properties": {
+          "rank": { "type": "integer", "minimum": 1 },
+          "record_id": { "type": "string" },
+          "record_key": { "type": "string" },
+          "record_version": { "type": "integer" },
+          "insurer_code": { "type": "string" },
+          "fit": { "type": "string", "description": "Decimal string 0..1, 4 places." },
+          "score": { "type": "string", "description": "Expected payout ÷ premium, decimal string, 4 places; displayed with 2." },
+          "premium": { "$ref": "#/$defs/money" },
+          "premium_client_share": { "$ref": "#/$defs/money" },
+          "sum_insured": { "$ref": "#/$defs/money" },
+          "expected_payout": { "$ref": "#/$defs/money" },
+          "is_top": { "type": "boolean" },
+          "reasons": {
+            "type": "array", "maxItems": 4,
+            "items": {
+              "type": "object", "additionalProperties": false,
+              "required": ["kind", "message_key", "params", "clauses"],
+              "properties": {
+                "kind": { "enum": ["covers", "not_covered", "pays_from", "decision_window", "lowest_premium", "subsidy"] },
+                "message_key": { "type": "string", "description": "Template key; text is rendered by the UI from params so the wording stays in one place." },
+                "params": { "type": "object" },
+                "clauses": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          },
+          "confidence": { "enum": ["high", "medium", "low"] }
+        }
+      }
+    },
+    "dropped": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["record_id", "record_key", "insurer_code", "reason_code", "reason_params"],
+        "properties": {
+          "record_id": { "type": "string" },
+          "record_key": { "type": "string" },
+          "insurer_code": { "type": "string" },
+          "reason_code": { "enum": ["not_eligible", "fit_below_theta", "crop_or_species_mismatch", "region_not_sold", "period_no_overlap", "sale_window_closed"] },
+          "reason_params": { "type": "object" },
+          "clause": { "type": "string" },
+          "fit": { "type": "string" }
+        }
+      }
+    },
+    "computed_at": { "type": "string", "format": "date-time" }
+  },
+  "$defs": {
+    "money": {
+      "type": "object", "additionalProperties": false,
+      "required": ["amount_minor", "currency"],
+      "properties": { "amount_minor": { "type": "integer" }, "currency": { "type": "string", "pattern": "^[A-Z]{3}$" } }
+    }
+  }
+}

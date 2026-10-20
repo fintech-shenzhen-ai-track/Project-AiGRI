@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Sign in · AiGRI</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: sign-in split layout (no shell on this screen) */
+.signin{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);min-height:860px}
+.si-hero{position:relative;overflow:hidden;color:#fff;display:flex;flex-direction:column;justify-content:space-between;padding:40px;min-height:860px;background:var(--ink)}
+.si-hero img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;object-position:50% 62%}
+.si-top,.si-copy{position:relative;z-index:1}
+.si-top svg{display:block;height:48px;width:auto}
+.si-h{font-size:40px;line-height:1.05;font-weight:700;letter-spacing:-0.03em;max-width:520px;text-wrap:balance}
+.si-sub{font-size:19px;line-height:1.45;margin-top:16px;max-width:480px;color:#fff}
+.si-form{display:flex;align-items:center;justify-content:center;padding:32px 24px}
+.si-col{width:100%;max-width:400px;display:flex;flex-direction:column}
+.si-col .sun-rise{width:72px;height:72px;margin-bottom:16px}
+.si-col .lead{margin-top:8px;font-size:17px}
+.si-field{margin-top:20px}
+.si-col .btn-y{margin-top:20px}
+.si-new{margin-top:16px}
+.si-demo{margin-top:24px}
+.si-demo .label{margin-bottom:12px}
+.demo-row{min-height:72px;padding:12px 16px}
+.si-foot{margin-top:20px;gap:8px 16px}
+@media (max-width:600px){
+  .signin{display:block;min-height:0}
+  .si-hero{min-height:300px;height:300px;padding:20px}
+  .si-top svg{height:36px}
+  .si-h{font-size:30px}
+  .si-form{padding:32px 20px 48px}
+}
+</style>
+</head>
+<body data-portal="client" data-page="signin">
+<a class="skip" href="#main">Skip to content</a>
+<div class="signin">
+  <section class="si-hero settle-box" aria-label="AiGRI">
+    <img class="settle" src="../../landing-preview/hero.jpg" alt="A wide green rice paddy under a cloudy sky">
+    <div class="scrim"></div>
+    <div class="si-top" role="img" aria-label="AiGRI"><svg viewBox="0 0 756 256" height="48" aria-hidden="true" focusable="false">
+<path fill="#FFFFFF" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#FFFFFF" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#FFFFFF" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#FFFFFF" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#FFFFFF" x="130" y="116" width="22" height="72"/>
+<path fill="#FFCB3D" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#FFCB3D" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#FFFFFF" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#FFFFFF" x="243" y="117" width="44" height="22"/>
+<path fill="#FFFFFF" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#FFFFFF" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#FFFFFF" x="419" y="68" width="22" height="120"/>
+</g></svg></div>
+    <div class="si-copy">
+      <h2 class="si-h">Insurance that sees the storm coming.</h2>
+      <p class="si-sub only-desktop">Policies ranked for your risk. Alerts before the flood. Claims filed with satellite and photo proof.</p>
+    </div>
+  </section>
+  <main id="main" class="si-form">
+    <div class="si-col">
+      <svg class="sun-rise rv" viewBox="0 0 256 256" role="img" aria-label="AiGRI symbol"><path class="sr-row" style="--r:0" fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/><rect class="sr-row" style="--r:1" fill="#557945" x="36" y="136" width="204" height="44" rx="16"/><rect class="sr-row" style="--r:2" fill="#557945" x="16" y="196" width="224" height="44" rx="16"/><circle class="sr-sun" fill="#FFCB3D" cx="196" cy="58" r="46"/></svg>
+      <div class="rv"><h1 class="title">Welcome to AiGRI</h1>
+      <p class="lead">Sign in with your phone number or email. We'll send you a code.</p></div>
+      <div class="field si-field rv" style="--i:1"><label class="field-label" for="who">Phone or email</label><input class="input" id="who" type="text" value="+62 812-2741-0938" inputmode="email" autocomplete="username"></div>
+      <a class="btn btn-y btn-block btn-lg rv" style="--i:2" href="02-onboarding.html">Continue</a>
+      <p class="small si-new rv" style="--i:2">New to AiGRI? <a href="02-onboarding.html">Create an account</a></p>
+      <div class="si-demo rv" style="--i:3">
+        <p class="label">Demo accounts</p>
+        <div class="stack-sm">
+          <a class="card card-link demo-row" href="09-home.html"><span class="avatar" style="background:var(--white)">CV</span><span class="grow"><span class="h-card" style="display:block">CV Tani Makmur Demak</span><span class="small muted">Client · rice SME, Demak</span></span></a>
+          <a class="card card-link demo-row" href="04-herd.html"><span class="avatar" style="background:var(--white)">PS</span><span class="grow"><span class="h-card" style="display:block">Pak Slamet Santoso</span><span class="small muted">Client · farmer with rice and 12 cattle, Grobogan</span></span></a>
+          <a class="card card-link demo-row" href="../insurer/01-dashboard.html"><span class="avatar" style="background:var(--white)">DP</span><span class="grow"><span class="h-card" style="display:block">Dimas Prasetyo</span><span class="small muted">Insurer · Asuransi Jasindo, claims adjuster</span></span></a>
+          <a class="card card-link demo-row" href="../admin/01-overview.html"><span class="avatar" style="background:var(--white)">RK</span><span class="grow"><span class="h-card" style="display:block">Rina Kartika</span><span class="small muted">Superadmin · AiGRI platform operations</span></span></a>
+        </div>
+      </div>
+      <div class="wrap-row meta si-foot rv" style="--i:3"><span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span><span>English</span><span>Sandbox prototype. No real money moves.</span></div>
+    </div>
+  </main>
+</div>
+
+<script src="../shared/system.js"></script>
+</body>
+</html>

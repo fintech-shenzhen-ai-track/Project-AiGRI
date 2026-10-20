@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Wallet · AiGRI</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: country chip under the title is shown in the head on every width; txn rows wrap on narrow cards */
+@media (max-width:600px){.txn{grid-template-columns:40px minmax(0,1fr)}.txn-amt{grid-column:2;text-align:left}}
+</style>
+</head>
+<body data-portal="client" data-page="wallet">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="09-home.html" aria-label="AiGRI home">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Client</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="home" href="09-home.html"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+      <a class="nav-item" data-nav="farm" href="03-parcels.html"><svg class="i" aria-hidden="true"><use href="#i-farm"/></svg>My farm</a>
+      <a class="nav-item" data-nav="risk" href="05-risk.html"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg>Risk</a>
+      <a class="nav-item" data-nav="cover" href="06-policies.html"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+      <a class="nav-item" data-nav="claims" href="12-claim-status.html"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+      <a class="nav-item" data-nav="wallet" href="13-wallet.html"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+      <a class="nav-item" data-nav="alerts" href="10-alert.html"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg>Alerts<span class="nav-badge is-need">1</span></a>
+      </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span>
+      <div class="me"><span class="avatar">SW</span><span class="me-text"><span class="me-name">Ibu Sri Wahyuni</span><span class="me-meta">CV Tani Makmur Demak</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="mbar">
+      <a class="logo-link" href="09-home.html" aria-label="AiGRI home"><svg viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/></svg></a>
+      <span class="mbar-title">Wallet</span>
+      <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+    </header>
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><span aria-current="page">Wallet</span></nav>
+      <div class="topbar-actions">
+        <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+        <span class="avatar" aria-hidden="true">SW</span>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+
+      <div class="banner banner-ok rv" style="margin-bottom:32px">
+        <span class="banner-icon" style="background:none;width:40px;height:40px"><svg class="sun-rise rv" viewBox="0 0 256 256" width="40" height="40" role="img" aria-label="AiGRI symbol">
+<path class="sr-row" style="--r:0" fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect class="sr-row" style="--r:1" fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect class="sr-row" style="--r:2" fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle class="sr-sun" fill="#FFCB3D" cx="196" cy="58" r="46"/></svg></span>
+        <p class="banner-title">Payout arrived: Rp187.800.000</p>
+        <p class="banner-text">From Asuransi Jasindo for claim CLM-26-000418, 24 Feb 2026, 14:32 WIB.</p>
+        <div class="banner-actions"><a class="btn btn-ghost" href="12-claim-status.html">View claim</a></div>
+      </div>
+
+      <div class="page-head">
+        <h1 class="title rv">Wallet</h1>
+        <div class="wrap-row rv" style="margin-top:12px;--i:1"><span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span><span class="sandbox">Sandbox: no real money moves</span></div>
+      </div>
+
+      <div class="split">
+        <section class="wallet-hero rv" aria-labelledby="bal">
+          <div class="wh-top"><span class="label" id="bal">Balance</span></div>
+          <p class="num-xl" data-count="199360000" data-from="11560000" data-format="money">Rp199.360.000</p>
+          <p class="meta">Available now</p>
+          <div class="wh-actions"><button class="btn btn-w" type="button" data-open="withdrawSheet">Withdraw</button><button class="btn btn-ghost" type="button" data-stub="Adding funds is not part of this prototype.">Add funds</button></div>
+          <p class="meta">Linked: BCA ••••4821 via BI-FAST</p>
+        </section>
+        <section class="card rv" style="--i:1" aria-labelledby="ssn">
+          <h2 class="h-card" id="ssn">This season</h2>
+          <dl class="kv" style="margin-top:8px">
+            <div><dt>Premiums paid</dt><dd>Rp13.440.000</dd></div>
+            <div><dt>Payouts received</dt><dd>Rp187.800.000</dd></div>
+            <div><dt>Claims paid</dt><dd>1</dd></div>
+          </dl>
+        </section>
+      </div>
+
+      <section class="card card-lg section rv" aria-labelledby="acth">
+        <h2 class="h-section" id="acth" style="margin-bottom:16px">Activity</h2>
+        <div class="tabs" data-tabs role="tablist" aria-label="Activity filter">
+          <button class="tab-btn" role="tab" id="at1" aria-controls="ap1" aria-selected="true" type="button">All</button>
+          <button class="tab-btn" role="tab" id="at2" aria-controls="ap2" aria-selected="false" type="button">Money in</button>
+          <button class="tab-btn" role="tab" id="at3" aria-controls="ap3" aria-selected="false" type="button">Money out</button>
+          <span class="tabs-ink" aria-hidden="true"></span>
+        </div>
+        <div class="tab-panel" id="ap1" role="tabpanel" aria-labelledby="at1" style="margin-top:16px"><div class="txn is-in rv"><span class="txn-icon"><svg class="i" aria-hidden="true"><use href="#i-arrow-down-left"/></svg></span><div><p class="txn-title">Payout · CLM-26-000418</p><p class="meta">Asuransi Jasindo · 24 Feb 2026, 14:32 · PAY-26-00318</p></div><span class="txn-amt">+Rp187.800.000</span></div><div class="txn "><span class="txn-icon"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span><div><p class="txn-title">Premium · POL-JSD-26-004127</p><p class="meta">To Asuransi Jasindo · 10 Jan 2026, 09:41</p></div><span class="txn-amt">−Rp13.440.000</span></div><div class="txn is-in"><span class="txn-icon"><svg class="i" aria-hidden="true"><use href="#i-arrow-down-left"/></svg></span><div><p class="txn-title">Top-up via BI-FAST</p><p class="meta">From BCA ••••4821 · 9 Jan 2026, 16:05</p></div><span class="txn-amt">+Rp25.000.000</span></div></div>
+        <div class="tab-panel" id="ap2" role="tabpanel" aria-labelledby="at2" style="margin-top:16px" hidden><div class="txn is-in"><span class="txn-icon"><svg class="i" aria-hidden="true"><use href="#i-arrow-down-left"/></svg></span><div><p class="txn-title">Payout · CLM-26-000418</p><p class="meta">Asuransi Jasindo · 24 Feb 2026, 14:32 · PAY-26-00318</p></div><span class="txn-amt">+Rp187.800.000</span></div><div class="txn is-in"><span class="txn-icon"><svg class="i" aria-hidden="true"><use href="#i-arrow-down-left"/></svg></span><div><p class="txn-title">Top-up via BI-FAST</p><p class="meta">From BCA ••••4821 · 9 Jan 2026, 16:05</p></div><span class="txn-amt">+Rp25.000.000</span></div></div>
+        <div class="tab-panel" id="ap3" role="tabpanel" aria-labelledby="at3" style="margin-top:16px" hidden><div class="txn "><span class="txn-icon"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span><div><p class="txn-title">Premium · POL-JSD-26-004127</p><p class="meta">To Asuransi Jasindo · 10 Jan 2026, 09:41</p></div><span class="txn-amt">−Rp13.440.000</span></div></div>
+        <button class="btn btn-ghost" type="button" style="margin-top:12px;margin-left:-14px" data-stub="Statements are not part of this prototype.">Download statement (CSV)</button>
+      </section>
+
+      <section class="card section rv" aria-labelledby="pah">
+        <h2 class="h-card" id="pah" style="margin-bottom:16px">Payout accounts</h2>
+        <div class="row-between wrap-row">
+          <div class="row"><span class="ins-mark" style="background:var(--white)">BCA</span><div><p class="txn-title">BCA ••••4821</p><p class="meta">CV TANI MAKMUR DEMAK · BI-FAST · default</p></div></div>
+          <span class="pill pill-ok">Verified</span>
+        </div>
+        <div style="margin-top:20px"><button class="btn btn-soft" type="button" data-stub="E-wallets are not part of this prototype.">Add an e-wallet</button><p class="meta" style="margin-top:8px">GoPay, OVO or DANA</p></div>
+        <p class="meta" style="margin-top:16px">Changing payout details needs a code sent to your phone. AiGRI's assistant can't change them.</p>
+      </section>
+    </main>
+  </div>
+</div>
+<nav class="tabbar" aria-label="Main">
+  <a class="tab" data-nav="home alerts" href="09-home.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+  <a class="tab" data-nav="farm risk" href="03-parcels.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-farm"/></svg>Farm</a>
+  <a class="tab" data-nav="cover" href="06-policies.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+  <a class="tab" data-nav="claims" href="12-claim-status.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+  <a class="tab" data-nav="wallet" href="13-wallet.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+  </nav>
+<dialog class="sheet" id="withdrawSheet" aria-labelledby="wdT">
+  <div class="sheet-grab"></div>
+  <div class="ov-head"><h3 class="h-section" id="wdT">Withdraw</h3><button class="icon-btn" type="button" data-close aria-label="Close"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="ov-body stack">
+    <div class="field"><label class="field-label" for="amt">Amount</label><div class="affix"><span class="affix-pre">Rp</span><input class="input" id="amt" value="150.000.000" inputmode="numeric"></div><span class="field-hint">Available Rp199.360.000</span></div>
+    <dl class="kv">
+      <div><dt>To</dt><dd>BCA ••••4821 (CV TANI MAKMUR DEMAK)</dd></div>
+      <div><dt>Fee</dt><dd>Rp2.500 (BI-FAST)</dd></div>
+      <div><dt>Arrives</dt><dd>Usually within a minute</dd></div>
+    </dl>
+  </div>
+  <div class="ov-foot"><button class="btn btn-y btn-block" type="button" data-close data-toast="Withdrawal of Rp150.000.000 sent to BCA ••••4821." data-tone="ok">Withdraw Rp150.000.000</button></div>
+</dialog>
+<script src="../shared/system.js"></script>
+</body>
+</html>

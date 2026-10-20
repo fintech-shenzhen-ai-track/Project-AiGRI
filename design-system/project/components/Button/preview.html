@@ -1,0 +1,31 @@
+<!-- @dsCard group="Actions" height=250 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Button preview</title>
+<style>.pv{padding:16px 20px}</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><symbol id="i-bell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></symbol><symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M7 11l5 5 5-5M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></symbol><symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol></defs></svg>
+<div class="pv stack-sm">
+  <div class="wrap-row">
+    <button class="btn btn-y" type="button">Get covered</button>
+    <button class="btn btn-ink" type="button">Continue</button>
+    <button class="btn btn-soft" type="button">Secondary</button>
+    <button class="btn btn-ghost" type="button">View clause</button>
+    <button class="btn btn-danger" type="button">Deny claim</button>
+  </div>
+  <div class="wrap-row">
+    <button class="btn btn-ink btn-sm" type="button">Small</button>
+    <button class="btn btn-ink" type="button"><svg class="i i-sm" aria-hidden="true"><use href="#i-download"/></svg>Download</button>
+    <button class="btn btn-ink btn-lg" type="button">Large</button>
+    <button class="icon-btn" type="button" aria-label="Search"><svg class="i" aria-hidden="true"><use href="#i-search"/></svg></button>
+    <button class="icon-btn" type="button" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></button>
+  </div>
+  <div class="wrap-row">
+    <button class="btn btn-ink" type="button" disabled>Disabled</button>
+    <button class="btn btn-ink is-loading" type="button" aria-busy="true">Confirm and pay</button>
+    <span class="card-green" style="padding:12px 20px;border-radius:var(--r-md);display:inline-flex;gap:8px"><button class="btn btn-w" type="button">Withdraw</button><button class="btn btn-ghost" type="button">Add funds</button></span>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Rice Flood &amp; Drought Cover · AiGRI</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: c07 covered rows, sticky aside, mobile buy bar */
+.cov-list{display:flex;flex-direction:column;gap:8px}
+.cov-row{list-style:none;display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;padding:14px 16px;border-radius:var(--r-sm);background:var(--surface-2)}
+.cov-row>.i{color:var(--ok)}
+.cov-row.is-minus>.i{color:var(--muted-2)}
+.cov-row>span{flex:1 1 auto;min-width:0}
+.aside-sticky{position:sticky;top:88px}
+.buybar{position:sticky;bottom:var(--tabbar-h);z-index:30;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 20px;background:var(--white);box-shadow:0 -8px 24px rgba(31,42,27,.08)}
+.buybar p{margin:0}
+@media (max-width:600px){ .aside-sticky{position:static} .cov-row>span{flex:1 1 calc(100% - 40px)} }
+</style>
+</head>
+<body data-portal="client" data-page="cover">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="09-home.html" aria-label="AiGRI home">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Client</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="home" href="09-home.html"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+      <a class="nav-item" data-nav="farm" href="03-parcels.html"><svg class="i" aria-hidden="true"><use href="#i-farm"/></svg>My farm</a>
+      <a class="nav-item" data-nav="risk" href="05-risk.html"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg>Risk</a>
+      <a class="nav-item" data-nav="cover" href="06-policies.html"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+      <a class="nav-item" data-nav="claims" href="12-claim-status.html"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+      <a class="nav-item" data-nav="wallet" href="13-wallet.html"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+      <a class="nav-item" data-nav="alerts" href="10-alert.html"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg>Alerts<span class="nav-badge is-need">1</span></a>
+    </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span>
+      <div class="me"><span class="avatar">SW</span><span class="me-text"><span class="me-name">Ibu Sri Wahyuni</span><span class="me-meta">CV Tani Makmur Demak</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="mbar">
+      <a class="logo-link" href="09-home.html" aria-label="AiGRI home"><svg viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/><rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/><rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/><circle fill="#FFCB3D" cx="196" cy="58" r="46"/></svg></a>
+      <span class="mbar-title">Policy details</span>
+      <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+    </header>
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="06-policies.html">Cover</a><span class="crumb-sep">›</span><span aria-current="page">Rice Flood &amp; Drought Cover</span></nav>
+      <div class="topbar-actions">
+        <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+        <span class="avatar" aria-hidden="true">SW</span>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+      <div class="page-head">
+        <p class="eyebrow rv">Asuransi Jasindo · Policy record PR-JSD-RFD-2026</p>
+        <h1 class="title rv" style="--i:1">Rice Flood &amp; Drought Cover</h1>
+        <p class="lead rv" style="--i:2">For irrigated and rain-fed lowland rice. One planting season, up to 4 months.</p>
+        <p class="rv" style="--i:3;margin-top:16px"><span class="pill pill-ok">Ranked #1 for your risk</span></p>
+      </div>
+
+      <div class="split">
+        <div class="stack-lg">
+          <div class="card card-lg rv"><h2 class="h-section" style="margin-bottom:8px">What it costs for your 6 parcels</h2><dl class="kv">
+            <div><dt>Area covered</dt><dd>48,0 ha</dd></div>
+            <div><dt>Sum insured</dt><dd>Rp384.000.000<span class="meta">Rp8.000.000/ha</span> <button class="cite" type="button" data-open="clauseSheet" data-clause="6.1">Clause 6.1</button></dd></div>
+            <div><dt>Premium</dt><dd>Rp13.440.000<span class="meta">3,5% of the sum insured</span> <button class="cite" type="button" data-open="clauseSheet" data-clause="7.1">Clause 7.1</button></dd></div>
+            <div><dt>Expected payout at your risk</dt><dd>Rp19.622.400</dd></div>
+            <div><dt>Cover period</dt><dd>10 Jan – 30 Apr 2026<span class="meta">From the day you buy to the end of the season</span> <button class="cite" type="button" data-open="clauseSheet" data-clause="3.1">Clause 3.1</button></dd></div>
+          </dl></div>
+
+          <div><h2 class="h-section" style="margin-bottom:16px">What's covered</h2><ul class="cov-list"><li class="cov-row"><svg class="i i-sm" aria-hidden="true"><use href="#i-check"/></svg><span>Flood</span><button class="cite" type="button" data-open="clauseSheet" data-clause="4.1">Clause 4.1</button></li><li class="cov-row"><svg class="i i-sm" aria-hidden="true"><use href="#i-check"/></svg><span>Drought, when irrigation fails 21 days in a row</span><button class="cite" type="button" data-open="clauseSheet" data-clause="4.2">Clause 4.2</button></li><li class="cov-row"><svg class="i i-sm" aria-hidden="true"><use href="#i-check"/></svg><span>Pest and disease outbreaks</span><button class="cite" type="button" data-open="clauseSheet" data-clause="4.3">Clause 4.3</button></li></ul></div>
+
+          <div><h2 class="h-section" style="margin-bottom:16px">What's not covered</h2><ul class="cov-list"><li class="cov-row is-minus"><svg class="i i-sm" aria-hidden="true"><use href="#i-minus"/></svg><span>Losses from poor farming practice</span><button class="cite" type="button" data-open="clauseSheet" data-clause="5.1">Clause 5.1</button></li><li class="cov-row is-minus"><svg class="i i-sm" aria-hidden="true"><use href="#i-minus"/></svg><span>War and civil unrest</span><button class="cite" type="button" data-open="clauseSheet" data-clause="5.2">Clause 5.2</button></li><li class="cov-row is-minus"><svg class="i i-sm" aria-hidden="true"><use href="#i-minus"/></svg><span>Falls in rice prices</span><button class="cite" type="button" data-open="clauseSheet" data-clause="5.3">Clause 5.3</button></li></ul></div>
+
+          <div><h2 class="h-section" style="margin-bottom:16px">How much it pays</h2>
+            <table class="table"><thead><tr><th>If the loss is</th><th>It pays</th></tr></thead><tbody>
+              <tr><td>Total loss, 90% or more</td><td>100% of the parcel's sum insured</td></tr>
+              <tr><td>Partial loss, 10–90%</td><td>Your assessed loss % of the sum insured</td></tr>
+              <tr><td>Under 10%</td><td>Nothing <button class="cite" type="button" data-open="clauseSheet" data-clause="6.3">Clause 6.3</button></td></tr>
+            </tbody></table>
+            <p class="small muted" style="margin-top:12px">If DMK-01 (9,6 ha) loses 50%: Rp38.400.000.</p></div>
+
+          <div><h2 class="h-section" style="margin-bottom:16px">Deadlines</h2><ul class="cov-list"><li class="cov-row"><svg class="i i-sm" aria-hidden="true"><use href="#i-check"/></svg><span>Report a loss within 7 days after the event ends</span><button class="cite" type="button" data-open="clauseSheet" data-clause="8.1">Clause 8.1</button></li><li class="cov-row"><svg class="i i-sm" aria-hidden="true"><use href="#i-check"/></svg><span>Evidence within 14 days of reporting</span><button class="cite" type="button" data-open="clauseSheet" data-clause="8.2">Clause 8.2</button></li><li class="cov-row"><svg class="i i-sm" aria-hidden="true"><use href="#i-check"/></svg><span>Jasindo decides within 14 days of a complete claim</span><button class="cite" type="button" data-open="clauseSheet" data-clause="9.1">Clause 9.1</button></li></ul>
+            <p class="small muted" style="margin-top:12px">AiGRI tracks these for you and warns you 2 days before.</p></div>
+
+          <div><h2 class="h-section" style="margin-bottom:16px">Common questions</h2><div class="stack-sm">
+<details class="disc"><summary>Am I covered if a levee breaks?</summary><div class="disc-body"><div class="disc-inner"><p>Yes. Flood from river overflow or levee failure is covered when water covers the crop for 3 days or more. <button class="cite" type="button" data-open="clauseSheet" data-clause="4.1">Clause 4.1</button></p></div></div></details>
+<details class="disc"><summary>Is drought covered if I have irrigation?</summary><div class="disc-body"><div class="disc-inner"><p>Only if the irrigation supply to the parcel fails for 21 days in a row. <button class="cite" type="button" data-open="clauseSheet" data-clause="4.2">Clause 4.2</button></p></div></div></details>
+<details class="disc"><summary>Is fire covered?</summary><div class="disc-body"><div class="disc-inner"><p>This policy doesn't say. AiGRI can't confirm fire cover. Ask Asuransi Jasindo before you buy. <span class="pill pill-pending">Not stated in this policy</span></p></div></div></details>
+          </div></div>
+        </div>
+
+        <aside class="stack aside-sticky" aria-label="About this policy">
+          <div class="card only-desktop"><h2 class="h-card">Buy this policy</h2><p class="num-l" style="margin-top:12px">Rp13.440.000</p><p class="meta">for 48,0 ha this season</p><a class="btn btn-y btn-block" href="08-buy.html" style="margin-top:16px">Get covered</a><p class="small muted" style="margin-top:12px">Inside Jasindo's limits for automatic issue (up to 100 ha). Your policy issues as soon as you pay.</p></div>
+          <div class="card"><h2 class="h-card">About the insurer</h2><p class="h-card" style="font-size:17px;margin-top:8px">Asuransi Jasindo</p><p class="small muted" style="margin-top:4px">State-owned insurer, licensed by OJK. Runs the national AUTP and AUTS/K schemes.</p><dl class="kv" style="margin-top:8px"><div><dt>Median decision time on AiGRI</dt><dd>5,1 days</dd></div><div><dt>Claims paid on AiGRI since Jan 2026</dt><dd>64</dd></div></dl></div>
+          <div class="card"><h2 class="h-card">What Jasindo will see</h2><p class="small muted" style="margin-top:8px">Only after you buy: the 6 parcels this policy covers, their crops and planting dates, and any claim you file. Not your wallet or other insurers' quotes.</p></div>
+          <button class="btn btn-ghost" type="button" data-stub="The 24-page policy PDF is not part of this prototype."><svg class="i i-sm" aria-hidden="true"><use href="#i-file"/></svg>View the policy PDF (24 pages)</button>
+        </aside>
+      </div>
+      <p class="demo-note">Demo data. Products and prices are illustrative.</p>
+    </main>
+      <div class="buybar only-mobile"><div><p class="label">Premium</p><p class="num" style="font-weight:700;font-size:19px">Rp13.440.000</p></div><a class="btn btn-y" href="08-buy.html">Get covered</a></div>
+  </div>
+</div>
+<nav class="tabbar" aria-label="Main">
+  <a class="tab" data-nav="home alerts" href="09-home.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+  <a class="tab" data-nav="farm risk" href="03-parcels.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-farm"/></svg>Farm</a>
+  <a class="tab" data-nav="cover" href="06-policies.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+  <a class="tab" data-nav="claims" href="12-claim-status.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+  <a class="tab" data-nav="wallet" href="13-wallet.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+</nav>
+
+<dialog class="sheet" id="clauseSheet" aria-labelledby="clT">
+  <div class="sheet-grab"></div>
+  <div class="ov-head"><h3 class="h-section" id="clT">Clause 4.1</h3><button class="icon-btn" type="button" data-close aria-label="Close"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="ov-body"><p class="muted" id="clB">Flood. Loss or damage to the insured crop caused by inundation from rain, river overflow or levee failure, where water covers the crop for at least 3 consecutive days.</p></div>
+  <div class="ov-foot"><button class="btn btn-ink" type="button" data-close>Got it</button></div>
+</dialog>
+
+<script src="../shared/system.js"></script>
+<script>(function(){
+  var C = {"3.1":["Clause 3.1","Cover period. Cover starts on the day you buy and ends on 30 April 2026, the end of the planting season."],"4.1":["Clause 4.1","Flood. Loss or damage to the insured crop caused by inundation from rain, river overflow or levee failure, where water covers the crop for at least 3 consecutive days."],"4.2":["Clause 4.2","Drought. Loss caused by lack of water where the irrigation supply to the parcel fails for 21 consecutive days or more."],"4.3":["Clause 4.3","Pest and disease. Loss caused by an outbreak of pests or crop disease that the local agriculture office confirms in writing."],"5.1":["Clause 5.1","Not covered. Loss that comes from poor farming practice, such as late planting, no weeding or no upkeep of drainage."],"5.2":["Clause 5.2","Not covered. Loss caused by war, riot or civil unrest."],"5.3":["Clause 5.3","Not covered. Falls in the market price of rice. The policy covers crop loss, not price."],"6.1":["Clause 6.1","Sum insured. Rp8.000.000 for each hectare insured for the season."],"6.3":["Clause 6.3","How losses are paid. A total loss of 90% or more pays 100% of the parcel's sum insured. A partial loss of 10% to 90% pays the assessed loss percentage. A loss under 10% is treated as no loss."],"7.1":["Clause 7.1","Premium. 3,5% of the sum insured, Rp280.000 for each hectare, paid before the policy starts."],"8.1":["Clause 8.1","Notice of loss. Report a loss within 7 days after the event ends."],"8.2":["Clause 8.2","Evidence. Send photos and other evidence within 14 days of reporting the loss."],"9.1":["Clause 9.1","The insurer will decide a claim within 14 days of receiving a complete claim."]};
+  document.addEventListener('click', function(e){
+    var t = e.target.closest && e.target.closest('[data-clause]'); if (!t) return;
+    var c = C[t.getAttribute('data-clause')]; if (!c) return;
+    document.getElementById('clT').textContent = c[0]; document.getElementById('clB').textContent = c[1];
+  });
+})();</script>
+</body>
+</html>

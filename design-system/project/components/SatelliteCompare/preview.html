@@ -1,0 +1,29 @@
+<!-- @dsCard group="Insurance" height=560 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SatelliteCompare preview</title>
+<style>.pv{padding:16px 20px}</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs></defs></svg>
+<div class="pv" style="max-width:680px">
+  <div class="sat">
+    <div class="sat-layer sat-before"><svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="800" height="500" fill="#5D9253"/><rect width="400" height="250" fill="#6FA463"/><rect x="400" y="250" width="400" height="250" fill="#4E7F45"/><rect y="250" width="400" height="250" fill="#7DAF6C"/><path d="M0 120C200 150 500 90 800 130" stroke="#CFE0EC" stroke-width="16" fill="none"/><polygon points="170,110 600,100 640,400 200,410" fill="none" stroke="#fff" stroke-width="4"/></svg></div>
+    <div class="sat-layer sat-after"><svg viewBox="0 0 800 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><rect width="800" height="500" fill="#5D9253"/><rect width="400" height="250" fill="#6FA463"/><rect x="400" y="250" width="400" height="250" fill="#4E7F45"/><rect y="250" width="400" height="250" fill="#7DAF6C"/><polygon points="150,90 620,90 660,420 180,430" fill="#2F5F86" opacity=".9"/><polygon points="170,110 600,100 640,400 200,410" fill="#2F5F86" stroke="#fff" stroke-width="4"/></svg></div>
+    <span class="sat-tag is-before">Before · 2 Feb 2026 · Sentinel-1</span>
+    <span class="sat-tag is-after">After · 8 Feb 2026 · Sentinel-1</span>
+    <span class="sat-handle" aria-hidden="true"></span>
+    <input class="sat-range" type="range" min="0" max="100" value="50" aria-label="Compare before and after">
+  </div>
+  <div class="sat-readings">
+    <div class="reading"><span class="label">Flooded</span><b>92%</b></div>
+    <div class="reading"><span class="label">Flood duration</span><b>9 days</b></div>
+    <div class="reading"><span class="label">Crop change (NDVI)</span><b>−75%</b></div>
+    <div class="reading"><span class="label">Confidence</span><span class="pill pill-ok">High</span></div>
+  </div>
+</div>
+<script>
+  var s = document.querySelector('.sat'), r = s.querySelector('.sat-range');
+  r.addEventListener('input', function () { s.style.setProperty('--x', r.value + '%'); });
+</script>
+</body>
+</html>

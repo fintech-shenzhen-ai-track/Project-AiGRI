@@ -1,0 +1,107 @@
+/* AiGRI — generated from tokens.json */
+:root, [data-theme="light"] {
+  --ink: #1f2a1b;
+  --muted: #44533f;
+  --muted-2: #6b7766;
+  --disabled: #8e9a89;
+  --green: #557945;
+  --leaf: #5d9253;
+  --sun: #ffcb3d;
+  --sun-press: #f2b91f;
+  --cream: #fff8e1;
+  --white: #ffffff;
+  --surface-1: #fafafb;
+  --surface-2: #f5f5f7;
+  --surface-3: #ededf0;
+  --track: #e3e3e0;
+  --focus: #1f2a1b;
+  --ok: #3f5c33;
+  --ok-bg: #e7f0e3;
+  --pending-bg: #ededf0;
+  --info: #2f5f86;
+  --info-bg: #e3edf5;
+  --need: #7a4b00;
+  --need-bg: #fbebcb;
+  --denied: #9e2f25;
+  --denied-bg: #fbe5e1;
+  --alert: #9a3a0e;
+  --alert-bg: #fce8dc;
+  --map-land: #eef2ea;
+  --map-water: #cfe0ec;
+  --map-road: #ffffff;
+  --water: #2f5f86;
+  --parcel: #5d9253;
+  --parcel-risk: #c8693a;
+  --parcel-off: #c9cec6;
+  --shadow-float: 0 8px 24px rgba(31,42,27,.10);
+  --shadow-modal: 0 24px 64px rgba(31,42,27,.18);
+  --shadow-knob: 0 2px 8px rgba(31,42,27,.14);
+}
+:root {
+  --s1: 4px;
+  --s2: 8px;
+  --s3: 12px;
+  --s4: 16px;
+  --s5: 24px;
+  --s6: 32px;
+  --s7: 48px;
+  --s8: 64px;
+  --s9: 96px;
+  --r-lg: 28px;
+  --r-md: 20px;
+  --r-sm: 14px;
+  --r-xs: 10px;
+  --r-pill: 999px;
+  --wrap: 1160px;
+  --side-w: 248px;
+  --rail-w: 76px;
+  --content-max: 1120px;
+  --topbar-h: 64px;
+  --mbar-h: 56px;
+  --tabbar-h: 64px;
+  --gutter: 48px;
+  --rise: 16px;
+  --rise-app: 8px;
+  --fs-body: 17px;
+  --fs-small: 15px;
+  --fs-label: 13px;
+  --fs-num-xl: 56px;
+  --fs-title: 34px;
+  --fs-num-l: 34px;
+  --fs-section: 24px;
+  --fs-card: 19px;
+  --fs-lead: 19px;
+  --tr-h1: -0.035em;
+  --tr-h2: -0.028em;
+  --tr-h3: -0.015em;
+  --tr-label: 0.08em;
+  --dur-press: 160ms;
+  --dur-fast: 200ms;
+  --dur-ui: 240ms;
+  --dur-reveal: 600ms;
+  --dur-explain: 1600ms;
+  --stagger: 60ms;
+  --dur-sheet: 320ms;
+  --dur-exit: 180ms;
+  --dur-count: 900ms;
+  --dur-draw: 900ms;
+  --dur-app-reveal: 360ms;
+  --stagger-app: 40ms;
+  --ease-out: cubic-bezier(0.23,1,0.32,1);
+  --ease-in-out: cubic-bezier(0.77,0,0.175,1);
+  --ease-drawer: cubic-bezier(0.32,0.72,0,1);
+  --font-sans: -apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Segoe UI",system-ui,sans-serif;
+  --font-mono: ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+.num-xl { font-family: var(--font-sans); font-size: 56px; font-weight: 700; line-height: 1.05; letter-spacing: -0.03em; }
+.title { font-family: var(--font-sans); font-size: 34px; font-weight: 700; line-height: 1.1; letter-spacing: -0.022em; }
+.num-l { font-family: var(--font-sans); font-size: 34px; font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; }
+.h-section { font-family: var(--font-sans); font-size: 24px; font-weight: 700; line-height: 1.2; letter-spacing: -0.015em; }
+.h-card { font-family: var(--font-sans); font-size: 19px; font-weight: 600; line-height: 1.3; letter-spacing: -0.01em; }
+.lead { font-family: var(--font-sans); font-size: 19px; font-weight: 400; line-height: 1.45; letter-spacing: 0; }
+.body { font-family: var(--font-sans); font-size: 17px; font-weight: 400; line-height: 1.5; letter-spacing: 0; }
+.small { font-family: var(--font-sans); font-size: 15px; font-weight: 400; line-height: 1.45; letter-spacing: 0; }
+.meta { font-family: var(--font-sans); font-size: 15px; font-weight: 400; line-height: 1.4; letter-spacing: 0; }
+.label { font-family: var(--font-sans); font-size: 13px; font-weight: 600; line-height: 1.3; letter-spacing: 0.08em; }
+.eyebrow { font-family: var(--font-sans); font-size: 13px; font-weight: 600; line-height: 1.3; letter-spacing: 0.08em; }
+.mono { font-family: var(--font-mono); font-size: 15px; font-weight: 400; line-height: 1.4; letter-spacing: 0; }

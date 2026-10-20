@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Publish policy · Jasindo on AiGRI</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: compiled-record rows (label, value, clause chip) */
+.split-r{grid-template-columns:300px minmax(0,1fr)}
+.rec{display:grid;grid-template-columns:160px minmax(0,1fr) auto;gap:8px 20px;align-items:baseline;padding:12px 0;border-radius:var(--r-sm);transition:background-color var(--dur-fast) ease}
+.rec .rk{font-size:var(--fs-small);color:var(--muted)}
+.rec .rval{min-width:0}
+.rec .rval .meta{display:block;margin-top:2px}
+.rec .rc{display:flex;align-items:center;gap:10px;justify-content:flex-end}
+.rec.flag{background:var(--need-bg);padding:16px;margin:4px -16px}
+.rec.flag .cite{background:var(--white)}
+.rec.flag{grid-template-columns:minmax(0,1fr) auto}
+.rec.flag .rk{grid-column:1;grid-row:1}
+.rec.flag .rc{grid-column:2;grid-row:1}
+.rec.flag .rval{grid-column:1/-1;grid-row:2}
+.card-lg>.label{margin:28px 0 4px}
+.card-lg>.label:first-child{margin-top:0}
+.sugg{margin-top:12px;padding:16px;border-radius:var(--r-sm);background:var(--white)}
+.sugg .label{color:var(--need)}
+/* local: PDF excerpt card sticks while the record scrolls */
+.pdf{position:sticky;top:88px}
+.pdfpage{margin-top:12px;padding:20px;border-radius:var(--r-sm);background:var(--white);max-height:520px;overflow:auto;font-size:var(--fs-small);line-height:1.6}
+.pdfpage .clause{padding:10px 12px;margin:0 -12px;border-radius:var(--r-xs);transition:background-color var(--dur-fast) ease}
+.pdfpage .clause+.clause{margin-top:6px}
+.pdfpage .clause.hl{background:var(--cream)}
+.pdfpage .clause.flash{animation:clauseflash 400ms var(--ease-out) 1}
+@keyframes clauseflash{from{opacity:.4}to{opacity:1}}
+/* local: white fields on the grey limits card */
+.lim .input,.lim .select,.lim .affix{background:var(--white)}
+.lim .affix .input{background:transparent}
+.lim .chip:not(.is-sel){background:var(--white)}
+.card-lg [data-select-group] .chip:not(.is-sel){background:var(--white)}
+.pill[data-pill]{transition:background-color var(--dur-fast) ease,color var(--dur-fast) ease,opacity 120ms ease}
+@media (prefers-reduced-motion:reduce){.pdfpage .clause.flash{animation:none}}
+</style>
+</head>
+<body data-portal="insurer" data-page="products">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="01-dashboard.html" aria-label="Jasindo on AiGRI, dashboard">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Asuransi Jasindo</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="dashboard" href="01-dashboard.html"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Dashboard</a>
+      <a class="nav-item" data-nav="products" href="02-publish-policy.html" aria-current="page"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg>Products</a>
+      <a class="nav-item" data-nav="underwriting" href="#" data-stub="The underwriting queue is not part of this prototype."><svg class="i" aria-hidden="true"><use href="#i-shield-check"/></svg>Underwriting<span class="nav-badge">4</span></a>
+      <a class="nav-item" data-nav="claims" href="03-claims-queue.html"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Claims<span class="nav-badge">41</span></a>
+      <a class="nav-item" data-nav="portfolio" href="05-portfolio.html"><svg class="i" aria-hidden="true"><use href="#i-layers"/></svg>Portfolio</a>
+      <a class="nav-item" data-nav="wallet" href="06-payouts.html"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet &amp; payouts</a>
+    </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span>
+      <div class="me"><span class="avatar">AL</span><span class="me-text"><span class="me-name">Ayu Lestari</span><span class="me-meta">Product manager · Jasindo</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="02-publish-policy.html">Products</a><span class="crumb-sep">›</span><span aria-current="page">New policy record</span></nav>
+      <div class="topbar-actions">
+        <span class="meta only-desktop" style="margin-right:8px">Monday 5 Jan 2026, 14:50 WIB</span>
+        <input class="input" type="search" placeholder="Search claims, clients, policies" aria-label="Search claims, clients, policies">
+        <a class="icon-btn" href="#" data-stub="Notifications open here." aria-label="Notifications"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg></a>
+        <span class="avatar" aria-hidden="true">AL</span>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+
+      <div class="page-head">
+        <p class="eyebrow rv">Product management</p>
+        <h1 class="title rv" style="--i:1">Rice Flood &amp; Drought Cover</h1>
+        <p class="lead rv" style="--i:2">AiGRI compiled your PDF into a policy record. Every field shows the clause it came from. Review the 2 flagged fields, set your limits, then publish.</p>
+        <div class="stepper rv" id="pubStepper" style="--n:4;--p:.333;--i:3;margin-top:28px;max-width:760px" role="list" aria-label="Publishing steps">
+          <div class="stepper-track"><span class="stepper-fill"></span></div>
+          <div class="step is-done" role="listitem"><span class="step-dot">1</span><span class="step-label">Upload</span></div>
+          <div class="step is-now" role="listitem" aria-current="step"><span class="step-dot">2</span><span class="step-label">Review record</span></div>
+          <div class="step" role="listitem"><span class="step-dot">3</span><span class="step-label">Issuance limits</span></div>
+          <div class="step" role="listitem"><span class="step-dot">4</span><span class="step-label">Publish</span></div>
+        </div>
+      </div>
+
+      <section class="card rv" aria-label="Uploaded file" style="margin-bottom:24px">
+        <div class="row" style="flex-wrap:wrap;gap:16px 20px">
+          <span class="ico-dot" style="background:var(--white)"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg></span>
+          <div style="flex:1;min-width:260px"><p class="h-card" style="word-break:break-all">Jasindo_Rice_Flood_Drought_Cover_2026.pdf</p><p class="meta">24 pages · 1,8 MB · uploaded 5 Jan 2026, 14:41 WIB</p></div>
+          <span class="pill pill-info">Compiled in 2 min 10 s</span>
+          <button class="btn btn-ghost" type="button" data-stub="Replacing the file is not part of this prototype.">Replace file</button>
+        </div>
+      </section>
+
+      <div class="banner banner-need rv" role="status" style="margin-bottom:32px">
+        <span class="banner-icon"><svg class="i" aria-hidden="true"><use href="#i-alert"/></svg></span>
+        <p class="banner-title">2 fields need your review</p>
+        <p class="banner-text">AiGRI's self-check asked 18 questions of the record and of the PDF text. 16 answers agreed. 2 didn't.</p>
+      </div>
+
+      <div class="split-r">
+        <aside class="card pdf rv" aria-label="PDF excerpt">
+          <p class="label">PDF · clause excerpt</p>
+          <div class="pdfpage" id="pdfPage" tabindex="0">
+            <p class="clause" id="cl-4-1"><b>4.1 Flood.</b> Loss or damage to the insured crop caused by inundation from rain, river overflow or levee failure, where water covers the crop for at least three (3) consecutive days.</p>
+            <p class="clause hl" id="cl-4-2"><b>4.2 Drought.</b> Loss caused by lack of water where the irrigation supply to the insured parcel fails for twenty-one (21) consecutive days or more, as certified by the local irrigation office.</p>
+            <p class="clause" id="cl-4-3"><b>4.3 Pest and disease.</b> Loss caused by an outbreak of pests or crop disease that is not controllable by normal good farming practice.</p>
+            <p class="clause" id="cl-6-2"><b>6.2 Deductible.</b> Losses below ten percent (10%) of the sum insured are not payable.</p>
+            <p class="clause" id="cl-6-3"><b>6.3 Loss categories.</b> A total loss of ninety percent (90%) or more is paid at one hundred percent (100%) of the sum insured. A partial loss between ten and ninety percent is paid at the assessed loss percentage.</p>
+          </div>
+          <p class="meta" style="margin-top:12px">Pick a clause chip on the right to jump to its text.</p>
+        </aside>
+        <div class="card card-lg rv" style="--i:1" aria-label="Compiled policy record">
+          <h3 class="label">Identity</h3>
+          <div class="rec"><span class="rk">Record ID</span><div class="rval"><span class="mono">PR-JSD-RFD-2026</span></div><span class="rc"></span></div>
+          <div class="rec"><span class="rk">Product name</span><div class="rval">Rice Flood &amp; Drought Cover</div><span class="rc"><button class="cite" type="button" data-clause="1.1">Clause 1.1</button></span></div>
+          <div class="rec"><span class="rk">Insurer</span><div class="rval">Asuransi Jasindo</div><span class="rc"></span></div>
+          <div class="rec"><span class="rk">Currency</span><div class="rval">IDR <span class="meta">From the Indonesia country pack</span></div><span class="rc"></span></div>
+          <h3 class="label">Insured</h3>
+          <div class="rec"><span class="rk">Crop</span><div class="rval">Rice, irrigated and rain-fed lowland</div><span class="rc"><button class="cite" type="button" data-clause="2.1">Clause 2.1</button></span></div>
+          <div class="rec"><span class="rk">Period</span><div class="rval">One planting season, up to 4 months from transplanting</div><span class="rc"><button class="cite" type="button" data-clause="3.1">Clause 3.1</button></span></div>
+          <h3 class="label">Perils covered</h3>
+          <div class="rec"><span class="rk">Flood</span><div class="rval">Covered</div><span class="rc"><button class="cite" type="button" data-clause="4.1">Clause 4.1</button></span></div>
+          <div class="rec flag" id="fl-drought"><span class="rk">Drought</span><div class="rval"><span id="droughtVal">Drought <span class="meta">AiGRI found a 21-day condition in the clause that the record missed.</span></span><div class="sugg" id="droughtSugg"><p class="label">AiGRI suggests</p><p style="margin-top:4px">Drought, only when irrigation supply fails for 21 consecutive days</p><div class="wrap-row" style="margin-top:12px"><button class="btn btn-ink btn-sm" type="button" id="acceptDrought">Accept suggestion</button><button class="btn btn-soft btn-sm" type="button" data-stub="Field editing is not part of this prototype. Accept the suggestion to continue.">Edit</button></div></div></div><span class="rc"><span class="pill pill-need" data-pill>Check</span><button class="cite" type="button" data-clause="4.2">Clause 4.2</button></span></div>
+          <div class="rec"><span class="rk">Pest and disease outbreak</span><div class="rval">Covered</div><span class="rc"><button class="cite" type="button" data-clause="4.3">Clause 4.3</button></span></div>
+          <h3 class="label">Exclusions</h3>
+          <div class="rec"><span class="rk">Poor farming practice</span><div class="rval">Excluded</div><span class="rc"><button class="cite" type="button" data-clause="5.1">Clause 5.1</button></span></div>
+          <div class="rec"><span class="rk">War and civil unrest</span><div class="rval">Excluded</div><span class="rc"><button class="cite" type="button" data-clause="5.2">Clause 5.2</button></span></div>
+          <div class="rec"><span class="rk">Price falls</span><div class="rval">Excluded</div><span class="rc"><button class="cite" type="button" data-clause="5.3">Clause 5.3</button></span></div>
+          <h3 class="label">Money</h3>
+          <div class="rec"><span class="rk">Sum insured</span><div class="rval">Rp8.000.000 per ha per season</div><span class="rc"><button class="cite" type="button" data-clause="6.1">Clause 6.1</button></span></div>
+          <div class="rec flag" id="fl-deduct"><span class="rk">Deductible</span><div class="rval"><span>Losses below 10% not paid. Per parcel or per policy? <span class="meta">The PDF text is ambiguous: “below ten percent (10%) of the sum insured”.</span></span><div class="wrap-row" style="margin-top:12px" data-select-group id="dedChips" role="group" aria-label="Deductible applies"><button class="chip" type="button" aria-pressed="false">Per parcel</button><button class="chip" type="button" aria-pressed="false">Per policy</button></div><span class="field-hint" style="display:block;margin-top:8px">Your choice is recorded with your name.</span></div><span class="rc"><span class="pill pill-need" data-pill>Check</span><button class="cite" type="button" data-clause="6.2">Clause 6.2</button></span></div>
+          <div class="rec"><span class="rk">Loss categories</span><div class="rval">Total ≥90% pays 100%; partial 10–90% pays assessed %; under 10% no loss</div><span class="rc"><button class="cite" type="button" data-clause="6.3">Clause 6.3</button></span></div>
+          <div class="rec"><span class="rk">Premium rate</span><div class="rval">3,5% of sum insured</div><span class="rc"><button class="cite" type="button" data-clause="7.1">Clause 7.1</button></span></div>
+          <h3 class="label">Deadlines</h3>
+          <div class="rec"><span class="rk">Notice</span><div class="rval">7 days after the loss event ends</div><span class="rc"><button class="cite" type="button" data-clause="8.1">Clause 8.1</button></span></div>
+          <div class="rec"><span class="rk">Evidence</span><div class="rval">14 days after notice</div><span class="rc"><button class="cite" type="button" data-clause="8.2">Clause 8.2</button></span></div>
+          <div class="rec"><span class="rk">Decision</span><div class="rval">14 days after a complete claim</div><span class="rc"><button class="cite" type="button" data-clause="9.1">Clause 9.1</button></span></div>
+          <h3 class="label">Documents required</h3>
+          <div class="rec"><span class="rk">Evidence packet</span><div class="rval">Parcel boundary, planting date, photos with time and place, satellite assessment where available</div><span class="rc"><button class="cite" type="button" data-clause="8.3">Clause 8.3</button></span></div>
+          <h3 class="label">Extraction</h3>
+          <div class="rec"><span class="rk">Model</span><div class="rval">Local 14B instruct model (Ollama), quarantined, no tools</div><span class="rc"></span></div>
+          <div class="rec"><span class="rk">Confidence</span><div class="rval">0,93</div><span class="rc"></span></div>
+          <div class="rec"><span class="rk">Self-check</span><div class="rval">16 of 18 agree</div><span class="rc"></span></div>
+        </div>
+      </div>
+
+      <section class="card card-lg section rv lim" aria-label="Issuance limits">
+        <h2 class="h-section">Issuance limits</h2>
+        <p class="meta" style="margin:4px 0 24px">Set by you, not from the PDF.</p>
+        <div class="grid-2">
+          <div class="field"><label class="field-label" for="limAuto">Auto-issue up to</label><div class="affix"><input class="input" id="limAuto" value="100" inputmode="numeric"><span class="affix-suf">ha per client</span></div></div>
+          <div class="field"><label class="field-label" for="limAbove">Above that</label><div class="select-wrap"><select class="select" id="limAbove"><option>Send to underwriting</option><option>Decline automatically</option></select></div></div>
+          <div class="field"><label class="field-label" for="limExp">Maximum exposure per regency</label><div class="affix"><span class="affix-pre">Rp</span><input class="input" id="limExp" value="60.000.000.000" inputmode="numeric"></div><span class="field-hint">Rp60 M</span></div>
+          <div class="field"><label class="field-label" for="limWin">Sale window</label><input class="input" id="limWin" value="10 Jan – 31 Jan 2026"></div>
+        </div>
+        <div class="field" style="margin-top:24px"><span class="field-label" id="regLbl">Regions</span>
+          <div class="wrap-row" data-select-group data-multi role="group" aria-labelledby="regLbl"><button class="chip is-sel" type="button" aria-pressed="true">Demak</button><button class="chip is-sel" type="button" aria-pressed="true">Grobogan</button><button class="chip is-sel" type="button" aria-pressed="true">Kudus</button><button class="chip is-sel" type="button" aria-pressed="true">Pati</button><button class="chip is-sel" type="button" aria-pressed="true">Jepara</button></div>
+        </div>
+      </section>
+
+      <section class="card card-lg section rv" aria-label="Before you publish">
+        <h2 class="h-section">Before you publish</h2>
+        <ul class="check-list" style="margin-top:20px">
+          <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>All fields cite a clause</span></li>
+          <li class="is-need" id="ckFlags"><svg class="i" aria-hidden="true"><use href="#i-alert"/></svg><span id="ckFlagsTxt">2 flagged fields reviewed</span></li>
+          <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Issuance limits set</span></li>
+          <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Nothing in the PDF asked AiGRI to change rankings <span class="meta">Injected-instruction scan: clean</span></span></li>
+        </ul>
+        <div class="wrap-row" style="margin-top:28px;gap:16px 24px">
+          <button class="btn btn-y btn-lg" type="button" id="publishBtn" aria-disabled="true">Publish to AiGRI</button>
+          <span class="field-hint" id="pubHint">Resolve 2 flagged fields first</span>
+        </div>
+      </section>
+
+      <p class="small muted" style="margin-top:24px">Only published records can be recommended or sold. AiGRI ranks every product by the same rule; there is no paid placement.</p>
+      <p class="demo-note">Demo data. Products and prices are illustrative.</p>
+    </main>
+  </div>
+</div>
+
+<script src="../shared/system.js"></script>
+<script>(function(){
+  var flags={drought:false,deduct:false};
+  var stepper=document.getElementById('pubStepper');
+  var btn=document.getElementById('publishBtn'),hint=document.getElementById('pubHint');
+  function fade(el,fn){
+    if(window.AG&&AG.reduced()){fn();return;}
+    el.style.opacity='0';setTimeout(function(){fn();el.style.opacity='1';},120);
+  }
+  function setStep(done,now,p){
+    var steps=stepper.querySelectorAll('.step');
+    for(var i=0;i<steps.length;i++){
+      steps[i].classList.toggle('is-done',i<done);
+      steps[i].classList.toggle('is-now',i===now);
+      if(i===now)steps[i].setAttribute('aria-current','step');else steps[i].removeAttribute('aria-current');
+    }
+    stepper.style.setProperty('--p',p);
+  }
+  function resolve(key,id){
+    if(flags[key])return;
+    flags[key]=true;
+    var row=document.getElementById(id),pill=row.querySelector('[data-pill]');
+    fade(pill,function(){pill.className='pill pill-ok';pill.setAttribute('data-pill','');pill.textContent='Reviewed';});
+    row.classList.remove('flag');
+    if(flags.drought&&flags.deduct)allDone();
+  }
+  function allDone(){
+    var li=document.getElementById('ckFlags');
+    li.className='is-ok';
+    var ic=li.querySelector('svg');
+    if(ic){var u=ic.querySelector('use');if(u)u.setAttribute('href','#i-check');ic.classList.add('pop');requestAnimationFrame(function(){requestAnimationFrame(function(){ic.classList.add('in');});});}
+    btn.removeAttribute('aria-disabled');
+    hint.hidden=true;
+    setStep(2,2,0.667);
+  }
+  document.getElementById('acceptDrought').addEventListener('click',function(){
+    var val=document.getElementById('droughtVal'),sg=document.getElementById('droughtSugg');
+    fade(val,function(){val.innerHTML='Drought, only when irrigation supply fails for 21 consecutive days <span class="meta">Accepted by Ayu Lestari. Recorded in the audit log.</span>';});
+    sg.hidden=true;
+    resolve('drought','fl-drought');
+  });
+  var chips=document.getElementById('dedChips');
+  chips.addEventListener('click',function(){
+    setTimeout(function(){
+      if(chips.querySelector('.is-sel'))resolve('deduct','fl-deduct');
+    },0);
+  });
+  btn.addEventListener('click',function(){
+    if(btn.getAttribute('aria-disabled')==='true')return;
+    setStep(3,3,1);
+    if(window.AG)AG.toast('Published. Rice Flood & Drought Cover is live for Demak, Grobogan, Kudus, Pati and Jepara.',{tone:'ok'});
+  });
+  var page=document.getElementById('pdfPage');
+  [].slice.call(document.querySelectorAll('.cite[data-clause]')).forEach(function(c){
+    c.addEventListener('click',function(){
+      var k=c.getAttribute('data-clause'),el=document.getElementById('cl-'+k.replace('.','-'));
+      if(!el){if(window.AG)AG.toast('Clause '+k+' is outside this excerpt.',{tone:'info'});return;}
+      [].slice.call(page.querySelectorAll('.clause')).forEach(function(n){n.classList.remove('hl','flash');});
+      el.classList.add('hl');
+      page.scrollTo?page.scrollTo({top:Math.max(0,el.offsetTop-page.offsetTop-12),behavior:(window.AG&&AG.reduced())?'auto':'smooth'}):(page.scrollTop=el.offsetTop-page.offsetTop-12);
+      void el.offsetWidth;el.classList.add('flash');
+    });
+  });
+})();</script>
+</body>
+</html>

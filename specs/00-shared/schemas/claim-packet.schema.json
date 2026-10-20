@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aigri.local/schemas/claim-packet.schema.json",
+  "title": "Claim Packet",
+  "description": "The exact bundle a Client confirms for a Claim. Its canonical-JSON SHA-256 is what gets submitted (hashing-and-audit.md). Money is not part of the packet: the Proposed Amount is computed by the rules engine at pre-check and the Adjuster sets the final amount.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["claim_id", "claim_no", "packet_version", "kind", "policy", "loss_event", "assets", "photos", "documents", "declaration", "drafted_at"],
+  "properties": {
+    "claim_id": { "type": "string" },
+    "claim_no": { "type": "string", "pattern": "^CLM-[0-9]{2}-[0-9]{6}$" },
+    "packet_version": { "type": "integer", "minimum": 1 },
+    "kind": { "enum": ["initial", "resubmission", "appeal"] },
+    "previous_packet_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "policy": {
+      "type": "object", "additionalProperties": false,
+      "required": ["policy_id", "policy_no", "record_id", "record_version", "insurer_code"],
+      "properties": {
+        "policy_id": { "type": "string" },
+        "policy_no": { "type": "string" },
+        "record_id": { "type": "string" },
+        "record_version": { "type": "integer" },
+        "insurer_code": { "type": "string" }
+      }
+    },
+    "loss_event": {
+      "type": "object", "additionalProperties": false,
+      "required": ["loss_event_id", "name", "window_start"],
+      "properties": {
+        "loss_event_id": { "type": "string" },
+        "name": { "type": "string", "examples": ["Central Java floods, Feb 2026"] },
+        "window_start": { "type": "string", "format": "date" },
+        "window_end": { "type": "string", "format": "date" },
+        "peril": { "type": "string" }
+      }
+    },
+    "assets": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["asset_type", "asset_id", "code", "included"],
+        "properties": {
+          "asset_type": { "enum": ["parcel", "livestock_group"] },
+          "asset_id": { "type": "string" },
+          "code": { "type": "string", "examples": ["DMK-01", "GBG kandang"] },
+          "area_ha": { "type": "string", "description": "Decimal string, 1 place." },
+          "tags": { "type": "array", "items": { "type": "string" }, "description": "Ear Tags claimed for a livestock group." },
+          "damage_assessment_id": { "type": "string" },
+          "damage_assessment_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+          "included": { "type": "boolean", "description": "false = listed but not claimed (for example DMK-06 outside the flood)." },
+          "client_note": { "type": "string", "maxLength": 1000 }
+        }
+      }
+    },
+    "photos": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["file_id", "sha256", "asset_id", "captured_at", "lat", "lon", "accuracy_m"],
+        "properties": {
+          "file_id": { "type": "string" },
+          "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+          "asset_id": { "type": "string" },
+          "purpose": { "enum": ["before", "after", "tag", "herd_count", "water_line"] },
+          "captured_at": { "type": "string", "format": "date-time" },
+          "lat": { "type": "string" },
+          "lon": { "type": "string" },
+          "accuracy_m": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["file_id", "sha256", "kind"],
+        "properties": {
+          "file_id": { "type": "string" },
+          "sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+          "kind": { "enum": ["notice_of_loss", "vet_certificate", "appeal_letter", "other"] }
+        }
+      }
+    },
+    "appeal": {
+      "type": "object", "additionalProperties": false,
+      "required": ["decision_id", "grounds"],
+      "properties": {
+        "decision_id": { "type": "string" },
+        "grounds": { "type": "string", "maxLength": 4000, "description": "Drafted by the agent, edited and confirmed by the Client." }
+      }
+    },
+    "declaration": {
+      "type": "object", "additionalProperties": false,
+      "required": ["text_key"],
+      "properties": { "text_key": { "const": "claim_true_and_complete_v1" } }
+    },
+    "drafted_at": { "type": "string", "format": "date-time" }
+  }
+}

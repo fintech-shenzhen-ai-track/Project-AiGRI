@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Country packs · AiGRI Admin</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: admin topbar search sizing, health dots, horizontal bars, small helpers */
+.adm-search{width:280px}
+.adm-search .input{height:40px}
+.hd{flex:none;width:10px;height:10px;border-radius:50%;background:var(--leaf);margin-top:7px}
+.hd.is-alert{background:var(--alert)}
+svg.chart .bar.is-alert{fill:var(--alert)}
+svg.chart text.fn-l{fill:var(--muted);font-size:18px;text-anchor:start}
+svg.chart text.fn-v{fill:var(--ink);font-size:21px;font-weight:600;text-anchor:start;font-variant-numeric:tabular-nums}
+.js svg.chart[data-draw] .draw-bar.hb{transform:scaleX(0);transform-origin:0 50%}
+.js svg.chart[data-draw].in .draw-bar.hb{transform:none}
+html[data-still] svg.chart .draw-bar.hb{transform:none!important}
+@media (prefers-reduced-motion:reduce){
+  .js svg.chart[data-draw] .draw-bar.hb{transform:none;opacity:0;transition:opacity 300ms ease;transition-delay:0ms}
+  .js svg.chart[data-draw].in .draw-bar.hb{opacity:1}
+}
+.tl-item.is-need .tl-pin::after{clip-path:none;inset:auto;left:8px;top:8px;width:8px;height:8px;border-radius:50%;background:#fff}
+.tl-item.is-need .tl-title{color:var(--need)}
+.li-row{display:flex;gap:12px;align-items:flex-start}
+.li-row+.li-row{margin-top:16px}
+.li-main{min-width:0;flex:1}
+.li-main .meta{display:block}
+.when-r{flex:none;text-align:right}
+.mono-s{font-family:var(--font-mono);font-size:15px}
+.pill-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sub-h{margin:0 0 12px}
+.card-gap{margin-top:24px}
+/* local: pack cards are select buttons that stack their content; pane cross-fade */
+.choice[data-pack]{align-items:flex-start;text-align:left;display:flex;flex-direction:column;gap:8px}
+.choice[data-pack] .meter{width:100%;margin-top:4px}
+.pack-pane+.pack-pane{margin-top:32px}
+.pack-pane.is-fading{opacity:0}
+.pack-pane{transition:opacity 200ms var(--ease-out)}
+html[data-still] .pack-pane,html[data-still] .pack-pane.is-fading{opacity:1;transition:none}
+@media (prefers-reduced-motion:reduce){.pack-pane{transition:none}}
+
+</style>
+</head>
+<body data-portal="admin" data-page="packs">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="01-overview.html" aria-label="AiGRI home">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Superadmin</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="overview" href="01-overview.html"><svg class="i" aria-hidden="true"><use href="#i-activity"/></svg>Overview</a>
+      <a class="nav-item" data-nav="insurers" href="02-insurers.html"><svg class="i" aria-hidden="true"><use href="#i-building"/></svg>Insurers<span class="nav-badge is-need">1</span></a>
+      <a class="nav-item" data-nav="quality" href="03-policy-quality.html"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Policy quality<span class="nav-badge">1</span></a>
+      <a class="nav-item" data-nav="disputes" href="04-disputes-sla.html"><svg class="i" aria-hidden="true"><use href="#i-scale"/></svg>Disputes &amp; SLAs<span class="nav-badge">2</span></a>
+      <a class="nav-item" data-nav="packs" href="05-country-packs.html"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg>Country packs</a>
+      <a class="nav-item" data-nav="audit" href="06-audit-log.html"><svg class="i" aria-hidden="true"><use href="#i-list"/></svg>Audit log</a>
+    </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR (1 of 4 packs live)</span>
+      <div class="me"><span class="avatar">RK</span><span class="me-text"><span class="me-name">Rina Kartika</span><span class="me-meta">AiGRI Platform operations</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="01-overview.html">Superadmin</a><span class="crumb-sep">›</span><span aria-current="page">Country packs</span></nav>
+      <div class="topbar-actions">
+        <div class="field adm-search"><input class="input" type="search" placeholder="Search claims, clients, policies" aria-label="Search claims, clients, policies"></div>
+        <a class="icon-btn" href="04-disputes-sla.html" aria-label="Alerts, 2 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+        <span class="avatar" aria-hidden="true">RK</span>
+      </div>
+    </header>
+    <main id="main" class="page">
+
+      <div class="page-head">
+        <p class="eyebrow rv">3 Mar 2026, 09:15 WIB</p>
+        <h1 class="title rv" style="--i:1">Country packs</h1>
+        <p class="lead rv" style="--i:2">A pack sets the currency, area units, regulator, payment rails, hazard data and insurer roster for one country. Indonesia is live. Three more are planned.</p>
+      </div>
+
+      <section class="grid-4 rv" data-select-group aria-label="Country packs">
+        <button class="choice is-sel" type="button" aria-pressed="true" data-pack="ID" style="--i:0">
+          <span class="h-card">Indonesia</span><span><span class="pill pill-ok">Live since 2 Jan 2026</span></span><span class="small muted">IDR · ha · WIB</span>
+          <span class="meter" role="img" aria-label="9 of 9 setup steps"><span style="--p:1"></span></span>
+          <span class="meta">9 of 9 setup steps</span><span class="choice-badge"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span></button>
+        <button class="choice" type="button" aria-pressed="false" data-pack="PH" style="--i:1">
+          <span class="h-card">Philippines</span><span><span class="pill pill-pending">Planned</span></span><span class="small muted">PHP · ha · PHT</span>
+          <span class="meter" role="img" aria-label="3 of 9 setup steps"><span style="--p:.333"></span></span>
+          <span class="meta">3 of 9 setup steps</span></button>
+        <button class="choice" type="button" aria-pressed="false" data-pack="VN" style="--i:2">
+          <span class="h-card">Vietnam</span><span><span class="pill pill-pending">Planned</span></span><span class="small muted">VND · ha · ICT</span>
+          <span class="meter" role="img" aria-label="1 of 9 setup steps"><span style="--p:.111"></span></span>
+          <span class="meta">1 of 9 setup steps</span></button>
+        <button class="choice" type="button" aria-pressed="false" data-pack="TH" style="--i:3">
+          <span class="h-card">Thailand</span><span><span class="pill pill-pending">Planned</span></span><span class="small muted">THB · rai · ICT</span>
+          <span class="meter" role="img" aria-label="1 of 9 setup steps"><span style="--p:.111"></span></span>
+          <span class="meta">1 of 9 setup steps</span></button>
+      </section>
+
+      <section class="section card card-lg rv" id="packDetail" aria-live="polite">
+        <div class="pack-pane" id="pane-ID">
+          <div class="row-between" style="margin-bottom:16px;align-items:flex-start"><h2 class="h-section">Indonesia</h2><span class="pill pill-ok">Live since 2 Jan 2026</span></div>
+          <dl class="kv"><div><dt>Currency</dt><dd>Indonesian rupiah (IDR), shown Rp6.000.000, no decimals</dd></div><div><dt>Number format</dt><dd>1.284 · 3,5% · 48,0 ha</dd></div><div><dt>Area unit</dt><dd>Hectare</dd></div><div><dt>Time zones</dt><dd>WIB, WITA, WIT by client location</dd></div><div><dt>Regulator</dt><dd>OJK (Otoritas Jasa Keuangan)</dd></div><div><dt>Data law</dt><dd>UU PDP, Law 27/2022</dd></div><div><dt>Payout rails</dt><dd>BI-FAST, virtual accounts, GoPay, OVO, DANA</dd></div><div><dt>Hazard data</dt><dd>BMKG, BNPB InaRISK and DIBI, Copernicus GFM, Sentinel-1 and Sentinel-2, Open-Meteo, GDACS</dd></div><div><dt>Government schemes</dt><dd>AUTP rice and AUTS/K cattle, 80% premium subsidy</dd></div><div><dt>Insurers</dt><dd>Asuransi Jasindo, Askrindo, Asuransi Sinar Mas (live); Asuransi Central Asia (in verification)</dd></div></dl><div class="card card-w" style="margin-top:24px;padding:20px"><p class="label" style="margin-bottom:8px">Format preview</p><p class="h-card mono-s" id="fmtPreview" style="font-size:19px">Rp187.800.000 · 40,5 ha · 24 Feb 2026, 14:32 WIB</p></div>
+        </div>
+        <div class="pack-pane" id="pane-PH">
+          <div class="row-between" style="margin-bottom:16px;align-items:flex-start"><h2 class="h-section">Philippines</h2><span class="pill pill-pending">Planned</span></div>
+          <dl class="kv"><div><dt>Currency</dt><dd>Philippine peso (PHP)</dd></div><div><dt>Area unit</dt><dd>Hectare</dd></div><div><dt>Time zones</dt><dd>PHT</dd></div><div><dt>Regulator</dt><dd>Insurance Commission</dd></div><div><dt>Data law</dt><dd>Data Privacy Act, RA 10173</dd></div><div><dt>Payout rails</dt><dd>InstaPay and PESONet</dd></div><div><dt>Hazard data</dt><dd>PAGASA and PhilSA</dd></div><div><dt>Insurers</dt><dd>Not started. Insurers are added through onboarding.</dd></div></dl><ul class="check-list" style="margin-top:24px"><li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Currency and formats</span></li><li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Area units</span></li><li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Regulator review</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Data law and DPA template</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Payout rails</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Hazard data feeds</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Satellite coverage check</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Insurer onboarding</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Pilot clients</span></li></ul>
+        </div>
+        <div class="pack-pane" id="pane-VN">
+          <div class="row-between" style="margin-bottom:16px;align-items:flex-start"><h2 class="h-section">Vietnam</h2><span class="pill pill-pending">Planned</span></div>
+          <dl class="kv"><div><dt>Currency</dt><dd>Vietnamese dong (VND)</dd></div><div><dt>Area unit</dt><dd>Hectare</dd></div><div><dt>Time zones</dt><dd>ICT</dd></div><div><dt>Regulator</dt><dd>Ministry of Finance, Insurance Supervisory Authority</dd></div><div><dt>Data law</dt><dd>Decree 13/2023 on personal data</dd></div><div><dt>Payout rails</dt><dd>NAPAS</dd></div><div><dt>Hazard data</dt><dd>NCHMF</dd></div><div><dt>Insurers</dt><dd>Not started. Insurers are added through onboarding.</dd></div></dl><ul class="check-list" style="margin-top:24px"><li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Currency and formats</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Area units</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Regulator review</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Data law and DPA template</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Payout rails</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Hazard data feeds</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Satellite coverage check</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Insurer onboarding</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Pilot clients</span></li></ul>
+        </div>
+        <div class="pack-pane" id="pane-TH">
+          <div class="row-between" style="margin-bottom:16px;align-items:flex-start"><h2 class="h-section">Thailand</h2><span class="pill pill-pending">Planned</span></div>
+          <dl class="kv"><div><dt>Currency</dt><dd>Thai baht (THB)</dd></div><div><dt>Area unit</dt><dd>Rai (1 rai = 0,16 ha)</dd></div><div><dt>Time zones</dt><dd>ICT</dd></div><div><dt>Regulator</dt><dd>Office of Insurance Commission (OIC)</dd></div><div><dt>Data law</dt><dd>PDPA</dd></div><div><dt>Payout rails</dt><dd>PromptPay</dd></div><div><dt>Hazard data</dt><dd>Thai Meteorological Department and GISTDA</dd></div><div><dt>Insurers</dt><dd>Not started. Insurers are added through onboarding.</dd></div></dl><ul class="check-list" style="margin-top:24px"><li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Currency and formats</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Area units</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Regulator review</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Data law and DPA template</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Payout rails</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Hazard data feeds</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Satellite coverage check</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Insurer onboarding</span></li><li><svg class="i" aria-hidden="true"><use href="#i-clock"/></svg><span class="muted">Pilot clients</span></li></ul>
+        </div>
+      </section>
+
+      <p class="small muted" style="margin-top:24px">Changing the live pack's currency or rails needs two Superadmins and is logged.</p>
+
+    </main>
+  </div>
+</div>
+
+<script src="../shared/system.js"></script>
+<script>(function(){
+
+  var panes={}, cards=document.querySelectorAll('[data-pack]');
+  ['ID','PH','VN','TH'].forEach(function(c){ panes[c]=document.getElementById('pane-'+c); });
+  var cur='ID';
+  function show(code){
+    if(code===cur) return;
+    var old=panes[cur], nu=panes[code], still=window.AG&&AG.reduced&&AG.reduced();
+    old.hidden=true; nu.hidden=false;
+    if(!still){ nu.classList.add('is-fading'); void nu.offsetWidth; requestAnimationFrame(function(){ nu.classList.remove('is-fading'); }); }
+    cur=code;
+  }
+  // with JS on, only the selected pack's detail shows; with JS off all four read in sequence
+  Object.keys(panes).forEach(function(c){ if(c!=='ID') panes[c].hidden=true; });
+  Array.prototype.forEach.call(cards,function(b){ b.addEventListener('click',function(){ show(b.getAttribute('data-pack')); }); });
+  if(window.AG&&AG.fmt){
+    var p=document.getElementById('fmtPreview');
+    if(p) p.textContent=AG.fmt.money(187800000)+' \u00b7 '+AG.fmt.area(40.5)+' \u00b7 '+AG.fmt.dateTime('2026-02-24T14:32');
+  }
+
+})();</script>
+</body>
+</html>

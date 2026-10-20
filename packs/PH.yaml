@@ -1,0 +1,30 @@
+# Philippines country pack (planned). Values from PLAN 2.1 and a05. No insurers until onboarding.
+code: PH
+name: Philippines
+status: planned
+currency: {code: PHP, symbol: "₱", symbol_spacing: none, display_decimals: 2, minor_unit_exponent: 2}
+locale: en-PH
+format: {decimal: ".", thousands: ",", date: "D MMM YYYY", datetime: "D MMM YYYY, HH:mm z"}
+area_unit: {code: ha, label: "ha", per_hectare: 1}
+timezones: [{iana: Asia/Manila, label: PHT, default: true}]
+regulator: {short: IC, name: "Insurance Commission"}
+data_law: "Data Privacy Act of 2012 (RA 10173)"
+payout_rails: ["InstaPay", "PESONet", "E-wallets"]
+hazard_sources:
+  - {id: pagasa, name: "PAGASA advisories", kind: warnings, access: "Public bulletin pages; no API (parse through the quarantined reader)"}
+  - {id: philsa, name: "PhilSA flood maps", kind: flood_map}
+  - {id: gfm, name: "Copernicus Global Flood Monitoring", kind: flood_map}
+  - {id: open_meteo, name: "Open-Meteo", kind: forecast}
+  - {id: gdacs, name: "GDACS", kind: cyclone}
+public_schemes: []
+insurers: []
+setup_steps:
+  - {step: "Currency and formats", done: true}
+  - {step: "Area units", done: true}
+  - {step: "Regulator review", done: true}
+  - {step: "Data law and DPA template", done: false}
+  - {step: "Payout rails", done: false}
+  - {step: "Hazard data feeds", done: false}
+  - {step: "Satellite coverage check", done: false}
+  - {step: "Insurer onboarding", done: false}
+  - {step: "Pilot clients", done: false}

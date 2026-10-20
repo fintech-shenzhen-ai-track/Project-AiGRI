@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Dashboard · Jasindo on AiGRI</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: compact list rows inside cards (no shared equivalent) */
+.rl{display:flex;flex-direction:column;gap:8px;margin-top:16px}
+.rl>*{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:14px 16px;border-radius:var(--r-sm);background:var(--white);color:var(--ink);text-decoration:none}
+.rl .id{font-weight:600}
+.rl .amt{font-weight:600;font-variant-numeric:tabular-nums;text-align:right}
+.rl .pill{justify-self:end}
+.rl.one>*{grid-template-columns:minmax(0,1fr) auto}
+@media (hover:hover) and (pointer:fine){ .rl a:hover{background:var(--surface-3);color:var(--ink)} }
+.chart-note{margin-top:12px}
+.split-nx{grid-template-columns:minmax(0,1.55fr) minmax(0,1fr)}
+.rl .id{white-space:nowrap}
+</style>
+</head>
+<body data-portal="insurer" data-page="dashboard">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="01-dashboard.html" aria-label="Jasindo on AiGRI, dashboard">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Asuransi Jasindo</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="dashboard" href="01-dashboard.html" aria-current="page"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Dashboard</a>
+      <a class="nav-item" data-nav="products" href="02-publish-policy.html"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg>Products</a>
+      <a class="nav-item" data-nav="underwriting" href="#" data-stub="The underwriting queue is not part of this prototype."><svg class="i" aria-hidden="true"><use href="#i-shield-check"/></svg>Underwriting<span class="nav-badge">4</span></a>
+      <a class="nav-item" data-nav="claims" href="03-claims-queue.html"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Claims<span class="nav-badge">41</span></a>
+      <a class="nav-item" data-nav="portfolio" href="05-portfolio.html"><svg class="i" aria-hidden="true"><use href="#i-layers"/></svg>Portfolio</a>
+      <a class="nav-item" data-nav="wallet" href="06-payouts.html"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet &amp; payouts</a>
+    </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span>
+      <div class="me"><span class="avatar">DP</span><span class="me-text"><span class="me-name">Dimas Prasetyo</span><span class="me-meta">Claims adjuster · Jasindo</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><span aria-current="page">Dashboard</span></nav>
+      <div class="topbar-actions">
+        <span class="meta only-desktop" style="margin-right:8px">Tuesday 24 Feb 2026, 08:30 WIB</span>
+        <input class="input" type="search" placeholder="Search claims, clients, policies" aria-label="Search claims, clients, policies">
+        <a class="icon-btn" href="#" data-stub="Notifications open here." aria-label="Notifications"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg></a>
+        <span class="avatar" aria-hidden="true">DP</span>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+
+      <div class="banner banner-need rv" role="status" style="margin-bottom:32px">
+        <span class="banner-icon"><svg class="i" aria-hidden="true"><use href="#i-send"/></svg></span>
+        <p class="banner-title">Nudge from AiGRI: CLM-26-000409 is due tomorrow</p>
+        <p class="banner-text">Rule: claim reaches its 14-day settlement window on 25 Feb 2026. Sent 23 Feb 2026, 09:00 WIB.</p>
+        <div class="banner-actions"><a class="btn btn-ink btn-sm" href="#" data-stub="Only CLM-26-000418 is built in this prototype.">Open claim</a><a class="btn btn-ghost btn-sm" href="#" data-stub="The nudge history is not part of this prototype.">All nudges (3)</a></div>
+      </div>
+
+      <div class="page-head">
+        <p class="eyebrow rv">Claims adjuster · Semarang branch</p>
+        <h1 class="title rv" style="--i:1">Good morning, Dimas</h1>
+        <p class="lead rv" style="--i:2">Central Java floods, Feb 2026: 41 claims open. AiGRI has pre-checked 14 of them.</p>
+      </div>
+
+      <section class="grid-4" aria-label="Key figures">
+        <div class="stat rv"><span class="label">Open claims</span><span class="num-l">41</span><span class="meta">39 flood · 2 cattle</span></div>
+        <div class="stat rv" style="--i:1"><span class="label">Due in 48 h</span><span class="row" style="gap:12px"><span class="num-l">3</span><span class="pill pill-need">Due soon</span></span><span class="meta">Earliest 25 Feb 2026</span></div>
+        <div class="stat rv" style="--i:2"><span class="label">Proposed, open</span><span class="num-l" title="Rp1.240.000.000">Rp1,24 M</span><span class="meta">Rules-engine amounts, not decisions</span></div>
+        <div class="stat rv" style="--i:3"><span class="label">Wallet balance</span><span class="num-l" title="Rp4.100.440.000">Rp4,10 M</span><span class="meta">Covers 3,3× open proposed amounts</span></div>
+      </section>
+
+      <section class="split split-nx section" aria-label="Claims overview">
+        <div class="card card-lg rv">
+          <h2 class="h-card">Open claims by status</h2>
+          <p class="meta" style="margin:4px 0 20px">41 open · Central Java floods, Feb 2026</p>
+          <svg class="chart" data-draw viewBox="0 0 600 48" role="img" aria-label="Open claims by status: Submitted 4, Pre-checked 14, Under review 18, Info requested 5. Total 41."><rect class="bar draw-bar" style="--i:0;fill:var(--muted-2)" x="0.0" y="0" width="57.4" height="48" rx="10"/><text x="28.7" y="30" text-anchor="middle" style="fill:#fff;font-size:17px;font-weight:700">4</text><rect class="bar draw-bar" style="--i:1;fill:var(--info)" x="61.4" y="0" width="200.8" height="48" rx="10"/><text x="161.8" y="30" text-anchor="middle" style="fill:#fff;font-size:17px;font-weight:700">14</text><rect class="bar draw-bar" style="--i:2;fill:var(--ink)" x="266.2" y="0" width="258.1" height="48" rx="10"/><text x="395.2" y="30" text-anchor="middle" style="fill:#fff;font-size:17px;font-weight:700">18</text><rect class="bar draw-bar" style="--i:3;fill:var(--need)" x="528.3" y="0" width="71.7" height="48" rx="10"/><text x="564.1" y="30" text-anchor="middle" style="fill:#fff;font-size:17px;font-weight:700">5</text></svg>
+          <div class="legend" style="margin-top:16px">
+            <span><i class="swatch" style="--c:var(--muted-2)"></i>Submitted 4</span>
+            <span><i class="swatch" style="--c:var(--info)"></i>Pre-checked 14</span>
+            <span><i class="swatch" style="--c:var(--ink)"></i>Under review 18</span>
+            <span><i class="swatch" style="--c:var(--need)"></i>Info requested 5</span>
+          </div>
+          <h2 class="h-card" style="margin-top:40px">Decisions per day</h2>
+          <p class="meta" style="margin:4px 0 12px">17 to 23 Feb 2026 · 18 decisions</p>
+          <svg class="chart" data-draw viewBox="0 0 600 190" role="img" aria-label="Decisions per day, 17 to 23 February: 0, 2, 3, 2, 4, 3, 4. 18 in total."><line class="axis" x1="0" y1="150" x2="600" y2="150"/><text class="bar-label" style="--i:0" x="60" y="140">0</text><text class="axis" x="60" y="176">17 Feb</text><rect class="bar draw-bar" style="--i:1" x="118" y="94" width="44" height="56" rx="8"/><text class="bar-label" style="--i:1" x="140" y="84">2</text><text class="axis" x="140" y="176">18 Feb</text><rect class="bar draw-bar" style="--i:2" x="198" y="66" width="44" height="84" rx="8"/><text class="bar-label" style="--i:2" x="220" y="56">3</text><text class="axis" x="220" y="176">19 Feb</text><rect class="bar draw-bar" style="--i:3" x="278" y="94" width="44" height="56" rx="8"/><text class="bar-label" style="--i:3" x="300" y="84">2</text><text class="axis" x="300" y="176">20 Feb</text><rect class="bar draw-bar" style="--i:4" x="358" y="38" width="44" height="112" rx="8"/><text class="bar-label" style="--i:4" x="380" y="28">4</text><text class="axis" x="380" y="176">21 Feb</text><rect class="bar draw-bar" style="--i:5" x="438" y="66" width="44" height="84" rx="8"/><text class="bar-label" style="--i:5" x="460" y="56">3</text><text class="axis" x="460" y="176">22 Feb</text><rect class="bar draw-bar" style="--i:6" x="518" y="38" width="44" height="112" rx="8"/><text class="bar-label" style="--i:6" x="540" y="28">4</text><text class="axis" x="540" y="176">23 Feb</text></svg>
+          <button class="btn btn-ghost btn-sm chart-note" type="button" data-toggle="decTable" aria-expanded="false">Show as table</button>
+          <table class="table chart-table" id="decTable" hidden><thead><tr><th>Day</th><th class="r">Decisions</th></tr></thead><tbody>
+            <tr><td class="id">17 Feb</td><td class="num">0</td></tr><tr><td class="id">18 Feb</td><td class="num">2</td></tr><tr><td class="id">19 Feb</td><td class="num">3</td></tr><tr><td class="id">20 Feb</td><td class="num">2</td></tr><tr><td class="id">21 Feb</td><td class="num">4</td></tr><tr><td class="id">22 Feb</td><td class="num">3</td></tr><tr><td class="id">23 Feb</td><td class="num">4</td></tr>
+          </tbody></table>
+        </div>
+        <div class="card rv" style="--i:1">
+          <h2 class="h-card">Next up</h2>
+          <p class="meta" style="margin-top:4px">Top 3 by settlement deadline</p>
+          <div class="rl">
+            <a href="#" data-stub="Only CLM-26-000418 is built in this prototype."><span class="id">CLM-26-000409</span><span class="amt">Rp74.880.000</span><span class="meta">UD Sumber Pangan Kudus</span><span class="pill pill-need">Due 25 Feb</span></a>
+            <a href="#" data-stub="Only CLM-26-000418 is built in this prototype."><span class="id">CLM-26-000425</span><span class="amt">Rp9.000.000</span><span class="meta">Bapak Joko Susilo</span><span class="pill pill-pending">Due 2 Mar</span></a>
+            <a href="04-claim-review.html"><span class="id">CLM-26-000418</span><span class="amt">Rp190.400.000</span><span class="meta">CV Tani Makmur Demak</span><span class="pill pill-pending">Due 6 Mar</span></a>
+          </div>
+          <a class="btn btn-ink btn-block" style="margin-top:20px" href="03-claims-queue.html">Open claims queue</a>
+        </div>
+      </section>
+
+      <section class="grid-2 section" aria-label="Hazards and products">
+        <div class="card rv">
+          <h2 class="h-card">Hazard watch</h2>
+          <dl class="kv" style="margin-top:8px">
+            <div><dt>Flood extent (Sentinel-1, 23 Feb)</dt><dd>2.120 ha of your insured rice still under water, down from 3.460 ha on 14 Feb</dd></div>
+            <div><dt>Where it is</dt><dd>Demak 1.180 ha · Grobogan 640 ha · Kudus 210 ha · Pati 90 ha</dd></div>
+            <div><dt>BMKG 24–26 Feb</dt><dd>Moderate rain, no warning</dd></div>
+          </dl>
+          <a class="btn btn-ghost" style="margin-top:8px" href="05-portfolio.html">Open portfolio map<svg class="i i-sm" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+        <div class="card rv" style="--i:1">
+          <h2 class="h-card">Products</h2>
+          <p class="meta" style="margin-top:4px">3 live on AiGRI · 1 draft</p>
+          <div class="rl">
+            <div><span class="id">Rice Flood &amp; Drought Cover</span><span class="pill pill-ok">Live</span></div>
+            <div><span class="id">AUTP Rice</span><span class="pill pill-ok">Live</span></div>
+            <div><span class="id">AUTS/K Cattle</span><span class="pill pill-ok">Live</span></div>
+            <div><span class="id">Rice Flood &amp; Drought Cover MT2 2026</span><span class="pill pill-pending">Draft</span></div>
+          </div>
+          <a class="btn btn-ghost" style="margin-top:12px" href="02-publish-policy.html">Publish a policy<svg class="i i-sm" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script src="../shared/system.js"></script>
+
+</body>
+</html>

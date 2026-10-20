@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Onboarding · AiGRI</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: onboarding form grid, footer row, muted tabs while the account is not set up */
+.ob-grid{gap:20px 24px}
+.card .input,.card .select,.card .textarea{background:var(--white)}
+.ob-foot{margin-top:32px}
+.ob-foot .btn[disabled]{opacity:.4}
+.tab[aria-disabled="true"]{color:var(--disabled);pointer-events:none}
+.tab[aria-disabled="true"] .i{color:var(--disabled)}
+[hidden]{display:none!important}
+@media (max-width:600px){ .ob-foot{flex-direction:column-reverse;align-items:stretch} .ob-foot .btn{width:100%} }
+</style>
+</head>
+<body data-portal="client" data-page="onboarding">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="09-home.html" aria-label="AiGRI home">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Client</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="home" href="09-home.html" aria-disabled="true"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+      <a class="nav-item" data-nav="farm" href="03-parcels.html" aria-disabled="true"><svg class="i" aria-hidden="true"><use href="#i-farm"/></svg>My farm</a>
+      <a class="nav-item" data-nav="risk" href="05-risk.html" aria-disabled="true"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg>Risk</a>
+      <a class="nav-item" data-nav="cover" href="06-policies.html" aria-disabled="true"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+      <a class="nav-item" data-nav="claims" href="12-claim-status.html" aria-disabled="true"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+      <a class="nav-item" data-nav="wallet" href="13-wallet.html" aria-disabled="true"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+      <a class="nav-item" data-nav="alerts" href="10-alert.html" aria-disabled="true"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg>Alerts<span class="nav-badge is-need">1</span></a>
+    </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span>
+      <div class="me"><span class="avatar">SW</span><span class="me-text"><span class="me-name">Ibu Sri Wahyuni</span><span class="me-meta">Setting up</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="mbar">
+      <a class="logo-link" href="09-home.html" aria-label="AiGRI home"><svg viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/><rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/><rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/><circle fill="#FFCB3D" cx="196" cy="58" r="46"/></svg></a>
+      <span class="mbar-title">Set up your account</span>
+      <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+    </header>
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><span aria-current="page">Set up your account</span></nav>
+      <div class="topbar-actions">
+        <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+        <span class="avatar" aria-hidden="true">SW</span>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+      <div class="page-head">
+        <p class="eyebrow rv">Set up your account</p>
+        <h1 class="title rv" style="--i:1">Tell us about your farm</h1>
+        <p class="lead rv" style="--i:2">Takes about 10 minutes. You can change anything later.</p>
+        <div class="page-actions rv" style="--i:3"><span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR · hectares</span></div>
+      </div>
+
+      <div data-flow data-flow-start="3" class="stack-lg" id="onb">
+        <div class="stepper" style="--n:4;--p:.667" role="list" aria-label="Set-up steps">
+          <div class="stepper-track"><span class="stepper-fill"></span></div>
+          <div class="step is-done" role="listitem"><span class="step-dot">1</span><span class="step-label">Account type</span></div>
+          <div class="step is-done" role="listitem"><span class="step-dot">2</span><span class="step-label">What you farm</span></div>
+          <div class="step is-now" role="listitem" aria-current="step"><span class="step-dot">3</span><span class="step-label">Business details</span></div>
+          <div class="step" role="listitem"><span class="step-dot">4</span><span class="step-label">Payout account</span></div>
+        </div>
+
+        <div class="stack">
+        <div data-flow-step="1"><h2 class="h-section" style="margin-bottom:20px">Who is this account for?</h2>
+          <div class="grid-2" data-select-group>
+            <button class="choice is-sel" type="button" aria-pressed="true"><span class="ico-dot" style="background:var(--white)"><svg class="i" aria-hidden="true"><use href="#i-building"/></svg></span><span class="h-card">Agri business</span><span class="small muted">A CV, UD, PT or other registered business</span><span class="choice-badge"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span></button>
+            <button class="choice" type="button" aria-pressed="false"><span class="ico-dot" style="background:var(--white)"><svg class="i" aria-hidden="true"><use href="#i-user"/></svg></span><span class="h-card">Individual farmer</span><span class="small muted">You farm in your own name</span><span class="choice-badge"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span></button>
+          </div></div>
+        <div data-flow-step="2"><h2 class="h-section" style="margin-bottom:20px">What do you farm?</h2>
+          <div class="grid-3" data-select-group>
+            <button class="choice is-sel" type="button" aria-pressed="true"><span class="ico-dot" style="background:var(--white)"><svg class="i" aria-hidden="true"><use href="#i-sprout"/></svg></span><span class="h-card">Crops</span><span class="small muted">Map parcels and list what you plant</span><span class="choice-badge"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span></button>
+            <button class="choice" type="button" aria-pressed="false"><span class="ico-dot" style="background:var(--white)"><svg class="i" aria-hidden="true"><use href="#i-cow"/></svg></span><span class="h-card">Livestock</span><span class="small muted">Register animals with ear tags</span><span class="choice-badge"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span></button>
+            <button class="choice" type="button" aria-pressed="false"><span class="ico-dot" style="background:var(--white)"><svg class="i" aria-hidden="true"><use href="#i-layers"/></svg></span><span class="h-card">Both</span><span class="small muted">Crops and livestock on the same account</span><span class="choice-badge"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span></button>
+          </div>
+          <p class="field-hint" style="margin-top:12px">Only the forms you need will show.</p></div>
+        <div data-flow-step="3" class="is-active"><h2 class="h-section" style="margin-bottom:16px">Business details</h2>
+          <div class="wrap-row" style="margin-bottom:20px"><span class="chip is-sel">Agri business</span><span class="chip is-sel">Crops</span><button class="btn btn-ghost btn-sm" type="button" data-goto="1">Edit</button></div>
+          <div class="card card-lg"><div class="grid-2 ob-grid">
+            <div class="field"><label class="field-label" for="f-biz">Business name</label><input class="input" id="f-biz" value="CV Tani Makmur Demak"></div>
+            <div class="field"><label class="field-label" for="f-nib">Business ID (NIB)</label><input class="input" id="f-nib" value="9120301234567" inputmode="numeric"><span class="field-hint">13 digits, from OSS</span></div>
+            <div class="field"><label class="field-label" for="f-contact">Contact person</label><input class="input" id="f-contact" value="Ibu Sri Wahyuni"></div>
+            <div class="field"><label class="field-label" for="f-role">Role</label><input class="input" id="f-role" value="Operations manager"></div>
+            <div class="field"><label class="field-label" for="f-phone">Phone</label><input class="input" id="f-phone" value="+62 812-2741-0938" inputmode="tel" autocomplete="tel"></div>
+            <div class="field"><label class="field-label" for="f-mail">Email</label><input class="input" id="f-mail" value="sri.wahyuni@tanimakmur.co.id" inputmode="email" autocomplete="email"></div>
+            <div class="field"><label class="field-label" for="f-prov">Province</label><div class="select-wrap"><select class="select" id="f-prov"><option selected>Central Java</option><option>East Java</option><option>West Java</option></select></div></div>
+            <div class="field"><label class="field-label" for="f-reg">Regency</label><div class="select-wrap"><select class="select" id="f-reg"><option selected>Demak</option><option>Grobogan</option><option>Kudus</option></select></div></div>
+            <div class="field"><label class="field-label" for="f-addr">Address</label><input class="input" id="f-addr" value="Jl. Sultan Fatah 41, Demak"></div>
+          </div></div></div>
+        <div data-flow-step="4"><h2 class="h-section" style="margin-bottom:20px">Where should payouts go?</h2>
+          <div class="grid-2" data-select-group id="payType">
+            <button data-pay="bank" class="choice is-sel" type="button" aria-pressed="true"><span class="ico-dot" style="background:var(--white)"><svg class="i" aria-hidden="true"><use href="#i-bank"/></svg></span><span class="h-card">Bank account (BI-FAST)</span><span class="small muted">Instant transfer, fee up to Rp2.500</span><span class="choice-badge"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span></button>
+            <button data-pay="wallet" class="choice" type="button" aria-pressed="false"><span class="ico-dot" style="background:var(--white)"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg></span><span class="h-card">E-wallet</span><span class="small muted">GoPay, OVO or DANA</span><span class="choice-badge"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span></button>
+          </div>
+          <div class="card card-lg" id="payBank" style="margin-top:24px"><div class="grid-2 ob-grid">
+            <div class="field"><label class="field-label" for="f-bank">Bank</label><div class="select-wrap"><select class="select" id="f-bank"><option selected>BCA</option><option>BRI</option><option>Mandiri</option><option>BNI</option></select></div></div>
+            <div class="field"><label class="field-label" for="f-acc">Account number</label><input class="input" id="f-acc" value="0981234821" inputmode="numeric"></div>
+            <div class="field"><label class="field-label" for="f-accn">Account name</label><input class="input" id="f-accn" value="CV TANI MAKMUR DEMAK"><span class="field-hint">We check the name with your bank before the first payout.</span></div>
+          </div></div>
+          <div class="card card-lg" id="payWallet" style="margin-top:24px" hidden><div class="grid-2 ob-grid">
+            <div class="field"><label class="field-label" for="f-ew">E-wallet</label><div class="select-wrap"><select class="select" id="f-ew"><option selected>GoPay</option><option>OVO</option><option>DANA</option></select></div></div>
+            <div class="field"><label class="field-label" for="f-ewn">Registered phone number</label><input class="input" id="f-ewn" value="+62 812-2741-0938" inputmode="tel"><span class="field-hint">The name on the e-wallet must match your business.</span></div>
+          </div></div>
+          <div class="consent" style="margin-top:24px"><p class="small">Your data stays with AiGRI. An insurer sees your farm data only after you buy from them, and only for the parcels that policy covers.</p><label class="check"><input type="checkbox" checked><span class="check-box"></span><span>I agree to the AiGRI terms and privacy notice (UU PDP, Law 27/2022).</span></label></div></div>
+        </div>
+
+        <div class="row-between ob-foot"><button class="btn btn-soft" type="button" data-prev>Back</button><button class="btn btn-ink" type="button" data-next>Continue</button><a class="btn btn-y" id="finish" href="03-parcels.html" hidden>Finish and map my parcels</a></div>
+      </div>
+    </main>
+  </div>
+</div>
+<nav class="tabbar" aria-label="Main">
+  <a class="tab" data-nav="home alerts" href="09-home.html" aria-disabled="true"><svg class="i i-lg" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+  <a class="tab" data-nav="farm risk" href="03-parcels.html" aria-disabled="true"><svg class="i i-lg" aria-hidden="true"><use href="#i-farm"/></svg>Farm</a>
+  <a class="tab" data-nav="cover" href="06-policies.html" aria-disabled="true"><svg class="i i-lg" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+  <a class="tab" data-nav="claims" href="12-claim-status.html" aria-disabled="true"><svg class="i i-lg" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+  <a class="tab" data-nav="wallet" href="13-wallet.html" aria-disabled="true"><svg class="i i-lg" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+</nav>
+
+
+<script src="../shared/system.js"></script>
+<script>(function(){
+  var flow = document.getElementById('onb');
+  var back = flow.querySelector('[data-prev]'), next = flow.querySelector('[data-next]'), fin = document.getElementById('finish');
+  function sync(n){ back.disabled = n === 1; next.hidden = n === 4; fin.hidden = n !== 4; }
+  flow.addEventListener('flow:change', function(e){ sync(e.detail && e.detail.step || (window.AG && AG.flow(flow).current())); });
+  sync(3);
+  var pt = document.getElementById('payType');
+  pt.addEventListener('click', function(){ setTimeout(function(){
+    var w = pt.querySelector('[data-pay=wallet]').classList.contains('is-sel');
+    document.getElementById('payBank').hidden = w; document.getElementById('payWallet').hidden = !w;
+  }, 0); });
+})();</script>
+</body>
+</html>

@@ -1,0 +1,78 @@
+{
+ "v": 3,
+ "layout": "files",
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-10-20T03:56:34Z"
+ },
+ "title": "AiGRI",
+ "namespace": "AiGRI",
+ "libraries": [],
+ "sections": {},
+ "groups": [
+  "Logos"
+ ],
+ "assetGroups": {
+  "Logos": {
+   "name": "Logos",
+   "tile": "l",
+   "order": [
+    "aigri-horizontal-color.svg",
+    "aigri-horizontal-reversed.svg",
+    "aigri-stacked-color.svg",
+    "aigri-symbol-color.svg",
+    "aigri-symbol-small-color.svg",
+    "aigri-horizontal-black.svg"
+   ],
+   "files": {
+    "aigri-horizontal-color.svg": {
+     "name": "aigri-horizontal-color.svg",
+     "blob": "3642dbf61beedab6c4a815a5b7c20255",
+     "size": 1329,
+     "type": "image/svg+xml"
+    },
+    "aigri-horizontal-reversed.svg": {
+     "name": "aigri-horizontal-reversed.svg",
+     "blob": "789b5f534779fc7255c7f776726ab66d",
+     "size": 1329,
+     "type": "image/svg+xml"
+    },
+    "aigri-stacked-color.svg": {
+     "name": "aigri-stacked-color.svg",
+     "blob": "e8dfc61e044ccc760a72a2b6704911a0",
+     "size": 1364,
+     "type": "image/svg+xml"
+    },
+    "aigri-symbol-color.svg": {
+     "name": "aigri-symbol-color.svg",
+     "blob": "0ec5fa01007a6db8c7a98f4974cbd59f",
+     "size": 477,
+     "type": "image/svg+xml"
+    },
+    "aigri-symbol-small-color.svg": {
+     "name": "aigri-symbol-small-color.svg",
+     "blob": "1836ca4449ee27f41949dcb2bf2c9890",
+     "size": 359,
+     "type": "image/svg+xml"
+    },
+    "aigri-horizontal-black.svg": {
+     "name": "aigri-horizontal-black.svg",
+     "blob": "5e6baae111fb496c9ddaa4b1a1ff444a",
+     "size": 1290,
+     "type": "image/svg+xml"
+    }
+   }
+  }
+ },
+ "blobs": {},
+ "docs": {
+  "readme": "project/README.md",
+  "sections": []
+ },
+ "lastChange": {
+  "by": "Desirre Bless Barbosa",
+  "at": "2026-10-20T03:56:34Z",
+  "via": "Claude Code",
+  "note": "First version from DESIGN.md and the landing page"
+ }
+}

@@ -1,0 +1,32 @@
+{
+  "brand": "AiGRI",
+  "tagline": "Insurance that sees the storm coming",
+  "brief": "A multi-insurer agricultural insurance platform for agri SMEs and farmers: policies ranked by predicted risk, storm alerts, satellite damage proof and automatic payouts once the adjuster approves.",
+  "adjectives": ["protective", "grounded", "clear-sighted", "trustworthy", "modern"],
+  "criteria": "Success: avoids shields, umbrellas, leaves and AI clichés; reads at 32 px; works in one colour and reversed on green.",
+  "industry": "finance",
+  "mockups": ["app-icon", "website", "payment-card", "favicon-tab", "signage", "tshirt"],
+  "nav": ["How it works", "For insurers", "FAQ"],
+  "brand_color": "#557945",
+  "greyscale": false,
+  "designer": "AiGRI team",
+  "round": 2,
+  "concepts": [
+    {
+      "name": "Field Watch",
+      "symbol": "aigri-symbol-color.svg",
+      "lockup": "aigri-horizontal-color.svg",
+      "symbol_on_tile": "aigri-symbol-reversed.svg",
+      "lockup_on_dark": "aigri-horizontal-reversed.svg",
+      "tile_color": "#557945",
+      "idea": "Rows of a field with a sun rising at the corner: AiGRI sees what is coming.",
+      "rationale": [
+        "Stepped rows read as land seen from above, echoing the satellite view",
+        "The sun is the forecast and the alert; it reappears as the dot of the i",
+        "One radius, one bar height, exact angles; a simpler two-row cut for 16 px"
+      ]
+    }
+  ],
+  "recommendation": "Field Watch: grounded, ownable in a category of shields and leaves, and it extends into patterns (rows) and alerts (the sun).",
+  "next_steps": ["Approve final artwork", "Swap the logo into the landing page", "Professional trademark search before launch"]
+}

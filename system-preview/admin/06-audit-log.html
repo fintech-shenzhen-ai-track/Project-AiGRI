@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Audit log · AiGRI Admin</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: admin topbar search sizing, health dots, horizontal bars, small helpers */
+.adm-search{width:280px}
+.adm-search .input{height:40px}
+.hd{flex:none;width:10px;height:10px;border-radius:50%;background:var(--leaf);margin-top:7px}
+.hd.is-alert{background:var(--alert)}
+svg.chart .bar.is-alert{fill:var(--alert)}
+svg.chart text.fn-l{fill:var(--muted);font-size:18px;text-anchor:start}
+svg.chart text.fn-v{fill:var(--ink);font-size:21px;font-weight:600;text-anchor:start;font-variant-numeric:tabular-nums}
+.js svg.chart[data-draw] .draw-bar.hb{transform:scaleX(0);transform-origin:0 50%}
+.js svg.chart[data-draw].in .draw-bar.hb{transform:none}
+html[data-still] svg.chart .draw-bar.hb{transform:none!important}
+@media (prefers-reduced-motion:reduce){
+  .js svg.chart[data-draw] .draw-bar.hb{transform:none;opacity:0;transition:opacity 300ms ease;transition-delay:0ms}
+  .js svg.chart[data-draw].in .draw-bar.hb{opacity:1}
+}
+.tl-item.is-need .tl-pin::after{clip-path:none;inset:auto;left:8px;top:8px;width:8px;height:8px;border-radius:50%;background:#fff}
+.tl-item.is-need .tl-title{color:var(--need)}
+.li-row{display:flex;gap:12px;align-items:flex-start}
+.li-row+.li-row{margin-top:16px}
+.li-main{min-width:0;flex:1}
+.li-main .meta{display:block}
+.when-r{flex:none;text-align:right}
+.mono-s{font-family:var(--font-mono);font-size:15px}
+.pill-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sub-h{margin:0 0 12px}
+.card-gap{margin-top:24px}
+/* local: clickable audit rows, payload block */
+#evTable tbody tr{cursor:pointer}
+#evTable td{padding-top:12px;padding-bottom:12px;vertical-align:top}
+#evTable .hash,#evTable .mono-s,#evTable td.id{white-space:nowrap}
+#evTable tbody tr:focus-visible td{background:var(--info-bg)}
+.payload{margin:0;font-family:var(--font-mono);font-size:15px;line-height:1.5;white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere}
+
+</style>
+</head>
+<body data-portal="admin" data-page="audit">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="01-overview.html" aria-label="AiGRI home">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Superadmin</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="overview" href="01-overview.html"><svg class="i" aria-hidden="true"><use href="#i-activity"/></svg>Overview</a>
+      <a class="nav-item" data-nav="insurers" href="02-insurers.html"><svg class="i" aria-hidden="true"><use href="#i-building"/></svg>Insurers<span class="nav-badge is-need">1</span></a>
+      <a class="nav-item" data-nav="quality" href="03-policy-quality.html"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Policy quality<span class="nav-badge">1</span></a>
+      <a class="nav-item" data-nav="disputes" href="04-disputes-sla.html"><svg class="i" aria-hidden="true"><use href="#i-scale"/></svg>Disputes &amp; SLAs<span class="nav-badge">2</span></a>
+      <a class="nav-item" data-nav="packs" href="05-country-packs.html"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg>Country packs</a>
+      <a class="nav-item" data-nav="audit" href="06-audit-log.html"><svg class="i" aria-hidden="true"><use href="#i-list"/></svg>Audit log</a>
+    </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR (1 of 4 packs live)</span>
+      <div class="me"><span class="avatar">RK</span><span class="me-text"><span class="me-name">Rina Kartika</span><span class="me-meta">AiGRI Platform operations</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="01-overview.html">Superadmin</a><span class="crumb-sep">›</span><span aria-current="page">Audit log</span></nav>
+      <div class="topbar-actions">
+        <div class="field adm-search"><input class="input" type="search" placeholder="Search claims, clients, policies" aria-label="Search claims, clients, policies"></div>
+        <a class="icon-btn" href="04-disputes-sla.html" aria-label="Alerts, 2 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+        <span class="avatar" aria-hidden="true">RK</span>
+      </div>
+    </header>
+    <main id="main" class="page">
+
+      <div class="page-head">
+        <p class="eyebrow rv">3 Mar 2026, 09:15 WIB</p>
+        <h1 class="title rv" style="--i:1">Audit log</h1>
+        <p class="lead rv" style="--i:2">Every action by people, AiGRI's agent and the system, chained by hash. Nothing can be edited or removed.</p>
+        <p class="rv" style="--i:3;margin-top:16px"><span class="pill pill-ok" id="chainPill">Verified 3 Mar 2026, 09:00 WIB</span></p>
+        <div class="page-actions rv" style="--i:3"><button class="btn btn-ink" type="button" id="verifyBtn"><svg class="i i-sm" aria-hidden="true"><use href="#i-hash"/></svg>Verify chain</button></div>
+      </div>
+
+      <section class="rv">
+        <div class="table-tools">
+          <div class="wrap-row" data-select-group data-multi id="actorChips" role="group" aria-label="Actor">
+            <button class="chip is-sel" type="button" aria-pressed="true" data-f="people">People</button>
+            <button class="chip is-sel" type="button" aria-pressed="true" data-f="agent">AiGRI agent</button>
+            <button class="chip is-sel" type="button" aria-pressed="true" data-f="system">System</button>
+            <button class="chip is-sel" type="button" aria-pressed="true" data-f="wallet">Wallet</button>
+          </div>
+          <div class="select-wrap" style="width:170px"><select class="select" style="height:40px" aria-label="Date range"><option>Last 60 days</option><option>Last 30 days</option><option>Last 7 days</option></select></div>
+          <div class="field" style="flex:1;min-width:260px;max-width:340px"><input class="input" id="evSearch" style="height:40px" type="search" placeholder="Search by claim, policy or person" aria-label="Search by claim, policy or person"></div>
+          <span class="count" id="evCount">14 of 14 events</span>
+        </div>
+        <div class="table-wrap"><table class="table" id="evTable">
+          <thead><tr><th class="r">Seq</th><th>Time (WIB)</th><th>Actor</th><th>Action</th><th>Object</th><th>Hash</th></tr></thead>
+          <tbody><tr tabindex="0" role="button" data-seq="18442" data-actor="system" aria-label="Open event 18442, audit.chain_verified"><td class="id num">18.442</td><td class="mono-s"><span style="display:block">2026-03-03</span><span class="meta">09:00:02</span></td><td>System</td><td class="mono-s">audit.chain_verified</td><td>18.442 events</td><td><span class="hash">5b1e70…9c07</span></td></tr><tr tabindex="0" role="button" data-seq="18431" data-actor="system" aria-label="Open event 18431, nudge.sent"><td class="id num">18.431</td><td class="mono-s"><span style="display:block">2026-03-01</span><span class="meta">09:00:00</span></td><td>System (rule)</td><td class="mono-s">nudge.sent</td><td>Asuransi Sinar Mas · CLM-26-000402</td><td><span class="hash">c3a9d2…1e5b</span></td></tr><tr tabindex="0" role="button" data-seq="18430" data-actor="system" aria-label="Open event 18430, nudge.sent"><td class="id num">18.430</td><td class="mono-s"><span style="display:block">2026-03-01</span><span class="meta">09:00:00</span></td><td>System (rule)</td><td class="mono-s">nudge.sent</td><td>ACA · PR-ACA-RMP-2026</td><td><span class="hash">08fe41…a6d3</span></td></tr><tr tabindex="0" role="button" data-seq="17266" data-actor="wallet" aria-label="Open event 17266, payout.executed"><td class="id num">17.266</td><td class="mono-s"><span style="display:block">2026-02-26</span><span class="meta">09:41:07</span></td><td>Wallet</td><td class="mono-s">payout.executed</td><td>PAY-26-00327 · Rp20.000.000 · trigger #17265</td><td><span class="hash">e71b0c…44f2</span></td></tr><tr tabindex="0" role="button" data-seq="17265" data-actor="people" aria-label="Open event 17265, claim.approved"><td class="id num">17.265</td><td class="mono-s"><span style="display:block">2026-02-26</span><span class="meta">09:40:51</span></td><td>Dimas Prasetyo (Jasindo adjuster)</td><td class="mono-s">claim.approved</td><td>CLM-26-000431 · Rp20.000.000</td><td><span class="hash">9d24aa…07c1</span></td></tr><tr tabindex="0" role="button" data-seq="16902" data-actor="wallet" aria-label="Open event 16902, payout.executed"><td class="id num">16.902</td><td class="mono-s"><span style="display:block">2026-02-24</span><span class="meta">14:32:04</span></td><td>Wallet</td><td class="mono-s">payout.executed</td><td>PAY-26-00318 · Rp187.800.000 · trigger #16901</td><td><span class="hash">41c8e5…b913</span></td></tr><tr tabindex="0" role="button" data-seq="16901" data-actor="people" aria-label="Open event 16901, claim.approved"><td class="id num">16.901</td><td class="mono-s"><span style="display:block">2026-02-24</span><span class="meta">14:30:47</span></td><td>Dimas Prasetyo (Jasindo adjuster)</td><td class="mono-s">claim.approved</td><td>CLM-26-000418 · Rp187.800.000 (changed from Rp190.400.000, reason recorded)</td><td><span class="hash">a7f310…5d28</span></td></tr><tr tabindex="0" role="button" data-seq="15880" data-actor="people" aria-label="Open event 15880, claim.confirmed"><td class="id num">15.880</td><td class="mono-s"><span style="display:block">2026-02-20</span><span class="meta">07:55:30</span></td><td>Ibu Sri Wahyuni (CV Tani Makmur Demak)</td><td class="mono-s">claim.confirmed</td><td>CLM-26-000418 · packet 9e02d7…41aa</td><td><span class="hash">2bd94f…e60a</span></td></tr><tr tabindex="0" role="button" data-seq="15511" data-actor="people" aria-label="Open event 15511, claim.info_requested"><td class="id num">15.511</td><td class="mono-s"><span style="display:block">2026-02-19</span><span class="meta">15:40:12</span></td><td>Dimas Prasetyo</td><td class="mono-s">claim.info_requested</td><td>CLM-26-000418</td><td><span class="hash">f05c6b…3a97</span></td></tr><tr tabindex="0" role="button" data-seq="15102" data-actor="people" aria-label="Open event 15102, claim.confirmed"><td class="id num">15.102</td><td class="mono-s"><span style="display:block">2026-02-16</span><span class="meta">08:20:41</span></td><td>Ibu Sri Wahyuni</td><td class="mono-s">claim.confirmed</td><td>CLM-26-000418 · packet 7c41e9…b02d</td><td><span class="hash">6e1d38…c4b0</span></td></tr><tr tabindex="0" role="button" data-seq="15101" data-actor="agent" aria-label="Open event 15101, claim.packet_drafted"><td class="id num">15.101</td><td class="mono-s"><span style="display:block">2026-02-16</span><span class="meta">08:19:58</span></td><td>AiGRI agent (Tier 1, draft)</td><td class="mono-s">claim.packet_drafted</td><td>CLM-26-000418</td><td><span class="hash">b8a275…0f61</span></td></tr><tr tabindex="0" role="button" data-seq="12007" data-actor="agent" aria-label="Open event 12007, alert.sent"><td class="id num">12.007</td><td class="mono-s"><span style="display:block">2026-02-04</span><span class="meta">06:10:00</span></td><td>AiGRI agent (Tier 0)</td><td class="mono-s">alert.sent</td><td>Flood warning · 5 parcels · CV Tani Makmur Demak</td><td><span class="hash">3c90fe…d812</span></td></tr><tr tabindex="0" role="button" data-seq="3310" data-actor="people" aria-label="Open event 3310, purchase.confirmed"><td class="id num">3.310</td><td class="mono-s"><span style="display:block">2026-01-10</span><span class="meta">09:41:22</span></td><td>Ibu Sri Wahyuni</td><td class="mono-s">purchase.confirmed</td><td>POL-JSD-26-004127 · payload a91c3f0e…77e3</td><td><span class="hash">7a52c1…e9b4</span></td></tr><tr tabindex="0" role="button" data-seq="2954" data-actor="people" aria-label="Open event 2954, policy_record.published"><td class="id num">2.954</td><td class="mono-s"><span style="display:block">2026-01-05</span><span class="meta">15:02:10</span></td><td>Ayu Lestari (Jasindo product manager)</td><td class="mono-s">policy_record.published</td><td>PR-JSD-RFD-2026</td><td><span class="hash">d4e8b7…2c35</span></td></tr></tbody></table></div>
+        <p class="small muted" id="evEmpty" hidden style="margin-top:16px">No events match these filters.</p>
+      </section>
+
+      <section class="section card rv">
+        <h2 class="h-card" style="margin-bottom:8px">Chain status</h2>
+        <dl class="kv">
+          <div><dt>Events</dt><dd>18.442</dd></div>
+          <div><dt>Last verified</dt><dd>3 Mar 2026, 09:00 WIB</dd></div>
+          <div><dt>Breaks</dt><dd>0</dd></div>
+          <div><dt>Storage</dt><dd>Append-only, hash-chained (SHA-256)</dd></div>
+        </dl>
+        <p class="small" style="margin-top:12px"><a href="04-disputes-sla.html#nudge">See nudges in Disputes and SLAs</a></p>
+      </section>
+
+    </main>
+  </div>
+</div>
+<dialog class="sheet" id="eventSheet" aria-labelledby="evT">
+  <div class="sheet-grab"></div>
+  <div class="ov-head"><h3 class="h-section" id="evT">Event</h3><button class="icon-btn" type="button" data-close aria-label="Close"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="ov-body">
+    <dl class="kv">
+      <div><dt>Time</dt><dd id="evWhen"></dd></div>
+      <div><dt>Actor</dt><dd id="evActor"></dd></div>
+      <div><dt>Tier</dt><dd id="evTier"></dd></div>
+      <div><dt>Previous hash</dt><dd class="mono-s" id="evPrev"></dd></div>
+      <div><dt>This hash</dt><dd class="mono-s" id="evHash"></dd></div>
+    </dl>
+    <p class="label" style="margin:16px 0 8px">Payload</p>
+    <pre class="card payload" id="evPayload"></pre>
+    <p class="small muted" style="margin-top:12px">Read only. Events can't be edited or removed.</p>
+  </div>
+  <div class="ov-foot"><button class="btn btn-soft" type="button" data-close>Close</button></div>
+</dialog>
+<script src="../shared/system.js"></script>
+<script>(function(){
+
+  var D={"18442": {"act": "audit.chain_verified", "actor": "System", "tier": "System job, not a person", "prev": "3f8a12…b7d0", "hash": "5b1e70…9c07", "payload": "{ \"events_checked\": 18442, \"breaks\": 0, \"algorithm\": \"SHA-256\", \"verified_at\": \"2026-03-03T09:00:02+07:00\" }", "when": "2026-03-03 09:00:02 WIB"}, "18431": {"act": "nudge.sent", "actor": "System (rule)", "tier": "Rule-based, no person involved", "prev": "08fe41…a6d3", "hash": "c3a9d2…1e5b", "payload": "{ \"rule\": \"claim past settlement window\", \"to\": \"Asuransi Sinar Mas\", \"claim\": \"CLM-26-000402\", \"window_ended\": \"2026-02-28\" }", "when": "2026-03-01 09:00:00 WIB"}, "18430": {"act": "nudge.sent", "actor": "System (rule)", "tier": "Rule-based, no person involved", "prev": "e21b9c…5a60", "hash": "08fe41…a6d3", "payload": "{ \"rule\": \"policy record unreviewed 7 days or more\", \"to\": \"Asuransi Central Asia (ACA)\", \"record\": \"PR-ACA-RMP-2026\", \"compiled\": \"2026-02-22\" }", "when": "2026-03-01 09:00:00 WIB"}, "17266": {"act": "payout.executed", "actor": "Wallet", "tier": "System (executes only after an approval event)", "prev": "9d24aa…07c1", "hash": "e71b0c…44f2", "payload": "{ \"payout\": \"PAY-26-00327\", \"claim\": \"CLM-26-000431\", \"amount\": 20000000, \"currency\": \"IDR\", \"trigger_event\": 17265 }", "when": "2026-02-26 09:41:07 WIB"}, "17265": {"act": "claim.approved", "actor": "Dimas Prasetyo (Asuransi Jasindo, Claims adjuster)", "tier": "Person (Tier 3 action, never the agent)", "prev": "4c07de…81f3", "hash": "9d24aa…07c1", "payload": "{ \"claim\": \"CLM-26-000431\", \"final_amount\": 20000000, \"currency\": \"IDR\", \"approved_by\": \"Dimas Prasetyo\" }", "when": "2026-02-26 09:40:51 WIB"}, "16902": {"act": "payout.executed", "actor": "Wallet", "tier": "System (executes only after an approval event)", "prev": "a7f310…5d28", "hash": "41c8e5…b913", "payload": "{ \"payout\": \"PAY-26-00318\", \"claim\": \"CLM-26-000418\", \"amount\": 187800000, \"currency\": \"IDR\", \"trigger_event\": 16901 }", "when": "2026-02-24 14:32:04 WIB"}, "16901": {"act": "claim.approved", "actor": "Dimas Prasetyo (Asuransi Jasindo, Claims adjuster)", "tier": "Person (Tier 3 action, never the agent)", "prev": "b5c210…7e8d", "hash": "a7f310…5d28", "payload": "{ \"claim\": \"CLM-26-000418\", \"final_amount\": 187800000, \"proposed_amount\": 190400000, \"changed\": [\"DMK-05: 20% → 15%\"], \"reason\": \"Field photos show partial lodging; plants are recovering.\", \"currency\": \"IDR\" }", "when": "2026-02-24 14:30:47 WIB"}, "15880": {"act": "claim.confirmed", "actor": "Ibu Sri Wahyuni (CV Tani Makmur Demak)", "tier": "Person (client confirms, Tier 3 action)", "prev": "f05c6b…3a97", "hash": "2bd94f…e60a", "payload": "{ \"claim\": \"CLM-26-000418\", \"packet\": \"9e02d7…41aa\", \"confirmed_by\": \"Ibu Sri Wahyuni\", \"note\": \"2 photos added after the information request\" }", "when": "2026-02-20 07:55:30 WIB"}, "15511": {"act": "claim.info_requested", "actor": "Dimas Prasetyo (Asuransi Jasindo, Claims adjuster)", "tier": "Person (Tier 3 action, never the agent)", "prev": "6e1d38…c4b0", "hash": "f05c6b…3a97", "payload": "{ \"claim\": \"CLM-26-000418\", \"request\": \"Please add a ground photo of DMK-05 showing the water line on the plants.\" }", "when": "2026-02-19 15:40:12 WIB"}, "15102": {"act": "claim.confirmed", "actor": "Ibu Sri Wahyuni (CV Tani Makmur Demak)", "tier": "Person (client confirms, Tier 3 action)", "prev": "b8a275…0f61", "hash": "6e1d38…c4b0", "payload": "{ \"claim\": \"CLM-26-000418\", \"packet\": \"7c41e9…b02d\", \"confirmed_by\": \"Ibu Sri Wahyuni\" }", "when": "2026-02-16 08:20:41 WIB"}, "15101": {"act": "claim.packet_drafted", "actor": "AiGRI agent (Tier 1, draft)", "tier": "Agent, Tier 1: drafts only, a person confirms", "prev": "d90c3a…1b47", "hash": "b8a275…0f61", "payload": "{ \"claim\": \"CLM-26-000418\", \"state\": \"draft\", \"parcels\": 5, \"needs_confirmation_by\": \"Ibu Sri Wahyuni\" }", "when": "2026-02-16 08:19:58 WIB"}, "12007": {"act": "alert.sent", "actor": "AiGRI agent (Tier 0)", "tier": "Agent, Tier 0: read-only and notify", "prev": "71ae5d…c93b", "hash": "3c90fe…d812", "payload": "{ \"alert\": \"flood warning\", \"client\": \"CV Tani Makmur Demak\", \"parcels\": 5, \"channels\": [\"push\", \"sms (sandbox)\", \"email\"], \"source\": \"BMKG heavy-rain warning, 2026-02-04T05:30+07:00\" }", "when": "2026-02-04 06:10:00 WIB"}, "3310": {"act": "purchase.confirmed", "actor": "Ibu Sri Wahyuni (CV Tani Makmur Demak)", "tier": "Person (client confirms, Tier 3 action)", "prev": "2e6f08…ad14", "hash": "7a52c1…e9b4", "payload": "{ \"policy\": \"POL-JSD-26-004127\", \"premium\": 13440000, \"currency\": \"IDR\", \"payload_hash\": \"a91c3f0e…77e3\" }", "when": "2026-01-10 09:41:22 WIB"}, "2954": {"act": "policy_record.published", "actor": "Ayu Lestari (Asuransi Jasindo, Product manager)", "tier": "Person (Tier 3 action, never the agent)", "prev": "91b3f6…07ea", "hash": "d4e8b7…2c35", "payload": "{ \"record\": \"PR-JSD-RFD-2026\", \"insurer\": \"Asuransi Jasindo\", \"published_by\": \"Ayu Lestari\" }", "when": "2026-01-05 15:02:10 WIB"}};
+  var table=document.getElementById('evTable'), rows=Array.prototype.slice.call(table.tBodies[0].rows);
+  var chips=document.getElementById('actorChips'), q=document.getElementById('evSearch'), cnt=document.getElementById('evCount'), empty=document.getElementById('evEmpty');
+  function pretty(s){
+    try{ return JSON.stringify(JSON.parse(s),null,2); }catch(e){ return s; }
+  }
+  function openRow(tr){
+    var d=D[tr.getAttribute('data-seq')]; if(!d) return;
+    document.getElementById('evT').textContent='Event '+tr.getAttribute('data-seq')+' \u00b7 '+d.act;
+    document.getElementById('evWhen').textContent=d.when;
+    document.getElementById('evActor').textContent=d.actor;
+    document.getElementById('evTier').textContent=d.tier;
+    document.getElementById('evPrev').textContent=d.prev;
+    document.getElementById('evHash').textContent=d.hash;
+    document.getElementById('evPayload').textContent=pretty(d.payload);
+    if(window.AG) AG.open('eventSheet');
+  }
+  rows.forEach(function(tr){
+    tr.addEventListener('click',function(){ openRow(tr); });
+    tr.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openRow(tr); } });
+  });
+  function apply(){
+    var on={}; Array.prototype.forEach.call(chips.querySelectorAll('.chip'),function(c){ if(c.classList.contains('is-sel')) on[c.getAttribute('data-f')]=1; });
+    var term=(q.value||'').toLowerCase().trim(), n=0;
+    rows.forEach(function(tr){
+      var show=on[tr.getAttribute('data-actor')] && (!term || tr.textContent.toLowerCase().indexOf(term)>-1);
+      tr.hidden=!show; if(show) n++;
+    });
+    cnt.textContent=n+' of '+rows.length+' events'; empty.hidden=n>0;
+  }
+  chips.addEventListener('click',function(){ setTimeout(apply,0); });
+  q.addEventListener('input',apply);
+  var vb=document.getElementById('verifyBtn'), pill=document.getElementById('chainPill');
+  vb.addEventListener('click',function(){
+    if(vb.classList.contains('is-loading')) return;
+    vb.classList.add('is-loading'); vb.setAttribute('aria-busy','true');
+    setTimeout(function(){
+      vb.classList.remove('is-loading'); vb.removeAttribute('aria-busy');
+      var set=function(){ pill.textContent='Verified just now'; pill.style.opacity='1'; };
+      if(window.AG&&AG.reduced&&AG.reduced()) set(); else { pill.style.transition='opacity 120ms ease'; pill.style.opacity='0'; setTimeout(set,130); }
+      if(window.AG) AG.toast('Chain verified. 18.442 events, no breaks.',{tone:'ok'});
+    },900);
+  });
+
+})();</script>
+</body>
+</html>

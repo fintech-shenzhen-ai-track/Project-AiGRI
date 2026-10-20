@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Flood warning · AiGRI</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: rain chart text sizes and white halo on value labels (shared chart text is tuned for wider viewBoxes) */
+svg.chart.rain text.axis{font-size:15px}
+svg.chart.rain .bar-label{paint-order:stroke;stroke:var(--surface-2);stroke-width:5px;stroke-linejoin:round}
+.chart-box{max-width:560px}
+@media (max-width:600px){svg.chart.rain text.axis,svg.chart.rain .bar-label{font-size:19px}}
+/* local: map label size on narrow screens, forecast-area fade (opacity 0 to .25, 600ms, 200ms delay) */
+.js .fc-area{opacity:0;transition:opacity 600ms var(--ease-out) 200ms}
+.js .rv.in .fc-area{opacity:.25}
+html[data-still] .fc-area{opacity:.25!important}
+@media (max-width:600px){svg.map-svg text.map-label{font-size:24px}}
+/* local: numbered to-do list and photo rows in the sheet */
+.todo{counter-reset:n;display:flex;flex-direction:column;gap:20px;list-style:none}
+.todo li{counter-increment:n;display:grid;grid-template-columns:28px minmax(0,1fr);gap:16px;align-items:start}
+.todo li::before{content:counter(n);width:28px;height:28px;border-radius:50%;background:var(--ink);color:#fff;font-size:var(--fs-small);font-weight:700;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums}
+.todo-t{line-height:1.45;padding-top:2px}
+.cap-list{display:flex;flex-direction:column;gap:8px;list-style:none}
+.cap-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-radius:var(--r-sm);background:var(--surface-2)}
+.cap-row.is-taken{background:var(--ok-bg)}
+.cap-row .btn[disabled]{background:transparent;color:var(--ok)}
+@media (max-width:600px){.map{height:320px!important}.table-stack td[data-l="Chance, next 7 days"]{font-weight:600}}
+</style>
+</head>
+<body data-portal="client" data-page="alerts">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="09-home.html" aria-label="AiGRI home">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Client</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="home" href="09-home.html"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+      <a class="nav-item" data-nav="farm" href="03-parcels.html"><svg class="i" aria-hidden="true"><use href="#i-farm"/></svg>My farm</a>
+      <a class="nav-item" data-nav="risk" href="05-risk.html"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg>Risk</a>
+      <a class="nav-item" data-nav="cover" href="06-policies.html"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+      <a class="nav-item" data-nav="claims" href="12-claim-status.html"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+      <a class="nav-item" data-nav="wallet" href="13-wallet.html"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+      <a class="nav-item" data-nav="alerts" href="10-alert.html"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg>Alerts<span class="nav-badge is-need">1</span></a>
+      </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span>
+      <div class="me"><span class="avatar">SW</span><span class="me-text"><span class="me-name">Ibu Sri Wahyuni</span><span class="me-meta">CV Tani Makmur Demak</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="mbar">
+      <a class="logo-link" href="09-home.html" aria-label="AiGRI home"><svg viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/></svg></a>
+      <span class="mbar-title">Flood warning</span>
+      <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+    </header>
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="10-alert.html">Alerts</a><span class="crumb-sep">›</span><span aria-current="page">Flood warning</span></nav>
+      <div class="topbar-actions">
+        <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+        <span class="avatar" aria-hidden="true">SW</span>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+
+      <div class="page-head">
+        <p class="rv"><span class="pill pill-alert">Flood warning</span></p>
+        <p class="eyebrow rv" style="margin-top:12px">Sent 4 Feb 2026, 06:10 WIB</p>
+        <h1 class="title rv" style="--i:1">Heavy rain and flood risk, 6–8 Feb</h1>
+        <p class="lead rv" style="--i:2">BMKG issued a heavy-rain warning for Demak, Grobogan and Kudus at 05:30 WIB. AiGRI's model puts 5 of your 6 parcels in the likely flood area along the Wulan river.</p>
+      </div>
+
+      <div class="split">
+        <div class="stack">
+          <div>
+            <div class="map rv" style="height:480px">
+              <svg class="map-svg" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Schematic map of Demak. Parcels DMK-01 to DMK-05 sit inside the forecast flood area along the Wulan river. DMK-06 is outside.">
+<rect width="800" height="520" fill="#EEF2EA"/>
+<path d="M0 0H800V60C700 90 600 50 500 76S250 90 0 60Z" fill="#CFE0EC"/>
+<path d="M640 520C650 440 600 400 560 340S470 200 470 76" fill="none" stroke="#CFE0EC" stroke-width="22" stroke-linecap="round"/>
+<path d="M300 520C300 440 330 340 380 280S420 200 420 140" fill="none" stroke="#CFE0EC" stroke-width="14" stroke-linecap="round"/>
+<path d="M0 330H800M330 90V520" stroke="#fff" stroke-width="4" fill="none"/>
+<path class="fc-area" opacity=".25" fill="#C8693A" d="M480 90C560 100 690 180 705 300C720 420 690 500 560 512C440 522 300 502 196 474C166 424 186 360 240 350C330 340 400 262 420 200C440 150 452 108 480 90Z"/>
+<polygon points="500,130 570,118 590,170 540,196 496,170" fill="#C8693A" stroke="#fff" stroke-width="2"/>
+<polygon points="505,208 570,204 582,262 528,284 500,246" fill="#C8693A" stroke="#fff" stroke-width="2"/>
+<polygon points="592,300 650,292 668,344 620,368 584,336" fill="#C8693A" stroke="#fff" stroke-width="2"/>
+<polygon points="540,412 606,408 618,462 560,480 528,452" fill="#C8693A" stroke="#fff" stroke-width="2"/>
+<polygon points="220,384 280,376 296,424 244,448 210,420" fill="#C8693A" stroke="#fff" stroke-width="2"/>
+<polygon points="232,196 292,186 310,236 262,260 226,238" fill="#5D9253" stroke="#fff" stroke-width="2"/>
+<text x="545" y="160" text-anchor="middle" font-size="22" font-weight="700" fill="#fff" style="font-family:var(--font)">01</text>
+<text x="540" y="248" text-anchor="middle" font-size="22" font-weight="700" fill="#fff" style="font-family:var(--font)">02</text>
+<text x="626" y="338" text-anchor="middle" font-size="22" font-weight="700" fill="#fff" style="font-family:var(--font)">03</text>
+<text x="574" y="452" text-anchor="middle" font-size="22" font-weight="700" fill="#fff" style="font-family:var(--font)">04</text>
+<text x="254" y="420" text-anchor="middle" font-size="22" font-weight="700" fill="#fff" style="font-family:var(--font)">05</text>
+<text x="265" y="230" text-anchor="middle" font-size="22" font-weight="700" fill="#fff" style="font-family:var(--font)">06</text>
+<text class="map-label" x="346" y="316">Demak</text><text class="map-label" x="478" y="106">Karanganyar</text><text class="map-label" x="600" y="284">Gajah</text><text class="map-label" x="540" y="398">Dempet</text><text class="map-label" x="186" y="370">Wonosalam</text><text class="map-label" x="234" y="170">Mijen</text>
+</svg>
+              <div class="map-ctrl"><button class="icon-btn" type="button" aria-label="Zoom in" data-stub="The map is a schematic in this prototype."><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button><button class="icon-btn" type="button" aria-label="Zoom out" data-stub="The map is a schematic in this prototype."><svg class="i" aria-hidden="true"><use href="#i-minus"/></svg></button></div>
+            </div>
+            <div class="legend" style="margin-top:12px"><span><i class="swatch" style="--c:var(--parcel-risk)"></i>In forecast flood area</span><span><i class="swatch" style="--c:var(--parcel)"></i>Outside</span><span><i class="swatch" style="--c:var(--map-water)"></i>Wulan river</span></div>
+            <p class="meta" style="margin-top:4px">Schematic map. Not to scale.</p>
+          </div>
+          <section class="card card-lg rv" aria-labelledby="rfh">
+            <h2 class="h-card" id="rfh" style="margin-bottom:16px">Rain forecast</h2>
+            <div class="chart-box">
+              <svg class="chart rain" data-draw viewBox="0 0 400 220" role="img" aria-label="Rain forecast 4 to 10 February in millimetres per day: 22, 48, 96, 74, 51, 18, 9. 221 millimetres expected over 6 to 8 February. The BMKG heavy-rain level is 50 millimetres per day.">
+<line class="axis" x1="0" y1="185" x2="400" y2="185"/>
+<rect class="bar is-water draw-bar" style="--i:0" x="8" y="154.2" width="40" height="30.8" rx="6"/>
+<text class="bar-label" style="--i:0" x="28" y="145.2">22</text>
+<text class="axis" x="28" y="209">4</text>
+<rect class="bar is-water draw-bar" style="--i:1" x="64" y="117.8" width="40" height="67.2" rx="6"/>
+<text class="bar-label" style="--i:1" x="84" y="108.8">48</text>
+<text class="axis" x="84" y="209">5</text>
+<rect class="bar is-water draw-bar" style="--i:2" x="120" y="50.6" width="40" height="134.4" rx="6"/>
+<text class="bar-label" style="--i:2" x="140" y="41.6">96</text>
+<text class="axis" x="140" y="209">6</text>
+<rect class="bar is-water draw-bar" style="--i:3" x="176" y="81.4" width="40" height="103.6" rx="6"/>
+<text class="bar-label" style="--i:3" x="196" y="72.4">74</text>
+<text class="axis" x="196" y="209">7</text>
+<rect class="bar is-water draw-bar" style="--i:4" x="232" y="113.6" width="40" height="71.4" rx="6"/>
+<text class="bar-label" style="--i:4" x="252" y="104.6">51</text>
+<text class="axis" x="252" y="209">8</text>
+<rect class="bar is-water draw-bar" style="--i:5" x="288" y="159.8" width="40" height="25.2" rx="6"/>
+<text class="bar-label" style="--i:5" x="308" y="150.8">18</text>
+<text class="axis" x="308" y="209">9</text>
+<rect class="bar is-water draw-bar" style="--i:6" x="344" y="172.4" width="40" height="12.6" rx="6"/>
+<text class="bar-label" style="--i:6" x="364" y="163.4">9</text>
+<text class="axis" x="364" y="209">10</text>
+<line class="threshold" x1="0" y1="115.0" x2="400" y2="115.0"/>
+</svg>
+            </div>
+            <div class="legend" style="margin-top:12px"><span><i class="swatch" style="--c:var(--water)"></i>Rain, mm per day</span><span><i class="swatch" style="--c:var(--alert)"></i>BMKG heavy-rain level, 50 mm/day</span></div>
+            <p class="small" style="margin-top:12px">221 mm expected over 6–8 Feb.</p>
+          </section>
+        </div>
+
+        <div class="stack">
+          <section class="card card-lg rv" aria-labelledby="wtd">
+            <h2 class="h-section" id="wtd" style="margin-bottom:20px">What to do now</h2>
+            <ol class="todo">
+              <li id="photos"><div><p class="todo-t">Take a before-photo of each parcel today</p><button class="btn btn-y" type="button" data-open="captureSheet" style="margin-top:12px">Take before-photos</button></div></li>
+              <li><p class="todo-t">Clear drainage outlets on DMK-01 and DMK-02, closest to the river</p></li>
+              <li><p class="todo-t">Move stored seed and fertiliser to higher ground</p></li>
+              <li><p class="todo-t">Keep your phone charged. We'll message you if the forecast changes.</p></li>
+            </ol>
+          </section>
+          <section class="card rv" aria-labelledby="ifd">
+            <h2 class="h-card" id="ifd">If your crop is damaged</h2>
+            <p class="small" style="margin-top:8px">Report within 7 days after the flood ends. AiGRI drafts the claim with satellite readings and your photos; you check and confirm.</p>
+            <p style="margin-top:12px"><button class="cite" type="button" data-open="clauseSheet">Clause 8.1</button></p>
+          </section>
+        </div>
+      </div>
+
+      <section class="card card-lg section rv" aria-labelledby="pfh">
+        <h2 class="h-section" id="pfh" style="margin-bottom:16px">Parcels in the forecast area</h2>
+        <div class="table-wrap"><table class="table table-stack">
+          <thead><tr><th>Parcel</th><th>Area</th><th>Distance to river</th><th class="r">Chance of flooding, next 7 days</th></tr></thead>
+          <tbody><tr><td class="id" data-l="Parcel">DMK-01</td><td data-l="Area">9,6 ha</td><td data-l="Distance to river">0,4 km</td><td class="num" data-l="Chance, next 7 days">78%</td></tr><tr><td class="id" data-l="Parcel">DMK-02</td><td data-l="Area">8,4 ha</td><td data-l="Distance to river">0,9 km</td><td class="num" data-l="Chance, next 7 days">71%</td></tr><tr><td class="id" data-l="Parcel">DMK-03</td><td data-l="Area">7,2 ha</td><td data-l="Distance to river">1,3 km</td><td class="num" data-l="Chance, next 7 days">64%</td></tr><tr><td class="id" data-l="Parcel">DMK-04</td><td data-l="Area">8,8 ha</td><td data-l="Distance to river">1,8 km</td><td class="num" data-l="Chance, next 7 days">52%</td></tr><tr><td class="id" data-l="Parcel">DMK-05</td><td data-l="Area">6,5 ha</td><td data-l="Distance to river">2,6 km</td><td class="num" data-l="Chance, next 7 days">38%</td></tr></tbody>
+        </table></div>
+        <p class="meta" style="margin-top:12px">DMK-06 Mijen Hilir is outside the forecast area (11%).</p>
+      </section>
+
+      <section class="card section rv" aria-labelledby="htd">
+        <h2 class="h-card" id="htd">How you were told</h2>
+        <dl class="kv" style="margin-top:8px">
+          <div><dt>Push</dt><dd>4 Feb, 06:10 · delivered</dd></div>
+          <div><dt>SMS</dt><dd>4 Feb, 06:10 · delivered (sandbox)</dd></div>
+          <div><dt>Email</dt><dd>4 Feb, 06:11 · delivered</dd></div>
+        </dl>
+        <p class="meta" style="margin-top:8px">Sources: BMKG early warning 4 Feb 05:30 WIB, Open-Meteo ensemble, AiGRI flood model.</p>
+      </section>
+
+      <div class="banner banner-info section rv">
+        <span class="banner-icon"><svg class="i" aria-hidden="true"><use href="#i-info"/></svg></span>
+        <p class="banner-title">Demo: jump to 16 Feb 2026, after the flood</p>
+        <p class="banner-text">The water receded on 14 Feb. AiGRI has drafted your claim.</p>
+        <div class="banner-actions"><a class="btn btn-ink" href="11-claim.html">Open the drafted claim</a></div>
+      </div>
+    </main>
+  </div>
+</div>
+<nav class="tabbar" aria-label="Main">
+  <a class="tab" data-nav="home alerts" href="09-home.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+  <a class="tab" data-nav="farm risk" href="03-parcels.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-farm"/></svg>Farm</a>
+  <a class="tab" data-nav="cover" href="06-policies.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+  <a class="tab" data-nav="claims" href="12-claim-status.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+  <a class="tab" data-nav="wallet" href="13-wallet.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+  </nav>
+<dialog class="sheet" id="captureSheet" aria-labelledby="csT">
+  <div class="sheet-grab"></div>
+  <div class="ov-head"><h3 class="h-section" id="csT">Before-photos</h3><button class="icon-btn" type="button" data-close aria-label="Close"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="ov-body">
+    <p class="small muted" style="margin-bottom:12px"><b id="capCount">0 of 5</b> parcels photographed</p>
+    <ul class="cap-list"><li class="cap-row"><span><b>DMK-01</b><span class="meta" style="display:block">Karanganyar Utara</span></span><button class="btn btn-soft btn-sm" type="button" data-cap>Take photo</button></li><li class="cap-row"><span><b>DMK-02</b><span class="meta" style="display:block">Karanganyar Selatan</span></span><button class="btn btn-soft btn-sm" type="button" data-cap>Take photo</button></li><li class="cap-row"><span><b>DMK-03</b><span class="meta" style="display:block">Gajah Timur</span></span><button class="btn btn-soft btn-sm" type="button" data-cap>Take photo</button></li><li class="cap-row"><span><b>DMK-04</b><span class="meta" style="display:block">Dempet Barat</span></span><button class="btn btn-soft btn-sm" type="button" data-cap>Take photo</button></li><li class="cap-row"><span><b>DMK-05</b><span class="meta" style="display:block">Wonosalam</span></span><button class="btn btn-soft btn-sm" type="button" data-cap>Take photo</button></li></ul>
+    <p class="label" style="margin:24px 0 12px">Each photo records</p>
+    <ul class="check-list">
+      <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Time and date</span></li>
+      <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>GPS location (must be inside the parcel)</span></li>
+      <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>A fingerprint of the file, so it can't be swapped</span></li>
+    </ul>
+  </div>
+  <div class="ov-foot"><button class="btn btn-ink btn-block" type="button" data-close>Done</button></div>
+</dialog>
+<dialog class="sheet" id="clauseSheet" aria-labelledby="clT">
+  <div class="sheet-grab"></div>
+  <div class="ov-head"><h3 class="h-section" id="clT">Clause 8.1</h3><button class="icon-btn" type="button" data-close aria-label="Close"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="ov-body"><p class="muted">Notice. The insured must report a loss to the insurer within 7 days after the insured event ends.</p></div>
+  <div class="ov-foot"><button class="btn btn-ink btn-block" type="button" data-close>Got it</button></div>
+</dialog>
+<script src="../shared/system.js"></script>
+<script>(function(){
+  var rows = document.querySelectorAll('[data-cap]');
+  var count = document.getElementById('capCount');
+  var n = 0;
+  rows.forEach(function(b){
+    b.addEventListener('click', function(){
+      if (b.disabled) return;
+      b.disabled = true; b.textContent = 'Taken';
+      b.closest('.cap-row').classList.add('is-taken');
+      n += 1; count.textContent = n + ' of 5';
+      if (window.AG) AG.toast('Photo saved. ' + n + ' of 5 parcels photographed.', { tone: 'ok' });
+    });
+  });
+})();</script>
+</body>
+</html>

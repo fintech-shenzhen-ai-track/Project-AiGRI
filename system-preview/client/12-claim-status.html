@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Claim status · AiGRI</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: total row in the amount table */
+.table tr.is-total td{font-weight:600;background:var(--white)}
+.table tbody tr.is-total{--row:var(--white)}
+/* local: amount table fits the narrow side card */
+.amt th,.amt td{white-space:nowrap;padding-left:8px;padding-right:8px}
+.amt td.num{font-size:14px}
+</style>
+</head>
+<body data-portal="client" data-page="claims">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="09-home.html" aria-label="AiGRI home">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Client</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="home" href="09-home.html"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+      <a class="nav-item" data-nav="farm" href="03-parcels.html"><svg class="i" aria-hidden="true"><use href="#i-farm"/></svg>My farm</a>
+      <a class="nav-item" data-nav="risk" href="05-risk.html"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg>Risk</a>
+      <a class="nav-item" data-nav="cover" href="06-policies.html"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+      <a class="nav-item" data-nav="claims" href="12-claim-status.html"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+      <a class="nav-item" data-nav="wallet" href="13-wallet.html"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+      <a class="nav-item" data-nav="alerts" href="10-alert.html"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg>Alerts<span class="nav-badge is-need">1</span></a>
+      </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span>
+      <div class="me"><span class="avatar">SW</span><span class="me-text"><span class="me-name">Ibu Sri Wahyuni</span><span class="me-meta">CV Tani Makmur Demak</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="mbar">
+      <a class="logo-link" href="09-home.html" aria-label="AiGRI home"><svg viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/></svg></a>
+      <span class="mbar-title">Claim status</span>
+      <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+    </header>
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="12-claim-status.html">Claims</a><span class="crumb-sep">›</span><span aria-current="page">CLM-26-000418</span></nav>
+      <div class="topbar-actions">
+        <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+        <span class="avatar" aria-hidden="true">SW</span>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+
+      <section class="card card-lg rv" aria-labelledby="hero">
+        <p><span class="pill pill-ok">Paid</span></p>
+        <p class="eyebrow" style="margin-top:16px">Claim CLM-26-000418 · Central Java floods, Feb 2026</p>
+        <h1 class="num-xl" id="hero" data-count="187800000" data-format="money">Rp187.800.000</h1>
+        <p class="small muted" style="margin-top:12px;max-width:640px">Approved by Dimas Prasetyo, Asuransi Jasindo, on 24 Feb 2026, 14:30 WIB. Paid to your AiGRI wallet at 14:32.</p>
+        <p style="margin-top:20px"><a class="btn btn-ink" href="13-wallet.html">Open wallet</a></p>
+      </section>
+
+      <div class="split section">
+        <section class="card card-lg rv" aria-labelledby="wh">
+          <h2 class="h-section" id="wh" style="margin-bottom:24px">What happened</h2>
+          <div class="tl" id="tl" style="--p:1">
+            <div class="tl-track"><span class="tl-fill"></span></div>
+            <div class="tl-item done"><span class="tl-pin"></span><p class="tl-when">16 Feb 2026 · 08:19 WIB</p><p class="tl-title">Packet drafted</p><p class="tl-body">AiGRI · 5 parcels, 14 photos, satellite readings</p></div>
+<div class="tl-item done"><span class="tl-pin"></span><p class="tl-when">16 Feb 2026 · 08:20 WIB</p><p class="tl-title">Confirmed and submitted</p><p class="tl-body">Ibu Sri Wahyuni · packet <span class="hash">7c41e9…b02d</span></p></div>
+<div class="tl-item done"><span class="tl-pin"></span><p class="tl-when">16 Feb 2026 · 08:21 WIB</p><p class="tl-title">Pre-checked: complete</p><p class="tl-body">AiGRI · 1 note: DMK-05 radar shows no flood</p></div>
+<div class="tl-item done"><span class="tl-pin"></span><p class="tl-when">17 Feb 2026 · 10:02 WIB</p><p class="tl-title">Under review</p><p class="tl-body">Dimas Prasetyo, Asuransi Jasindo</p></div>
+<div class="tl-item is-need"><span class="tl-pin"></span><p class="tl-when">19 Feb 2026 · 15:40 WIB</p><p class="tl-title">Info requested</p><p class="tl-body">Dimas Prasetyo: “Please add a ground photo of DMK-05 showing the water line on the plants.”</p></div>
+<div class="tl-item done"><span class="tl-pin"></span><p class="tl-when">20 Feb 2026 · 07:55 WIB</p><p class="tl-title">2 photos added, confirmed and resubmitted</p><p class="tl-body">Ibu Sri Wahyuni · packet <span class="hash">9e02d7…41aa</span></p></div>
+<div class="tl-item done"><span class="tl-pin"></span><p class="tl-when">24 Feb 2026 · 14:30 WIB</p><p class="tl-title">Approved: Rp187.800.000</p><p class="tl-body">Dimas Prasetyo · DMK-05 changed from 20% to 15%, reason recorded</p></div>
+<div class="tl-item is-now"><span class="tl-pin"></span><p class="tl-when">24 Feb 2026 · 14:32 WIB</p><p class="tl-title">Paid to your AiGRI wallet</p><p class="tl-body">Wallet, automatic after approval · PAY-26-00318</p></div>
+
+          </div>
+        </section>
+        <div class="stack">
+          <section class="card rv" aria-labelledby="amh">
+            <h2 class="h-card" id="amh" style="margin-bottom:12px">How the amount was set</h2>
+            <div class="table-wrap amt"><table class="table table-stack">
+              <thead><tr><th>Parcel</th><th class="r">Loss</th><th class="r">Paid</th></tr></thead>
+              <tbody><tr><td class="id" data-l="Parcel">DMK-01</td><td class="num" data-l="Assessed loss">92%</td><td class="num" data-l="Paid">Rp76.800.000</td></tr><tr><td class="id" data-l="Parcel">DMK-02</td><td class="num" data-l="Assessed loss">75%</td><td class="num" data-l="Paid">Rp50.400.000</td></tr><tr><td class="id" data-l="Parcel">DMK-03</td><td class="num" data-l="Assessed loss">55%</td><td class="num" data-l="Paid">Rp31.680.000</td></tr><tr><td class="id" data-l="Parcel">DMK-04</td><td class="num" data-l="Assessed loss">30%</td><td class="num" data-l="Paid">Rp21.120.000</td></tr><tr><td class="id" data-l="Parcel">DMK-05</td><td class="num" data-l="Assessed loss">15%</td><td class="num" data-l="Paid">Rp7.800.000</td></tr><tr class="is-total"><td class="id" data-l="Parcel">Total</td><td class="num" data-l="Assessed loss"></td><td class="num" data-l="Paid"><b>Rp187.800.000</b></td></tr></tbody>
+            </table></div>
+            <div class="banner banner-info" style="margin-top:16px;padding:16px">
+              <span class="banner-icon"><svg class="i" aria-hidden="true"><use href="#i-info"/></svg></span>
+              <p class="banner-text">The adjuster changed DMK-05 from 20% to 15%. Reason: “Field photos show partial lodging; plants are recovering.”</p>
+            </div>
+            <p class="small" style="margin-top:16px">Rules: total loss at 90% or more pays 100%; partial loss pays the assessed %. <button class="cite" type="button" data-open="clauseSheet">Clause 6.3</button></p>
+          </section>
+          <section class="card rv" aria-labelledby="aph">
+            <h2 class="h-card" id="aph">Not happy with the decision?</h2>
+            <p class="small" style="margin-top:8px">You can appeal within 30 days. AiGRI drafts the appeal from your packet; you check and send it.</p>
+            <button class="btn btn-soft" type="button" style="margin-top:16px" data-stub="Appeals are not part of this prototype.">Draft an appeal</button>
+          </section>
+        </div>
+      </div>
+
+      <section class="card section rv" aria-labelledby="och">
+        <h2 class="h-card" id="och">Other claims</h2>
+        <div class="empty" style="padding:24px 16px 8px"><p class="small">No other claims.</p></div>
+      </section>
+
+      <p class="section"><a class="btn btn-ghost" href="../insurer/04-claim-review.html" style="margin-left:-14px">See the adjuster's view (demo)</a></p>
+    </main>
+  </div>
+</div>
+<nav class="tabbar" aria-label="Main">
+  <a class="tab" data-nav="home alerts" href="09-home.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+  <a class="tab" data-nav="farm risk" href="03-parcels.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-farm"/></svg>Farm</a>
+  <a class="tab" data-nav="cover" href="06-policies.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+  <a class="tab" data-nav="claims" href="12-claim-status.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+  <a class="tab" data-nav="wallet" href="13-wallet.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+  </nav>
+<dialog class="sheet" id="clauseSheet" aria-labelledby="clT">
+  <div class="sheet-grab"></div>
+  <div class="ov-head"><h3 class="h-section" id="clT">Clause 6.3</h3><button class="icon-btn" type="button" data-close aria-label="Close"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="ov-body"><p class="muted">Payment. A total loss of 90% or more of a parcel pays 100% of its sum insured. A partial loss from 10% to under 90% pays the assessed loss percentage. Under 10% is treated as no loss.</p></div>
+  <div class="ov-foot"><button class="btn btn-ink btn-block" type="button" data-close>Got it</button></div>
+</dialog>
+<script src="../shared/system.js"></script>
+<script>(function(){
+  var tl = document.getElementById('tl');
+  if (!tl || !window.AG || AG.reduced()) return;
+  var last = tl.querySelector('.tl-item.is-now');
+  tl.style.setProperty('--p', 0);
+  if (last) last.classList.remove('is-now');
+  setTimeout(function(){ tl.style.setProperty('--p', 1); }, 350);
+  setTimeout(function(){ if (last) last.classList.add('is-now'); }, 1000);
+})();</script>
+</body>
+</html>

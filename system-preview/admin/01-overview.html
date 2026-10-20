@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Platform overview · AiGRI Admin</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: admin topbar search sizing, health dots, horizontal bars, small helpers */
+.adm-search{width:280px}
+.adm-search .input{height:40px}
+.hd{flex:none;width:10px;height:10px;border-radius:50%;background:var(--leaf);margin-top:7px}
+.hd.is-alert{background:var(--alert)}
+svg.chart .bar.is-alert{fill:var(--alert)}
+svg.chart text.fn-l{fill:var(--muted);font-size:18px;text-anchor:start}
+svg.chart text.fn-v{fill:var(--ink);font-size:21px;font-weight:600;text-anchor:start;font-variant-numeric:tabular-nums}
+.js svg.chart[data-draw] .draw-bar.hb{transform:scaleX(0);transform-origin:0 50%}
+.js svg.chart[data-draw].in .draw-bar.hb{transform:none}
+html[data-still] svg.chart .draw-bar.hb{transform:none!important}
+@media (prefers-reduced-motion:reduce){
+  .js svg.chart[data-draw] .draw-bar.hb{transform:none;opacity:0;transition:opacity 300ms ease;transition-delay:0ms}
+  .js svg.chart[data-draw].in .draw-bar.hb{opacity:1}
+}
+.tl-item.is-need .tl-pin::after{clip-path:none;inset:auto;left:8px;top:8px;width:8px;height:8px;border-radius:50%;background:#fff}
+.tl-item.is-need .tl-title{color:var(--need)}
+.li-row{display:flex;gap:12px;align-items:flex-start}
+.li-row+.li-row{margin-top:16px}
+.li-main{min-width:0;flex:1}
+.li-main .meta{display:block}
+.when-r{flex:none;text-align:right}
+.mono-s{font-family:var(--font-mono);font-size:15px}
+.pill-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sub-h{margin:0 0 12px}
+.card-gap{margin-top:24px}
+
+</style>
+</head>
+<body data-portal="admin" data-page="overview">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="01-overview.html" aria-label="AiGRI home">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Superadmin</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="overview" href="01-overview.html"><svg class="i" aria-hidden="true"><use href="#i-activity"/></svg>Overview</a>
+      <a class="nav-item" data-nav="insurers" href="02-insurers.html"><svg class="i" aria-hidden="true"><use href="#i-building"/></svg>Insurers<span class="nav-badge is-need">1</span></a>
+      <a class="nav-item" data-nav="quality" href="03-policy-quality.html"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Policy quality<span class="nav-badge">1</span></a>
+      <a class="nav-item" data-nav="disputes" href="04-disputes-sla.html"><svg class="i" aria-hidden="true"><use href="#i-scale"/></svg>Disputes &amp; SLAs<span class="nav-badge">2</span></a>
+      <a class="nav-item" data-nav="packs" href="05-country-packs.html"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg>Country packs</a>
+      <a class="nav-item" data-nav="audit" href="06-audit-log.html"><svg class="i" aria-hidden="true"><use href="#i-list"/></svg>Audit log</a>
+    </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR (1 of 4 packs live)</span>
+      <div class="me"><span class="avatar">RK</span><span class="me-text"><span class="me-name">Rina Kartika</span><span class="me-meta">AiGRI Platform operations</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="01-overview.html">Superadmin</a><span class="crumb-sep">›</span><span aria-current="page">Overview</span></nav>
+      <div class="topbar-actions">
+        <div class="field adm-search"><input class="input" type="search" placeholder="Search claims, clients, policies" aria-label="Search claims, clients, policies"></div>
+        <a class="icon-btn" href="04-disputes-sla.html" aria-label="Alerts, 2 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+        <span class="avatar" aria-hidden="true">RK</span>
+      </div>
+    </header>
+    <main id="main" class="page">
+
+      <div class="page-head">
+        <p class="eyebrow rv">3 Mar 2026, 09:15 WIB</p>
+        <h1 class="title rv" style="--i:1">Platform overview</h1>
+        <p class="lead rv" style="--i:2">Indonesia pack · Central Java floods, Feb 2026 in its fourth week.</p>
+        <div class="page-actions rv" style="--i:3"><span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span></div>
+      </div>
+
+      <section class="grid-4" aria-label="Platform totals">
+        <div class="stat rv"><span class="label">Insurers</span><span class="num-l">3 live</span><span class="meta">ACA in verification</span></div>
+        <div class="stat rv" style="--i:1"><span class="label">Clients</span><span class="num-l" data-count="3912" data-format="num">3.912</span><span class="meta">214 agri SMEs · 3.698 farmers</span></div>
+        <div class="stat rv" style="--i:2"><span class="label">Active policies</span><span class="num-l" data-count="5870" data-format="num">5.870</span><span class="meta">Across 3 live insurers</span></div>
+        <div class="stat rv" style="--i:3"><span class="label">Over SLA</span><span class="row" style="gap:12px"><span class="num-l">1</span><span class="pill pill-alert">Over window</span></span><span class="meta">Asuransi Sinar Mas</span></div>
+      </section>
+
+      <section class="section split">
+        <div class="card card-lg rv">
+          <h2 class="h-section" style="margin-bottom:16px">Flood claims</h2>
+          <svg class="chart" data-draw viewBox="0 0 640 190" role="img" aria-label="Flood claims funnel: 96 submitted, 71 decided, 64 paid, 1 over SLA">
+            <rect class="bar draw-bar hb" style="--i:0" x="130" y="10" width="430" height="32" rx="8"/><text class="fn-l" x="0" y="31">Submitted</text><text class="fn-v" x="572" y="32">96</text>
+            <rect class="bar is-ink draw-bar hb" style="--i:1" x="130" y="56" width="318" height="32" rx="8"/><text class="fn-l" x="0" y="77">Decided</text><text class="fn-v" x="460" y="78">71</text>
+            <rect class="bar draw-bar hb" style="--i:2" x="130" y="102" width="287" height="32" rx="8"/><text class="fn-l" x="0" y="123">Paid</text><text class="fn-v" x="429" y="124">64</text>
+            <rect class="bar is-alert draw-bar hb" style="--i:3" x="130" y="148" width="8" height="32" rx="4"/><text class="fn-l" x="0" y="169">Over SLA</text><text class="fn-v" x="150" y="170">1</text>
+          </svg>
+          <dl class="kv" style="margin-top:8px">
+            <div><dt>Median time to decision</dt><dd>6,2 days</dd></div>
+            <div><dt>Paid</dt><dd>Rp2,41 M<span class="meta">64 claims</span></dd></div>
+          </dl>
+          <h3 class="h-card" style="margin:24px 0 8px">SLA by insurer</h3>
+          <p class="small muted" style="margin-bottom:12px">Median days to decision against the 14-day window.</p>
+          <div class="table-wrap"><table class="table">
+            <thead><tr><th>Insurer</th><th>Median days</th><th class="r">Open</th><th>Over window</th></tr></thead>
+            <tbody>
+              <tr><td class="id">Asuransi Jasindo</td><td><b>5,1</b><div class="meter" role="img" aria-label="36 percent of the 14-day window"><span style="--p:.36"></span></div></td><td class="num">23</td><td>0</td></tr>
+              <tr><td class="id">Askrindo</td><td><b>6,8</b><div class="meter" role="img" aria-label="49 percent of the 14-day window"><span style="--p:.49"></span></div></td><td class="num">9</td><td>0</td></tr>
+              <tr data-href="04-disputes-sla.html" tabindex="0" class="is-flag"><td class="id">Asuransi Sinar Mas</td><td><b>9,4</b><div class="meter" role="img" aria-label="67 percent of the 14-day window"><span style="--p:.67"></span></div></td><td class="num">6</td><td><span class="pill pill-alert">1 over</span></td></tr>
+              <tr><td class="id">Asuransi Central Asia (ACA)</td><td class="meta">—</td><td class="num">—</td><td><span class="pill pill-pending">Not live</span></td></tr>
+            </tbody></table></div>
+        </div>
+
+        <div class="card rv" style="--i:1">
+          <div class="row-between" style="margin-bottom:16px"><h2 class="h-card">System health</h2><span class="pill pill-alert">1 degraded</span></div>
+          <ul style="padding:0;margin:0;list-style:none"><li class="li-row"><span class="hd"></span><div class="li-main"><p><b>Sentinel-1 radar ingest</b></p><p class="meta">OK · last 3 Mar, 05:40 WIB</p></div></li><li class="li-row"><span class="hd"></span><div class="li-main"><p><b>Sentinel-2 optical ingest</b></p><p class="meta">OK · last 2 Mar, 10:15 WIB</p></div></li><li class="li-row"><span class="hd"></span><div class="li-main"><p><b>BMKG warnings</b></p><p class="meta">OK · last 09:00 WIB</p></div></li><li class="li-row"><span class="hd"></span><div class="li-main"><p><b>Open-Meteo</b></p><p class="meta">OK</p></div></li><li class="li-row"><span class="hd"></span><div class="li-main"><p><b>GDACS</b></p><p class="meta">OK</p></div></li><li class="li-row"><span class="hd"></span><div class="li-main"><p><b>Wallet ledger</b></p><p class="meta">OK · 0 payouts without approval, 0 double payouts</p></div></li><li class="li-row"><span class="hd"></span><div class="li-main"><p><b>Audit chain</b></p><p class="meta">Verified 09:00 WIB · 18.442 events</p></div></li><li class="li-row"><span class="hd"></span><div class="li-main"><p><b>Push</b></p><p class="meta">OK</p></div></li><li class="li-row"><span class="hd is-alert"></span><div class="li-main"><p><b>SMS sandbox</b> <span class="pill pill-alert">Degraded</span></p><p class="meta">Delivery delayed about 4 min. Push and email unaffected.</p></div></li><li class="li-row"><span class="hd"></span><div class="li-main"><p><b>Email</b></p><p class="meta">OK</p></div></li></ul>
+        </div>
+      </section>
+
+      <section class="section grid-2">
+        <div class="card rv">
+          <h2 class="h-card" style="margin-bottom:16px">Nudges this week</h2>
+          <ul style="padding:0;margin:0;list-style:none"><li class="li-row"><div class="li-main"><p><b>Rule: claim past settlement window</b></p><p class="small muted">Asuransi Sinar Mas · CLM-26-000402 (window ended 28 Feb)</p><p class="meta">1 Mar 2026, 09:00 · Seen 1 Mar, 11:20</p></div><div class="when-r"><span class="pill pill-pending">Sent, no action</span></div></li><li class="li-row"><div class="li-main"><p><b>Rule: Policy Record unreviewed 7 days or more</b></p><p class="small muted">Asuransi Central Asia (ACA) · PR-ACA-RMP-2026 (compiled 22 Feb)</p><p class="meta">1 Mar 2026, 09:00</p></div><div class="when-r"><span class="pill pill-pending">Sent, not seen</span></div></li><li class="li-row"><div class="li-main"><p><b>Rule: claim due in 48 h</b></p><p class="small muted">Asuransi Jasindo · CLM-26-000409 (due 25 Feb)</p><p class="meta">23 Feb 2026, 09:00</p></div><div class="when-r"><span class="pill pill-ok">Resolved 24 Feb</span></div></li><li class="li-row"><div class="li-main"><p><b>Free text, drafted by AiGRI</b></p><p class="small muted">Asuransi Sinar Mas · CLM-26-000402 second reminder</p><p class="meta">3 Mar 2026, 09:12</p></div><div class="when-r"><a class="pill pill-need" href="04-disputes-sla.html#nudge">Draft waiting for you</a></div></li></ul>
+        </div>
+        <div class="card rv" style="--i:1">
+          <h2 class="h-card" style="margin-bottom:12px">Ranking audit</h2>
+          <p>Last run 3 Mar 2026, 06:00 WIB. 500 sample rankings recomputed, 500 match. No paid-placement fields. 0 anomalies.</p>
+          <p class="small muted" style="margin:12px 0 20px">The ranking rule is the same for every insurer.</p>
+          <a class="btn btn-ghost" href="03-policy-quality.html">Open policy quality</a>
+        </div>
+      </section>
+
+      <section class="section grid-4" aria-label="More areas">
+        <a class="card card-link rv" href="02-insurers.html"><svg class="i" aria-hidden="true"><use href="#i-building"/></svg><span class="grow"><span class="h-card" style="display:block">Insurers</span><span class="small muted">ACA verification</span></span></a>
+        <a class="card card-link rv" href="04-disputes-sla.html" style="--i:1"><svg class="i" aria-hidden="true"><use href="#i-scale"/></svg><span class="grow"><span class="h-card" style="display:block">Disputes</span><span class="small muted">2 open</span></span></a>
+        <a class="card card-link rv" href="05-country-packs.html" style="--i:2"><svg class="i" aria-hidden="true"><use href="#i-globe"/></svg><span class="grow"><span class="h-card" style="display:block">Country packs</span><span class="small muted">1 of 4 live</span></span></a>
+        <a class="card card-link rv" href="06-audit-log.html" style="--i:3"><svg class="i" aria-hidden="true"><use href="#i-list"/></svg><span class="grow"><span class="h-card" style="display:block">Audit log</span><span class="small muted">18.442 events</span></span></a>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<script src="../shared/system.js"></script>
+
+</body>
+</html>

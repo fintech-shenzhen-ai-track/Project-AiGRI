@@ -1,0 +1,23 @@
+<!-- @dsCard group="Forms" height=560 -->
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Input preview</title>
+<style>.pv{padding:16px 20px}</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 2.4 18a2 2 0 0 0 1.7 3h15.8a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></symbol></defs></svg>
+<div class="pv">
+  <div class="grid-2">
+    <div class="field"><label class="field-label" for="f1">Business name</label><input class="input" id="f1" value="CV Tani Makmur Demak"><span class="field-hint">As on your NIB.</span></div>
+    <div class="field"><label class="field-label" for="f2">Phone</label><input class="input" id="f2" value="+62 812-2741-0938" inputmode="tel"></div>
+    <div class="field"><label class="field-label" for="f3">Business ID (NIB)</label><input class="input" id="f3" value="12345" aria-invalid="true" aria-describedby="f3e"><span class="field-error" id="f3e"><svg class="i" aria-hidden="true"><use href="#i-alert"/></svg>NIB has 13 digits.</span></div>
+    <div class="field"><label class="field-label" for="f4">Disabled</label><input class="input" id="f4" value="Locked" disabled></div>
+    <div class="field"><label class="field-label" for="f6">Area</label><div class="affix"><input class="input" id="f6" value="9,6" inputmode="decimal"><span class="affix-suf">ha</span></div><span class="field-hint">Measured from the boundary you drew.</span></div>
+    <div class="field"><label class="field-label" for="f7">Premium</label><div class="affix"><span class="affix-pre">Rp</span><input class="input" id="f7" value="13.440.000"></div></div>
+    <div class="field"><label class="field-label" for="f8">Notes</label><textarea class="textarea" id="f8">Water line reached the panicles on 6 Feb.</textarea></div>
+    <div class="card"><div class="field"><label class="field-label" for="f9">Deductible (read-only)</label><div class="row"><input class="input" id="f9" value="10% of sum insured" readonly><span class="cite">Clause 6.2</span></div></div></div>
+  </div>
+  <div class="otp" style="margin-top:24px" role="group" aria-label="One-time code"><input class="input" inputmode="numeric" maxlength="1" aria-label="Digit 1" value="4"><input class="input" inputmode="numeric" maxlength="1" aria-label="Digit 2" value="8"><input class="input" inputmode="numeric" maxlength="1" aria-label="Digit 3" value="1"><input class="input" inputmode="numeric" maxlength="1" aria-label="Digit 4" value=""><input class="input" inputmode="numeric" maxlength="1" aria-label="Digit 5" value=""><input class="input" inputmode="numeric" maxlength="1" aria-label="Digit 6" value=""></div>
+</div>
+
+</body>
+</html>

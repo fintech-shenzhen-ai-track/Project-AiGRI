@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Home · AiGRI</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: rain chart text sizes and white halo on value labels (shared chart text is tuned for wider viewBoxes) */
+svg.chart.rain text.axis{font-size:15px}
+svg.chart.rain .bar-label{paint-order:stroke;stroke:var(--surface-2);stroke-width:5px;stroke-linejoin:round}
+.chart-box{max-width:560px}
+@media (max-width:600px){svg.chart.rain text.axis,svg.chart.rain .bar-label{font-size:19px}}
+/* local: stacked content inside a card-link, and seg wrapping on narrow cards */
+.card-link{align-items:flex-start}
+.card-link::after{margin-top:2px}
+.card-link>.grow{display:block}
+.card-link .kv>div{grid-template-columns:auto minmax(0,1fr);gap:12px}.card-link .kv dd{text-align:right}
+@media (max-width:600px){.card-link .kv>div{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body data-portal="client" data-page="home">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="09-home.html" aria-label="AiGRI home">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Client</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="home" href="09-home.html"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+      <a class="nav-item" data-nav="farm" href="03-parcels.html"><svg class="i" aria-hidden="true"><use href="#i-farm"/></svg>My farm</a>
+      <a class="nav-item" data-nav="risk" href="05-risk.html"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg>Risk</a>
+      <a class="nav-item" data-nav="cover" href="06-policies.html"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+      <a class="nav-item" data-nav="claims" href="12-claim-status.html"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+      <a class="nav-item" data-nav="wallet" href="13-wallet.html"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+      <a class="nav-item" data-nav="alerts" href="10-alert.html"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg>Alerts<span class="nav-badge is-need">1</span></a>
+      </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span>
+      <div class="me"><span class="avatar">SW</span><span class="me-text"><span class="me-name">Ibu Sri Wahyuni</span><span class="me-meta">CV Tani Makmur Demak</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="mbar">
+      <a class="logo-link" href="09-home.html" aria-label="AiGRI home"><svg viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/></svg></a>
+      <span class="mbar-title">Home</span>
+      <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+    </header>
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><span aria-current="page">Home</span><span class="crumb-sep">·</span><span>Wednesday 4 Feb 2026</span></nav>
+      <div class="topbar-actions">
+        <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+        <span class="avatar" aria-hidden="true">SW</span>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+
+      <div class="banner banner-alert is-strong rv" role="alert">
+        <span class="banner-icon"><svg class="i" aria-hidden="true"><use href="#i-rain-alert"/></svg></span>
+        <p class="banner-title">Flood warning for 5 of your 6 parcels</p>
+        <p class="banner-text">BMKG expects heavy rain on 6–8 Feb 2026, up to 96 mm a day. The Wulan river may overflow.</p>
+        <div class="banner-actions"><a class="btn btn-w" href="10-alert.html">See what to do</a></div>
+      </div>
+
+      <div class="page-head" style="margin-top:40px">
+        <h1 class="title rv" style="--i:0">Good morning, Ibu Sri</h1>
+        <p class="lead rv" style="--i:1">Here's your farm on 4 Feb 2026, 06:15 WIB.</p>
+      </div>
+
+      <div class="grid-3">
+        <a class="card card-link rv" style="--i:1" href="03-parcels.html"><div class="grow">
+          <p class="label">My farm</p>
+          <p class="num-l" style="margin-top:8px">48,0 ha</p>
+          <p class="meta" style="margin-top:4px">6 parcels of rice · day 52–64 after planting</p>
+          <svg viewBox="0 0 240 90" width="100%" height="90" role="img" aria-label="Six parcels: five in the forecast flood area, one outside" style="display:block;margin-top:16px">
+<rect width="240" height="90" rx="14" fill="#EEF2EA"/>
+<path d="M150 90C150 60 130 40 120 0" stroke="#CFE0EC" stroke-width="8" fill="none" stroke-linecap="round"/>
+<circle cx="128" cy="22" r="10" fill="#C8693A"/><circle cx="146" cy="44" r="10" fill="#C8693A"/><circle cx="176" cy="56" r="10" fill="#C8693A"/>
+<circle cx="160" cy="76" r="9" fill="#C8693A"/><circle cx="70" cy="68" r="9" fill="#C8693A"/><circle cx="62" cy="26" r="9" fill="#5D9253"/>
+</svg>
+        </div></a>
+        <a class="card card-link rv" style="--i:2" href="06-policies.html"><div class="grow">
+          <div class="row-between"><p class="label">Cover</p><span class="pill pill-ok">Active</span></div>
+          <p class="h-card" style="margin-top:8px">Rice Flood &amp; Drought Cover</p>
+          <p class="meta" style="margin-top:4px">Asuransi Jasindo · POL-JSD-26-004127 · until 30 Apr 2026</p>
+          <dl class="kv" style="margin-top:8px"><div><dt>Sum insured</dt><dd>Rp384.000.000</dd></div></dl>
+        </div></a>
+        <a class="card card-link rv" style="--i:3" href="13-wallet.html"><div class="grow">
+          <p class="label">Wallet</p>
+          <p class="num-l" style="margin-top:8px">Rp11.560.000</p>
+          <p class="meta" style="margin-top:4px">BCA ••••4821 · Sandbox</p>
+        </div></a>
+      </div>
+
+      <div class="split section">
+        <section class="card card-lg rv" aria-labelledby="wkh">
+          <div class="row-between wrap-row" style="margin-bottom:20px">
+            <h2 class="h-section" id="wkh">This week's risk</h2>
+            <div class="seg" data-seg role="group" aria-label="Hazard"><span class="seg-thumb"></span><button type="button" data-value="flood" aria-pressed="true">Flood</button><button type="button" data-value="drought" aria-pressed="false">Drought</button><button type="button" data-value="pest" aria-pressed="false">Pest</button></div>
+          </div>
+          <div class="chart-box">
+          <svg class="chart rain" data-draw viewBox="0 0 400 220" role="img" aria-label="Rain forecast 4 to 10 February in millimetres per day: 22, 48, 96, 74, 51, 18, 9. Peak 96 millimetres on 6 February. The BMKG heavy-rain level is 50 millimetres per day.">
+<line class="axis" x1="0" y1="185" x2="400" y2="185"/>
+<rect class="bar is-water draw-bar" style="--i:0" x="8" y="154.2" width="40" height="30.8" rx="6"/>
+<text class="bar-label" style="--i:0" x="28" y="145.2">22</text>
+<text class="axis" x="28" y="209">4</text>
+<rect class="bar is-water draw-bar" style="--i:1" x="64" y="117.8" width="40" height="67.2" rx="6"/>
+<text class="bar-label" style="--i:1" x="84" y="108.8">48</text>
+<text class="axis" x="84" y="209">5</text>
+<rect class="bar is-water draw-bar" style="--i:2" x="120" y="50.6" width="40" height="134.4" rx="6"/>
+<text class="bar-label" style="--i:2" x="140" y="41.6">96</text>
+<text class="axis" x="140" y="209">6</text>
+<rect class="bar is-water draw-bar" style="--i:3" x="176" y="81.4" width="40" height="103.6" rx="6"/>
+<text class="bar-label" style="--i:3" x="196" y="72.4">74</text>
+<text class="axis" x="196" y="209">7</text>
+<rect class="bar is-water draw-bar" style="--i:4" x="232" y="113.6" width="40" height="71.4" rx="6"/>
+<text class="bar-label" style="--i:4" x="252" y="104.6">51</text>
+<text class="axis" x="252" y="209">8</text>
+<rect class="bar is-water draw-bar" style="--i:5" x="288" y="159.8" width="40" height="25.2" rx="6"/>
+<text class="bar-label" style="--i:5" x="308" y="150.8">18</text>
+<text class="axis" x="308" y="209">9</text>
+<rect class="bar is-water draw-bar" style="--i:6" x="344" y="172.4" width="40" height="12.6" rx="6"/>
+<text class="bar-label" style="--i:6" x="364" y="163.4">9</text>
+<text class="axis" x="364" y="209">10</text>
+<line class="threshold" x1="0" y1="115.0" x2="400" y2="115.0"/>
+</svg>
+          </div>
+          <div class="legend" style="margin-top:12px"><span><i class="swatch" style="--c:var(--water)"></i>Rain, mm per day</span><span><i class="swatch" style="--c:var(--alert)"></i>BMKG heavy-rain level, 50 mm/day</span></div>
+          <p class="small" style="margin-top:12px"><b>Peak on 6 Feb.</b> 96 mm is nearly double the heavy-rain level.</p>
+          <a class="btn btn-ghost" href="05-risk.html" style="margin-top:12px;margin-left:-14px">Full risk forecast</a>
+        </section>
+        <aside class="card rv" style="--i:1" aria-labelledby="tdh">
+          <h2 class="h-card" id="tdh" style="margin-bottom:16px">To do before the rain</h2>
+          <ul class="check-list">
+            <li><label class="check"><input type="checkbox"><span class="check-box"></span><span>Take before-photos of DMK-01 to DMK-05 (0 of 5)</span></label></li>
+            <li><label class="check"><input type="checkbox"><span class="check-box"></span><span>Clear drainage outlets on DMK-01 and DMK-02</span></label></li>
+            <li><label class="check"><input type="checkbox"><span class="check-box"></span><span>Move seed and fertiliser to higher ground</span></label></li>
+          </ul>
+          <a class="btn btn-soft" href="10-alert.html#photos" style="margin-top:20px">Take photos</a>
+        </aside>
+      </div>
+
+      <section class="card section rv" aria-labelledby="clh">
+        <h2 class="h-card" id="clh">Claims</h2>
+        <div class="empty" style="padding:24px 16px 8px">
+          <span class="empty-icon"><svg class="i i-lg" aria-hidden="true"><use href="#i-file-check"/></svg></span>
+          <h3 class="h-card">No claims</h3>
+          <p class="small">If a flood damages a covered parcel, AiGRI drafts the claim with satellite readings and your photos. You check it and confirm.</p>
+        </div>
+      </section>
+
+      <section class="card section rv" aria-labelledby="rah">
+        <h2 class="h-card" id="rah" style="margin-bottom:8px">Recent activity</h2>
+        <div>
+          <div class="txn"><span class="txn-icon"><svg class="i" aria-hidden="true"><use href="#i-rain-alert"/></svg></span><p class="txn-title">Flood warning sent by push, SMS and email</p><span class="meta">4 Feb, 06:10</span></div>
+          <div class="txn"><span class="txn-icon"><svg class="i" aria-hidden="true"><use href="#i-shield-check"/></svg></span><p class="txn-title">Policy POL-JSD-26-004127 issued</p><span class="meta">10 Jan, 09:41</span></div>
+          <div class="txn"><span class="txn-icon"><svg class="i" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></span><p class="txn-title">Premium Rp13.440.000 paid</p><span class="meta">10 Jan, 09:41</span></div>
+          <div class="txn"><span class="txn-icon"><svg class="i" aria-hidden="true"><use href="#i-arrow-down-left"/></svg></span><p class="txn-title">Wallet topped up Rp25.000.000 via BI-FAST</p><span class="meta">9 Jan, 16:05</span></div>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+<nav class="tabbar" aria-label="Main">
+  <a class="tab" data-nav="home alerts" href="09-home.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+  <a class="tab" data-nav="farm risk" href="03-parcels.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-farm"/></svg>Farm</a>
+  <a class="tab" data-nav="cover" href="06-policies.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+  <a class="tab" data-nav="claims" href="12-claim-status.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+  <a class="tab" data-nav="wallet" href="13-wallet.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+  </nav>
+
+<script src="../shared/system.js"></script>
+<script>(function(){
+  var seg = document.querySelector('[data-seg]');
+  if (seg && window.AG) seg.addEventListener('seg:change', function(e){
+    if (e.detail && e.detail.value !== 'flood') AG.toast('Flood is the hazard that matters this week. Drought and pest charts are not part of this prototype.', { tone: 'info' });
+  });
+})();</script>
+</body>
+</html>

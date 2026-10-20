@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Livestock · AiGRI</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: c04 stat tiles, shed map height, viewfinder in the capture sheet */
+.stat .num-l.is-money{font-size:26px;line-height:1.3}
+.shed-map{aspect-ratio:5 / 3;max-width:560px}
+.viewfinder{position:relative;aspect-ratio:4 / 3;border-radius:var(--r-lg);overflow:hidden;background:var(--ink)}
+.viewfinder img{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;opacity:.4;display:block}
+.viewfinder .vf-guide{position:absolute;left:0;top:0;width:100%;height:100%}
+.vf-tag{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);padding:6px 14px;border-radius:var(--r-pill);background:rgba(255,255,255,.18);color:#fff;font-size:var(--fs-small);font-weight:600;white-space:nowrap}
+.map-svg text.map-label{font-size:15px}
+@media (max-width:600px){ .herd .table-stack td{min-height:30px;padding:2px 0} .herd .table-stack td[data-l=Registered]{display:none} .herd .table-stack tr{padding:10px 16px;margin-bottom:8px} .stats-4{grid-template-columns:repeat(2,minmax(0,1fr))} .stats-4 .stat-wide{grid-column:1 / -1} }
+</style>
+</head>
+<body data-portal="client" data-page="farm">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="09-home.html" aria-label="AiGRI home">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Client</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="home" href="09-home.html"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+      <a class="nav-item" data-nav="farm" href="03-parcels.html"><svg class="i" aria-hidden="true"><use href="#i-farm"/></svg>My farm</a>
+      <a class="nav-item" data-nav="risk" href="05-risk.html"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg>Risk</a>
+      <a class="nav-item" data-nav="cover" href="06-policies.html"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+      <a class="nav-item" data-nav="claims" href="12-claim-status.html"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+      <a class="nav-item" data-nav="wallet" href="13-wallet.html"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+      <a class="nav-item" data-nav="alerts" href="10-alert.html"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg>Alerts<span class="nav-badge is-need">1</span></a>
+    </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span>
+      <div class="me"><span class="avatar">PS</span><span class="me-text"><span class="me-name">Pak Slamet Santoso</span><span class="me-meta">Individual farmer · Grobogan</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="mbar">
+      <a class="logo-link" href="09-home.html" aria-label="AiGRI home"><svg viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/><rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/><rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/><circle fill="#FFCB3D" cx="196" cy="58" r="46"/></svg></a>
+      <span class="mbar-title">Your cattle</span>
+      <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+    </header>
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="03-parcels.html">My farm</a><span class="crumb-sep">›</span><span aria-current="page">Livestock</span></nav>
+      <div class="topbar-actions">
+        <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+        <span class="avatar" aria-hidden="true">PS</span>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+      <div class="banner banner-need rv" role="status" style="margin-bottom:32px">
+        <span class="banner-icon"><svg class="i" aria-hidden="true"><use href="#i-camera"/></svg></span>
+        <p class="banner-title">Retake the tag photo for GBG-0489</p>
+        <p class="banner-text">Asuransi Jasindo asked on 23 Feb 2026 for claim CLM-26-000431. The last photo was blurred. Hold the tag flat, in daylight, with the number filling the frame.</p>
+        <div class="banner-actions"><button class="btn btn-y" type="button" data-open="captureSheet">Retake tag photo</button><a class="btn btn-ghost" href="#" data-stub="Claim CLM-26-000431 opens here. Only CLM-26-000418 is built in this prototype.">View claim</a></div>
+      </div>
+
+      <div class="page-head">
+        <p class="eyebrow rv" style="--i:1">My farm</p>
+        <h1 class="title rv" style="--i:1">Your cattle</h1>
+        <p class="lead rv" style="--i:2">12 cattle with ear tags at your shed in Kuwaron, Gubug. Insured under AUTS/K, the national cattle scheme.</p>
+        <div class="page-actions rv" style="--i:3"><button class="btn btn-soft" type="button" data-stub="Registering a new animal is not part of this prototype."><svg class="i i-sm" aria-hidden="true"><use href="#i-plus"/></svg>Register an animal</button></div>
+      </div>
+
+      <div class="tabs" data-tabs role="tablist" aria-label="Farm inventory">
+        <button class="tab-btn" role="tab" id="tb-parcels" aria-controls="pn-parcels" aria-selected="false" type="button">Parcels<span class="nav-badge">1</span></button>
+        <button class="tab-btn" role="tab" id="tb-stock" aria-controls="pn-stock" aria-selected="true" type="button">Livestock<span class="nav-badge">12</span></button>
+        <span class="tabs-ink" aria-hidden="true"></span>
+      </div>
+
+      <div class="tab-panel" id="pn-parcels" role="tabpanel" aria-labelledby="tb-parcels" style="margin-top:24px" hidden>
+        <a class="card card-link" href="03-parcels.html"><span class="ico-dot" style="background:var(--white)"><svg class="i" aria-hidden="true"><use href="#i-parcel"/></svg></span><span class="grow"><span class="h-card" style="display:block">GBG-01 · Sawah Kuwaron</span><span class="small muted">1,2 ha · Inpari 32 · planted 18 Dec 2025 · insured under AUTP Rice</span></span></a>
+      </div>
+
+      <div class="tab-panel" id="pn-stock" role="tabpanel" aria-labelledby="tb-stock" style="margin-top:24px">
+        <div class="stack-lg">
+          <div class="grid-4 stats-4">
+            <div class="stat rv"><span class="label">Registered</span><span class="num-l">12</span><span class="meta">Tagged 18 Dec 2025</span></div>
+            <div class="stat rv" style="--i:1"><span class="label">Alive</span><span class="num-l">10</span><span class="meta">At 24 Feb 2026</span></div>
+            <div class="stat rv" style="--i:2"><span class="label">Died 8 Feb 2026</span><span class="num-l">2</span><span class="meta">Flood</span></div>
+            <div class="stat rv stat-wide" style="--i:3"><span class="label">Insured value</span><span class="num-l is-money">Rp120.000.000</span><span class="meta">Rp10.000.000 per head</span></div>
+          </div>
+
+          <div class="split">
+            <div class="card card-lg"><h2 class="h-section" style="margin-bottom:12px">Policy</h2>
+              <dl class="kv">
+                <div><dt>Policy</dt><dd>POL-JSD-26-004091</dd></div>
+                <div><dt>Scheme</dt><dd>AUTS/K Cattle, Asuransi Jasindo</dd></div>
+                <div><dt>Period</dt><dd>18 Dec 2025 – 17 Dec 2026</dd></div>
+                <div><dt>Premium</dt><dd>Rp2.400.000 a year<span class="meta">Government pays Rp1.920.000. You paid Rp480.000.</span></dd></div>
+                <div><dt>Status</dt><dd><span class="pill pill-ok">Active</span></dd></div>
+              </dl></div>
+            <div class="card"><h2 class="h-card" style="margin-bottom:16px">Last herd count</h2>
+              <div class="photo"><img src="../../landing-preview/cattle.jpg" alt="Cattle at the shed during the herd count" loading="lazy" style="object-position:50% 55%"><span class="photo-chip">1 Feb 2026, 07:40 WIB · 12 of 12 tags read</span></div>
+              <button class="btn btn-soft btn-block" type="button" data-open="captureSheet" style="margin-top:16px">Take this month's count</button></div>
+          </div>
+
+          <div><h2 class="h-section">Animals</h2>
+            <p class="meta" style="margin-bottom:8px">All 12 registered 18 Dec 2025.</p><div class="table-wrap herd"><table class="table table-stack">
+              <thead><tr><th>Tag</th><th>Breed</th><th>Sex</th><th>Age</th><th>Registered</th><th>Status</th></tr></thead>
+              <tbody>
+              <tr><td class="id" data-l="Tag">GBG-0481</td><td data-l="Breed">Peranakan Ongole (PO)</td><td data-l="Sex">Cow</td><td data-l="Age">5 y</td><td data-l="Registered">18 Dec 2025</td><td data-l="Status"><span class="pill pill-ok">Alive</span></td></tr>
+              <tr><td class="id" data-l="Tag">GBG-0482</td><td data-l="Breed">PO</td><td data-l="Sex">Cow</td><td data-l="Age">3 y</td><td data-l="Registered">18 Dec 2025</td><td data-l="Status"><span class="pill pill-ok">Alive</span></td></tr>
+              <tr><td class="id" data-l="Tag">GBG-0483</td><td data-l="Breed">Simmental-PO cross (SimPO)</td><td data-l="Sex">Bull</td><td data-l="Age">2 y</td><td data-l="Registered">18 Dec 2025</td><td data-l="Status"><span class="pill pill-ok">Alive</span></td></tr>
+              <tr><td class="id" data-l="Tag">GBG-0484</td><td data-l="Breed">PO</td><td data-l="Sex">Cow</td><td data-l="Age">6 y</td><td data-l="Registered">18 Dec 2025</td><td data-l="Status"><span class="pill pill-ok">Alive</span></td></tr>
+              <tr><td class="id" data-l="Tag">GBG-0485</td><td data-l="Breed">PO</td><td data-l="Sex">Cow</td><td data-l="Age">4 y</td><td data-l="Registered">18 Dec 2025</td><td data-l="Status"><span class="pill pill-pending">Died 8 Feb · in claim</span></td></tr>
+              <tr><td class="id" data-l="Tag">GBG-0486</td><td data-l="Breed">PO</td><td data-l="Sex">Heifer</td><td data-l="Age">2 y</td><td data-l="Registered">18 Dec 2025</td><td data-l="Status"><span class="pill pill-ok">Alive</span></td></tr>
+              <tr><td class="id" data-l="Tag">GBG-0487</td><td data-l="Breed">SimPO</td><td data-l="Sex">Cow</td><td data-l="Age">4 y</td><td data-l="Registered">18 Dec 2025</td><td data-l="Status"><span class="pill pill-ok">Alive</span></td></tr>
+              <tr><td class="id" data-l="Tag">GBG-0488</td><td data-l="Breed">Limousin-PO cross (LimPO)</td><td data-l="Sex">Bull</td><td data-l="Age">3 y</td><td data-l="Registered">18 Dec 2025</td><td data-l="Status"><span class="pill pill-ok">Alive</span></td></tr>
+              <tr class="is-flag"><td class="id" data-l="Tag">GBG-0489</td><td data-l="Breed">SimPO</td><td data-l="Sex">Heifer</td><td data-l="Age">2 y</td><td data-l="Registered">18 Dec 2025</td><td data-l="Status"><span class="pill pill-need">Died 8 Feb · tag photo needed</span></td></tr>
+              <tr><td class="id" data-l="Tag">GBG-0490</td><td data-l="Breed">PO</td><td data-l="Sex">Cow</td><td data-l="Age">3 y</td><td data-l="Registered">18 Dec 2025</td><td data-l="Status"><span class="pill pill-ok">Alive</span></td></tr>
+              <tr><td class="id" data-l="Tag">GBG-0491</td><td data-l="Breed">SimPO</td><td data-l="Sex">Cow</td><td data-l="Age">5 y</td><td data-l="Registered">18 Dec 2025</td><td data-l="Status"><span class="pill pill-ok">Alive</span></td></tr>
+              <tr><td class="id" data-l="Tag">GBG-0492</td><td data-l="Breed">PO</td><td data-l="Sex">Cow</td><td data-l="Age">4 y</td><td data-l="Registered">18 Dec 2025</td><td data-l="Status"><span class="pill pill-ok">Alive</span></td></tr>
+              </tbody></table></div></div>
+
+          <div class="card"><h2 class="h-card" style="margin-bottom:16px">Shed location</h2>
+            <div class="map shed-map"><svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Schematic map of the shed in Desa Kuwaron with one pin" style="display:block;width:100%;height:100%"><rect width="400" height="240" fill="#EEF2EA"/><path d="M0 190C80 170 160 205 260 180S360 190 400 175" fill="none" stroke="#CFE0EC" stroke-width="16" stroke-linecap="round"/><path d="M0 100H400M170 0V240" stroke="#fff" stroke-width="4" fill="none"/><polygon points="214,30 300,24 318,84 250,92 208,66" fill="#5D9253" stroke="#fff" stroke-width="2"/><rect x="94" y="118" width="46" height="34" rx="6" fill="#C9CEC6" stroke="#fff" stroke-width="2"/><path d="M117 112C117 96 134 90 134 78a17 17 0 1 0-34 0c0 12 17 18 17 34Z" fill="#1F2A1B"/><circle cx="117" cy="78" r="7" fill="#fff"/><text class="map-label" x="150" y="148">Kandang</text><text class="map-label" x="226" y="112">Sawah Kuwaron</text></svg></div>
+            <p class="small" style="margin-top:12px">Kandang, Desa Kuwaron, Kec. Gubug, Grobogan · <span class="mono">−7.0441, 110.6152</span></p>
+            <p class="meta" style="margin-top:4px">Schematic map. Not to scale.</p></div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+<nav class="tabbar" aria-label="Main">
+  <a class="tab" data-nav="home alerts" href="09-home.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+  <a class="tab" data-nav="farm risk" href="03-parcels.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-farm"/></svg>Farm</a>
+  <a class="tab" data-nav="cover" href="06-policies.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+  <a class="tab" data-nav="claims" href="12-claim-status.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+  <a class="tab" data-nav="wallet" href="13-wallet.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+</nav>
+
+<dialog class="sheet" id="captureSheet" aria-labelledby="csT">
+  <div class="sheet-grab"></div>
+  <div class="ov-head"><h3 class="h-section" id="csT">Retake tag photo</h3><button class="icon-btn" type="button" data-close aria-label="Close"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="ov-body"><div class="stack">
+    <div class="viewfinder"><img src="../../landing-preview/cattle.jpg" alt="" style="object-position:50% 55%"><svg class="vf-guide" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid meet" aria-hidden="true"><g fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M110 90V62H138"/><path d="M262 62H290V90"/><path d="M290 210V238H262"/><path d="M138 238H110V210"/></g></svg><span class="vf-tag">Target tag · GBG-0489</span></div>
+    <ul class="check-list">
+      <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>Time and date</span></li>
+      <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>GPS location (must be within 200 m of your shed)</span></li>
+      <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span>A fingerprint of the file, so it can't be swapped</span></li>
+    </ul>
+  </div></div>
+  <div class="ov-foot"><button class="btn btn-y btn-block" type="button" data-close data-toast="Photo saved. Tag GBG-0489 read. Added to claim CLM-26-000431." data-tone="ok">Take photo</button></div>
+</dialog>
+
+<script src="../shared/system.js"></script>
+</body>
+</html>

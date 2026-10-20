@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Buy · AiGRI</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: choice cards sit on a card, so unselected ones go white; full-width pay button on mobile */
+.card .choice:not(.is-sel){background:var(--white)}
+@media (max-width:600px){#confirmPay{flex:1 1 100%}}
+</style>
+</head>
+<body data-portal="client" data-page="cover">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="09-home.html" aria-label="AiGRI home">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Client</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="home" href="09-home.html"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+      <a class="nav-item" data-nav="farm" href="03-parcels.html"><svg class="i" aria-hidden="true"><use href="#i-farm"/></svg>My farm</a>
+      <a class="nav-item" data-nav="risk" href="05-risk.html"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg>Risk</a>
+      <a class="nav-item" data-nav="cover" href="06-policies.html"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+      <a class="nav-item" data-nav="claims" href="12-claim-status.html"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+      <a class="nav-item" data-nav="wallet" href="13-wallet.html"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+      <a class="nav-item" data-nav="alerts" href="10-alert.html"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg>Alerts<span class="nav-badge is-need">1</span></a>
+      </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span>
+      <div class="me"><span class="avatar">SW</span><span class="me-text"><span class="me-name">Ibu Sri Wahyuni</span><span class="me-meta">CV Tani Makmur Demak</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="mbar">
+      <a class="logo-link" href="09-home.html" aria-label="AiGRI home"><svg viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/></svg></a>
+      <span class="mbar-title">Buy cover</span>
+      <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+    </header>
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="06-policies.html">Cover</a><span class="crumb-sep">›</span><span aria-current="page">Buy</span></nav>
+      <div class="topbar-actions">
+        <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+        <span class="avatar" aria-hidden="true">SW</span>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+
+      <div class="page-head">
+        <p class="eyebrow rv">Cover · Buy · 10 Jan 2026</p>
+        <h1 class="title rv" style="--i:1">Buy Rice Flood &amp; Drought Cover</h1>
+        <p class="lead rv" style="--i:2">Asuransi Jasindo · 6 parcels, 48,0 ha · 10 Jan to 30 Apr 2026. You check, you pay. Nothing is bought until you confirm.</p>
+      </div>
+
+      <div data-flow data-flow-start="3" class="stack">
+        <div class="stepper rv" style="--n:4;--p:.667" role="list" aria-label="Buying steps">
+          <div class="stepper-track"><span class="stepper-fill"></span></div>
+          <div class="step is-done" role="listitem"><span class="step-dot">1</span><span class="step-label">Review</span></div>
+          <div class="step is-done" role="listitem"><span class="step-dot">2</span><span class="step-label">Consent</span></div>
+          <div class="step is-now" role="listitem" aria-current="step"><span class="step-dot">3</span><span class="step-label">Pay</span></div>
+          <div class="step" role="listitem"><span class="step-dot">4</span><span class="step-label">Issued</span></div>
+        </div>
+
+        <!-- step 1 -->
+        <section data-flow-step="1" aria-labelledby="s1h">
+          <div class="card-lg card stack">
+            <div class="row-between wrap-row">
+              <h2 class="h-section" id="s1h">Review your cover</h2>
+              <span class="pill pill-info"><svg class="i i-sm" aria-hidden="true"><use href="#i-file-pen"/></svg>Drafted by AiGRI</span>
+            </div>
+            <dl class="kv">
+              <div><dt>Product</dt><dd>Rice Flood &amp; Drought Cover</dd></div>
+              <div><dt>Insurer</dt><dd>Asuransi Jasindo</dd></div>
+              <div><dt>Parcels</dt><dd>6 parcels, DMK-01 to DMK-06</dd></div>
+              <div><dt>Area</dt><dd>48,0 ha</dd></div>
+              <div><dt>Period</dt><dd>10 Jan – 30 Apr 2026</dd></div>
+              <div><dt>Sum insured</dt><dd>Rp384.000.000<span class="meta">Rp8.000.000/ha</span></dd></div>
+              <div><dt>Premium</dt><dd>Rp13.440.000<span class="meta">3,5%</span></dd></div>
+            </dl>
+            <div class="wrap-row">
+              <button class="btn btn-ink" type="button" data-next>Continue</button>
+              <button class="btn btn-ghost" type="button" data-stub="Parcel selection is fixed in this prototype. All 6 parcels are covered.">Change parcels</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- step 2 -->
+        <section data-flow-step="2" aria-labelledby="s2h">
+          <div class="card-lg card stack">
+            <h2 class="h-section" id="s2h">What you share</h2>
+            <div class="consent">
+              <p class="h-card">Share with Asuransi Jasindo</p>
+              <p class="small">Your business name and NIB, the 6 parcel boundaries, crops, varieties and planting dates. Nothing else.</p>
+              <label class="check"><input type="checkbox" checked><span class="check-box"></span><span>I agree to share this data with Asuransi Jasindo for this policy.</span></label>
+            </div>
+            <div class="wrap-row">
+              <button class="btn btn-soft" type="button" data-prev>Back</button>
+              <button class="btn btn-ink" type="button" data-next>Continue</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- step 3 (default) -->
+        <section data-flow-step="3" class="is-active" aria-labelledby="s3h">
+          <div class="split">
+            <div class="card-lg card stack">
+              <h2 class="h-section" id="s3h">Pay Rp13.440.000</h2>
+              <div class="stack-sm" data-select-group role="group" aria-label="Payment method">
+                <button class="choice is-sel" type="button" aria-pressed="true"><span class="h-card">AiGRI wallet</span><span class="small muted">Balance Rp25.000.000 → Rp11.560.000 after paying</span><span class="choice-badge"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span></button>
+                <button class="choice" type="button" aria-pressed="false"><span class="h-card">BI-FAST virtual account</span><span class="small muted">Pay from any bank app; we'll show the account number</span><span class="choice-badge"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg></span></button>
+              </div>
+              <div>
+                <p class="label" style="margin-bottom:4px">What you're confirming</p>
+                <dl class="kv">
+                  <div><dt>Policy</dt><dd>Rice Flood &amp; Drought Cover</dd></div>
+                  <div><dt>Insurer</dt><dd>Asuransi Jasindo</dd></div>
+                  <div><dt>Parcels</dt><dd>6 parcels, 48,0 ha</dd></div>
+                  <div><dt>Period</dt><dd>10 Jan – 30 Apr 2026</dd></div>
+                  <div><dt>Premium</dt><dd>Rp13.440.000</dd></div>
+                  <div><dt>Payload</dt><dd><span class="hash" title="Purchase payload fingerprint">a91c3f0e…77e3<button class="icon-btn" type="button" data-copy="a91c3f0e…77e3" aria-label="Copy a91c3f0e…77e3"><svg class="i i-sm" aria-hidden="true"><use href="#i-copy"/></svg></button></span><span class="meta">This fingerprint locks exactly what you confirm. If anything changes, you'll be asked again.</span></dd></div>
+                </dl>
+              </div>
+              <div class="wrap-row">
+                <button class="btn btn-y btn-lg" type="button" id="confirmPay" data-open="payModal">Confirm and pay Rp13.440.000</button>
+                <button class="btn btn-ghost" type="button" data-prev>Back</button>
+              </div>
+            </div>
+            <aside class="card" aria-label="Steps done">
+              <h3 class="h-card" style="margin-bottom:16px">Steps done</h3>
+              <ul class="check-list">
+                <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span><b>Review</b><br><span class="meta">10 Jan, 09:38</span></span></li>
+                <li class="is-ok"><svg class="i" aria-hidden="true"><use href="#i-check"/></svg><span><b>Consent given</b><br><span class="meta">10 Jan, 09:39</span></span></li>
+              </ul>
+            </aside>
+          </div>
+        </section>
+
+        <!-- step 4 -->
+        <section data-flow-step="4" aria-labelledby="s4h">
+          <div class="card-lg card stack" style="max-width:640px;margin:0 auto;align-items:center;text-align:center">
+            <span class="ico-dot is-ok pop" style="width:64px;height:64px"><svg class="i i-lg" aria-hidden="true"><use href="#i-check"/></svg></span>
+            <div>
+              <h2 class="title" id="s4h">You're covered</h2>
+              <p class="lead" style="margin-left:auto;margin-right:auto">Policy POL-JSD-26-004127 is active from 10 Jan 2026 until 30 Apr 2026.</p>
+            </div>
+            <dl class="kv" style="width:100%;text-align:left">
+              <div><dt>Paid</dt><dd>Rp13.440.000 from your AiGRI wallet</dd></div>
+              <div><dt>Wallet balance</dt><dd>Rp11.560.000</dd></div>
+              <div><dt>Issued</dt><dd>10 Jan 2026, 09:41 WIB</dd></div>
+            </dl>
+            <p class="small muted">Inside Jasindo's issuance limits, so no underwriting was needed.</p>
+            <div class="wrap-row" style="justify-content:center">
+              <a class="btn btn-ink" href="09-home.html">Go to Home</a>
+              <button class="btn btn-ghost" type="button" data-stub="The policy PDF is not part of this prototype.">Download policy (PDF)</button>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <p class="demo-note">Demo data. Products and prices are illustrative.</p>
+    </main>
+  </div>
+</div>
+<nav class="tabbar" aria-label="Main">
+  <a class="tab" data-nav="home alerts" href="09-home.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+  <a class="tab" data-nav="farm risk" href="03-parcels.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-farm"/></svg>Farm</a>
+  <a class="tab" data-nav="cover" href="06-policies.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+  <a class="tab" data-nav="claims" href="12-claim-status.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+  <a class="tab" data-nav="wallet" href="13-wallet.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+  </nav>
+<dialog class="modal" id="payModal" aria-labelledby="pmT">
+  <div class="sheet-grab"></div>
+  <div class="ov-head"><h3 class="h-section" id="pmT">Pay Rp13.440.000 from your wallet?</h3></div>
+  <div class="ov-body"><p class="muted">Asuransi Jasindo receives the premium and issues your policy straight away.</p></div>
+  <div class="ov-foot"><button class="btn btn-soft" type="button" data-close>Cancel</button><button class="btn btn-ink" type="button" id="payNow">Pay now</button></div>
+</dialog>
+<script src="../shared/system.js"></script>
+<script>(function(){
+  var flow = document.querySelector('[data-flow]');
+  var pay = document.getElementById('payNow');
+  var confirmBtn = document.getElementById('confirmPay');
+  if (!flow || !window.AG) return;
+  function issued(quiet){
+    var f = AG.flow(flow);
+    f.go(4, quiet);
+    if (!quiet) AG.toast('Policy issued. POL-JSD-26-004127.', { tone: 'ok' });
+  }
+  if (pay) pay.addEventListener('click', function(){
+    AG.close('payModal');
+    confirmBtn.classList.add('is-loading');
+    confirmBtn.setAttribute('aria-busy', 'true');
+    setTimeout(function(){
+      confirmBtn.classList.remove('is-loading');
+      confirmBtn.removeAttribute('aria-busy');
+      issued(false);
+    }, 900);
+  });
+  /* demo helper: 08-buy.html#issued opens the final step */
+  if (location.hash === '#issued') AG.flow(flow).go(4, true);
+})();</script>
+</body>
+</html>

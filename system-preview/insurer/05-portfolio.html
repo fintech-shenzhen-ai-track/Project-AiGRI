@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Portfolio · Jasindo on AiGRI</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: layer chips sit on top of the map; layers fade 200ms */
+.map-layers{position:absolute;left:16px;top:16px;display:flex;flex-wrap:wrap;gap:8px;max-width:calc(100% - 96px);z-index:2}
+.map-layers .chip:not(.is-sel){background:var(--white)}
+.map-layers .chip{box-shadow:var(--shadow-float)}
+.lyr{transition:opacity 200ms ease}
+.lyr.off{opacity:0}
+html[data-still] .lyr{transition:none}
+.rtable .tot td{background:var(--surface-2)}
+.rtable th,.rtable td{padding-left:12px;padding-right:12px}
+@media (prefers-reduced-motion:reduce){.lyr{transition:none}}
+</style>
+</head>
+<body data-portal="insurer" data-page="portfolio">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="01-dashboard.html" aria-label="Jasindo on AiGRI, dashboard">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Asuransi Jasindo</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="dashboard" href="01-dashboard.html"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Dashboard</a>
+      <a class="nav-item" data-nav="products" href="02-publish-policy.html"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg>Products</a>
+      <a class="nav-item" data-nav="underwriting" href="#" data-stub="The underwriting queue is not part of this prototype."><svg class="i" aria-hidden="true"><use href="#i-shield-check"/></svg>Underwriting<span class="nav-badge">4</span></a>
+      <a class="nav-item" data-nav="claims" href="03-claims-queue.html"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Claims<span class="nav-badge">41</span></a>
+      <a class="nav-item" data-nav="portfolio" href="05-portfolio.html" aria-current="page"><svg class="i" aria-hidden="true"><use href="#i-layers"/></svg>Portfolio</a>
+      <a class="nav-item" data-nav="wallet" href="06-payouts.html"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet &amp; payouts</a>
+    </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span>
+      <div class="me"><span class="avatar">DP</span><span class="me-text"><span class="me-name">Dimas Prasetyo</span><span class="me-meta">Claims adjuster · Jasindo</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><span aria-current="page">Portfolio</span></nav>
+      <div class="topbar-actions">
+        <span class="meta only-desktop" style="margin-right:8px">Tuesday 24 Feb 2026, 09:00 WIB</span>
+        <input class="input" type="search" placeholder="Search claims, clients, policies" aria-label="Search claims, clients, policies">
+        <a class="icon-btn" href="#" data-stub="Notifications open here." aria-label="Notifications"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg></a>
+        <span class="avatar" aria-hidden="true">DP</span>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+
+      <div id="expo">
+      <div class="page-head">
+        <p class="eyebrow rv">Portfolio</p>
+        <h1 class="title rv" style="--i:1">Exposure, Central Java</h1>
+        <p class="lead rv" style="--i:2">Your insured rice and cattle against the latest flood extent and rain forecast.</p>
+        <div class="page-actions rv" style="--i:3"><div class="seg" data-seg data-seg-target="#expo" role="group" aria-label="Asset type"><span class="seg-thumb"></span><button type="button" data-value="rice" aria-pressed="true">Rice</button><button type="button" data-value="cattle" aria-pressed="false">Cattle</button></div></div>
+      </div>
+
+      <section class="grid-4" data-seg-panel="rice" aria-label="Rice exposure">
+        <div class="stat rv"><span class="label">Insured rice</span><span class="num-l">6.840 ha</span><span class="meta">5 regencies</span></div>
+        <div class="stat rv" style="--i:1"><span class="label">Sum insured</span><span class="num-l">Rp41,2 M</span><span class="meta">Rice, this season</span></div>
+        <div class="stat rv" style="--i:2"><span class="label">In flood extent now</span><span class="num-l">2.120 ha</span><span class="meta">about Rp13,9 M · Sentinel-1, 23 Feb</span></div>
+        <div class="stat rv" style="--i:3"><span class="label">Open claims</span><span class="num-l">41</span><span class="meta">39 flood · 2 cattle</span></div>
+      </section>
+      <section class="grid-3" data-seg-panel="cattle" hidden aria-label="Cattle exposure">
+        <div class="stat"><span class="label">Insured cattle</span><span class="num-l">3.120 head</span><span class="meta">AUTS/K, Central Java</span></div>
+        <div class="stat"><span class="label">Sum insured</span><span class="num-l">Rp31,2 M</span><span class="meta">Up to Rp10.000.000 per head</span></div>
+        <div class="stat"><span class="label">Open cattle claims</span><span class="num-l">2</span><span class="meta">Both in Grobogan</span></div>
+      </section>
+
+      <section class="card card-lg section rv" aria-label="Exposure map">
+        <h2 class="h-section" style="margin-bottom:20px">Exposure map</h2>
+        <div class="map" style="height:560px"><svg class="map-svg" viewBox="0 0 900 560" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Schematic map of Central Java regencies: Jepara, Kudus, Pati, Demak and Grobogan, with insured parcels and the Sentinel-1 flood extent of 23 February over Demak and north Grobogan."><rect width="900" height="560" fill="#CFE0EC"/><polygon points="120,70 330,60 350,170 300,250 180,260 100,180" fill="#EEF2EA" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><polygon points="180,260 300,250 350,170 440,200 470,300 430,380 300,370 190,340" fill="#EEF2EA" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><polygon points="350,170 380,90 520,80 560,200 470,300 440,200" fill="#EEF2EA" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><polygon points="520,80 760,70 830,180 780,320 620,330 560,200" fill="#EEF2EA" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><polygon points="190,340 300,370 430,380 470,300 560,200 620,330 780,320 800,440 680,520 400,540 200,520 120,430" fill="#EEF2EA" stroke="#fff" stroke-width="3" stroke-linejoin="round"/><g class="lyr off" id="layerRain" aria-hidden="true"><ellipse cx="330" cy="260" rx="190" ry="120" fill="#6C9CC4" opacity=".38"/><ellipse cx="560" cy="170" rx="150" ry="90" fill="#6C9CC4" opacity=".32"/><ellipse cx="660" cy="250" rx="110" ry="70" fill="#6C9CC4" opacity=".25"/></g><g class="lyr" id="layerFlood"><path d="M190 292C250 262 330 250 420 232C470 236 520 252 556 292C560 340 530 392 440 420C380 432 300 424 232 396C200 374 186 334 190 292Z" fill="#2F5F86" opacity=".75"/><path d="M470 196C500 180 534 184 552 204C556 232 536 256 504 262C482 250 468 224 470 196Z" fill="#2F5F86" opacity=".75"/><path d="M590 258C612 250 636 258 644 280C640 300 616 308 596 298C586 286 584 270 590 258Z" fill="#2F5F86" opacity=".75"/></g><g class="lyr" id="layerParcels"><circle cx="286" cy="100" r="4" fill="#5D9253"/><circle cx="151" cy="180" r="4" fill="#5D9253"/><circle cx="291" cy="68" r="4" fill="#5D9253"/><circle cx="270" cy="160" r="6" fill="#5D9253"/><circle cx="258" cy="250" r="5" fill="#5D9253"/><circle cx="311" cy="217" r="5" fill="#5D9253"/><circle cx="334" cy="104" r="6" fill="#5D9253"/><circle cx="132" cy="179" r="6" fill="#5D9253"/><circle cx="191" cy="225" r="5" fill="#5D9253"/><circle cx="173" cy="168" r="4" fill="#5D9253"/><circle cx="435" cy="222" r="4" fill="#5D9253"/><circle cx="452" cy="250" r="5" fill="#5D9253"/><circle cx="304" cy="278" r="4" fill="#5D9253"/><circle cx="338" cy="319" r="6" fill="#5D9253"/><circle cx="287" cy="334" r="6" fill="#5D9253"/><circle cx="337" cy="191" r="6" fill="#5D9253"/><circle cx="407" cy="367" r="5" fill="#5D9253"/><circle cx="384" cy="292" r="6" fill="#5D9253"/><circle cx="280" cy="360" r="5" fill="#5D9253"/><circle cx="400" cy="332" r="5" fill="#5D9253"/><circle cx="444" cy="316" r="4" fill="#5D9253"/><circle cx="280" cy="268" r="6" fill="#5D9253"/><circle cx="192" cy="289" r="4" fill="#5D9253"/><circle cx="359" cy="341" r="5" fill="#5D9253"/><circle cx="318" cy="292" r="6" fill="#5D9253"/><circle cx="185" cy="260" r="5" fill="#5D9253"/><circle cx="264" cy="259" r="5" fill="#5D9253"/><circle cx="208" cy="297" r="5" fill="#5D9253"/><circle cx="377" cy="258" r="4" fill="#5D9253"/><circle cx="322" cy="366" r="5" fill="#5D9253"/><circle cx="368" cy="284" r="5" fill="#5D9253"/><circle cx="382" cy="278" r="5" fill="#5D9253"/><circle cx="369" cy="323" r="5" fill="#5D9253"/><circle cx="399" cy="199" r="6" fill="#5D9253"/><circle cx="360" cy="312" r="4" fill="#5D9253"/><circle cx="337" cy="336" r="6" fill="#5D9253"/><circle cx="195" cy="271" r="4" fill="#5D9253"/><circle cx="213" cy="326" r="6" fill="#5D9253"/><circle cx="389" cy="238" r="6" fill="#5D9253"/><circle cx="254" cy="333" r="5" fill="#5D9253"/><circle cx="259" cy="306" r="5" fill="#5D9253"/><circle cx="461" cy="291" r="6" fill="#5D9253"/><circle cx="354" cy="234" r="6" fill="#5D9253"/><circle cx="353" cy="218" r="6" fill="#5D9253"/><circle cx="387" cy="315" r="5" fill="#5D9253"/><circle cx="188" cy="318" r="5" fill="#5D9253"/><circle cx="401" cy="268" r="4" fill="#5D9253"/><circle cx="289" cy="304" r="5" fill="#5D9253"/><circle cx="366" cy="131" r="4" fill="#5D9253"/><circle cx="505" cy="225" r="5" fill="#5D9253"/><circle cx="401" cy="181" r="6" fill="#5D9253"/><circle cx="471" cy="176" r="4" fill="#5D9253"/><circle cx="543" cy="201" r="5" fill="#5D9253"/><circle cx="455" cy="87" r="5" fill="#5D9253"/><circle cx="456" cy="206" r="5" fill="#5D9253"/><circle cx="437" cy="85" r="5" fill="#5D9253"/><circle cx="530" cy="159" r="6" fill="#5D9253"/><circle cx="504" cy="156" r="6" fill="#5D9253"/><circle cx="473" cy="157" r="5" fill="#5D9253"/><circle cx="466" cy="245" r="5" fill="#5D9253"/><circle cx="504" cy="83" r="6" fill="#5D9253"/><circle cx="448" cy="115" r="5" fill="#5D9253"/><circle cx="453" cy="167" r="6" fill="#5D9253"/><circle cx="381" cy="113" r="6" fill="#5D9253"/><circle cx="608" cy="234" r="6" fill="#5D9253"/><circle cx="771" cy="209" r="5" fill="#5D9253"/><circle cx="666" cy="162" r="5" fill="#5D9253"/><circle cx="727" cy="297" r="5" fill="#5D9253"/><circle cx="593" cy="125" r="5" fill="#5D9253"/><circle cx="730" cy="87" r="5" fill="#5D9253"/><circle cx="708" cy="301" r="5" fill="#5D9253"/><circle cx="669" cy="281" r="6" fill="#5D9253"/><circle cx="598" cy="267" r="4" fill="#5D9253"/><circle cx="679" cy="181" r="5" fill="#5D9253"/><circle cx="582" cy="80" r="4" fill="#5D9253"/><circle cx="688" cy="256" r="4" fill="#5D9253"/><circle cx="626" cy="119" r="5" fill="#5D9253"/><circle cx="641" cy="229" r="4" fill="#5D9253"/><circle cx="535" cy="90" r="4" fill="#5D9253"/><circle cx="697" cy="89" r="4" fill="#5D9253"/><circle cx="678" cy="139" r="6" fill="#5D9253"/><circle cx="631" cy="185" r="5" fill="#5D9253"/><circle cx="404" cy="509" r="5" fill="#5D9253"/><circle cx="270" cy="398" r="4" fill="#5D9253"/><circle cx="489" cy="279" r="4" fill="#5D9253"/><circle cx="687" cy="496" r="5" fill="#5D9253"/><circle cx="583" cy="404" r="5" fill="#5D9253"/><circle cx="322" cy="427" r="6" fill="#5D9253"/><circle cx="786" cy="385" r="6" fill="#5D9253"/><circle cx="271" cy="376" r="6" fill="#5D9253"/><circle cx="576" cy="498" r="5" fill="#5D9253"/><circle cx="502" cy="528" r="6" fill="#5D9253"/><circle cx="610" cy="317" r="5" fill="#5D9253"/><circle cx="296" cy="467" r="5" fill="#5D9253"/><circle cx="318" cy="529" r="5" fill="#5D9253"/><circle cx="769" cy="397" r="4" fill="#5D9253"/><circle cx="219" cy="407" r="5" fill="#5D9253"/><circle cx="645" cy="418" r="5" fill="#5D9253"/><circle cx="513" cy="323" r="6" fill="#5D9253"/><circle cx="558" cy="243" r="4" fill="#5D9253"/><circle cx="153" cy="431" r="6" fill="#5D9253"/><circle cx="468" cy="324" r="5" fill="#5D9253"/><circle cx="413" cy="419" r="6" fill="#5D9253"/><circle cx="209" cy="417" r="6" fill="#5D9253"/><circle cx="218" cy="515" r="5" fill="#5D9253"/><circle cx="303" cy="409" r="5" fill="#5D9253"/><circle cx="540" cy="229" r="5" fill="#5D9253"/><circle cx="614" cy="373" r="6" fill="#5D9253"/><circle cx="306" cy="502" r="5" fill="#5D9253"/><circle cx="751" cy="384" r="5" fill="#5D9253"/><circle cx="686" cy="429" r="5" fill="#5D9253"/><circle cx="686" cy="468" r="4" fill="#5D9253"/><circle cx="183" cy="434" r="5" fill="#5D9253"/><circle cx="660" cy="409" r="4" fill="#5D9253"/><circle cx="552" cy="281" r="6" fill="#5D9253"/><circle cx="424" cy="446" r="6" fill="#5D9253"/><circle cx="560" cy="520" r="5" fill="#5D9253"/><circle cx="485" cy="431" r="5" fill="#5D9253"/><circle cx="514" cy="450" r="6" fill="#5D9253"/><circle cx="160" cy="466" r="4" fill="#5D9253"/></g><g class="lyr off" id="layerCattle"><rect x="173" y="83" width="14" height="14" rx="3" fill="#1F2A1B" stroke="#fff" stroke-width="2"/><rect x="361" y="178" width="14" height="14" rx="3" fill="#1F2A1B" stroke="#fff" stroke-width="2"/><rect x="328" y="239" width="14" height="14" rx="3" fill="#1F2A1B" stroke="#fff" stroke-width="2"/><rect x="189" y="269" width="14" height="14" rx="3" fill="#1F2A1B" stroke="#fff" stroke-width="2"/><rect x="368" y="122" width="14" height="14" rx="3" fill="#1F2A1B" stroke="#fff" stroke-width="2"/><rect x="464" y="160" width="14" height="14" rx="3" fill="#1F2A1B" stroke="#fff" stroke-width="2"/><rect x="779" y="138" width="14" height="14" rx="3" fill="#1F2A1B" stroke="#fff" stroke-width="2"/><rect x="557" y="93" width="14" height="14" rx="3" fill="#1F2A1B" stroke="#fff" stroke-width="2"/><rect x="322" y="470" width="14" height="14" rx="3" fill="#1F2A1B" stroke="#fff" stroke-width="2"/><rect x="235" y="390" width="14" height="14" rx="3" fill="#1F2A1B" stroke="#fff" stroke-width="2"/><rect x="547" y="319" width="14" height="14" rx="3" fill="#1F2A1B" stroke="#fff" stroke-width="2"/><rect x="575" y="338" width="14" height="14" rx="3" fill="#1F2A1B" stroke="#fff" stroke-width="2"/><rect x="326" y="392" width="14" height="14" rx="3" fill="#1F2A1B" stroke="#fff" stroke-width="2"/><rect x="653" y="430" width="14" height="14" rx="3" fill="#1F2A1B" stroke="#fff" stroke-width="2"/></g><text class="map-label" x="205" y="168" text-anchor="middle" style="font-size:20px">Jepara</text><text class="map-label" x="455" y="130" text-anchor="middle" style="font-size:20px">Kudus</text><text class="map-label" x="668" y="200" text-anchor="middle" style="font-size:20px">Pati</text><text class="map-label" x="305" y="312" text-anchor="middle" style="font-size:20px">Demak</text><text class="map-label" x="520" y="470" text-anchor="middle" style="font-size:20px">Grobogan</text><text x="24" y="544" text-anchor="start" style="fill:#44533F;font:600 18px var(--font);letter-spacing:.08em">JAVA SEA</text></svg>
+          <div class="map-layers" data-select-group data-multi role="group" aria-label="Map layers">
+            <button class="chip is-sel" type="button" aria-pressed="true" data-layer="layerParcels">Insured parcels</button>
+            <button class="chip is-sel" type="button" aria-pressed="true" data-layer="layerFlood">Flood extent, Sentinel-1 23 Feb</button>
+            <button class="chip" type="button" aria-pressed="false" data-layer="layerRain">Rain forecast 72 h, BMKG</button>
+            <button class="chip" type="button" aria-pressed="false" data-layer="layerCattle">Cattle farms</button>
+          </div>
+          <div class="map-ctrl"><button class="icon-btn" type="button" aria-label="Zoom in"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button><button class="icon-btn" type="button" aria-label="Zoom out"><svg class="i" aria-hidden="true"><use href="#i-minus"/></svg></button><button class="icon-btn" type="button" aria-label="Layers"><svg class="i" aria-hidden="true"><use href="#i-layers"/></svg></button></div>
+        </div>
+        <div class="legend" style="margin-top:12px"><span><i class="swatch" style="--c:var(--leaf)"></i>Insured parcel</span><span><i class="swatch" style="--c:var(--water)"></i>Flood extent, Sentinel-1 23 Feb</span><span><i class="swatch" style="--c:#6C9CC4"></i>Rain forecast, next 72 h</span><span><i class="swatch" style="--c:var(--ink)"></i>Cattle farm</span></div>
+        <p class="meta" style="margin-top:8px">Schematic map. Not to scale.</p>
+      </section>
+
+      <div class="banner banner-info section rv" role="note">
+        <span class="banner-icon"><svg class="i" aria-hidden="true"><use href="#i-info"/></svg></span>
+        <p class="banner-title">Concentration</p>
+        <p class="banner-text">Demak holds 38% of your Central Java rice sum insured. Consider a regency limit below Rp15,6 M for the dry season record.</p>
+      </div>
+
+      <section class="card card-lg section rv" data-seg-panel="rice" aria-label="By regency">
+        <h2 class="h-section" style="margin-bottom:16px">By regency</h2>
+        <div class="table-wrap"><table class="table rtable"><thead><tr><th>Regency</th><th class="r">Insured rice</th><th class="r">Sum insured</th><th class="r">In flood extent now</th><th>Share in flood</th><th class="r">Open claims</th></tr></thead><tbody><tr><td class="id">Demak</td><td class="num">2.410 ha</td><td class="num">Rp15,6 M</td><td class="num">1.180 ha</td><td><div class="row" style="gap:12px"><div class="meter" role="img" aria-label="49 percent of insured hectares in the flood extent" style="flex:1;min-width:80px"><span style="--p:0.49"></span></div><span class="num" style="width:40px;text-align:right">49%</span></div></td><td class="num">19</td></tr><tr><td class="id">Grobogan</td><td class="num">1.960 ha</td><td class="num">Rp11,3 M</td><td class="num">640 ha</td><td><div class="row" style="gap:12px"><div class="meter" role="img" aria-label="33 percent of insured hectares in the flood extent" style="flex:1;min-width:80px"><span style="--p:0.33"></span></div><span class="num" style="width:40px;text-align:right">33%</span></div></td><td class="num">12 + 2 cattle</td></tr><tr><td class="id">Kudus</td><td class="num">980 ha</td><td class="num">Rp5,9 M</td><td class="num">210 ha</td><td><div class="row" style="gap:12px"><div class="meter" role="img" aria-label="21 percent of insured hectares in the flood extent" style="flex:1;min-width:80px"><span style="--p:0.21"></span></div><span class="num" style="width:40px;text-align:right">21%</span></div></td><td class="num">5</td></tr><tr><td class="id">Pati</td><td class="num">1.120 ha</td><td class="num">Rp6,4 M</td><td class="num">90 ha</td><td><div class="row" style="gap:12px"><div class="meter" role="img" aria-label="8 percent of insured hectares in the flood extent" style="flex:1;min-width:80px"><span style="--p:0.08"></span></div><span class="num" style="width:40px;text-align:right">8%</span></div></td><td class="num">3</td></tr><tr><td class="id">Jepara</td><td class="num">370 ha</td><td class="num">Rp2,0 M</td><td class="num">0 ha</td><td><div class="row" style="gap:12px"><div class="meter" role="img" aria-label="0 percent of insured hectares in the flood extent" style="flex:1;min-width:80px"><span style="--p:0.0"></span></div><span class="num" style="width:40px;text-align:right">0%</span></div></td><td class="num">0</td></tr><tr class="tot"><td class="id">Total</td><td class="num id">6.840 ha</td><td class="num id">Rp41,2 M</td><td class="num id">2.120 ha<span class="meta" style="display:block;font-weight:400">about Rp13,9 M</span></td><td><div class="row" style="gap:12px"><div class="meter" role="img" aria-label="31 percent of insured hectares in the flood extent" style="flex:1;min-width:80px"><span style="--p:.31"></span></div><span class="num" style="width:40px;text-align:right">31%</span></div></td><td class="num id">41</td></tr></tbody></table></div>
+        <p class="meta" style="margin-top:12px">Cattle: 3.120 head insured, Rp31,2 M. Premium written this season Rp1,86 M. Open proposed amounts Rp1,24 M.</p>
+      </section>
+      <section class="card card-lg section" data-seg-panel="cattle" hidden aria-label="Cattle by regency">
+        <h2 class="h-section" style="margin-bottom:16px">Cattle by regency</h2>
+        <div class="table-wrap"><table class="table"><thead><tr><th>Regency</th><th class="r">Insured</th></tr></thead><tbody><tr><td class="id">Grobogan</td><td class="num">1.240 head</td></tr><tr><td class="id">Demak</td><td class="num">610 head</td></tr><tr><td class="id">Kudus</td><td class="num">480 head</td></tr><tr><td class="id">Pati</td><td class="num">520 head</td></tr><tr><td class="id">Jepara</td><td class="num">270 head</td></tr><tr class="tot"><td class="id">Total</td><td class="num id">3.120 head</td></tr></tbody></table></div>
+      </section>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="../shared/system.js"></script>
+<script>(function(){
+  var chips=[].slice.call(document.querySelectorAll('.map-layers .chip'));
+  function sync(){
+    chips.forEach(function(c){
+      var g=document.getElementById(c.getAttribute('data-layer'));
+      if(g)g.classList.toggle('off',c.getAttribute('aria-pressed')!=='true');
+    });
+  }
+  chips.forEach(function(c){c.addEventListener('click',function(){setTimeout(sync,0);});});
+  var seg=document.querySelector('[data-seg]');
+  if(seg)seg.addEventListener('seg:change',function(e){
+    var cattle=document.querySelector('.map-layers [data-layer="layerCattle"]');
+    if(e.detail&&e.detail.value==='cattle'&&cattle&&cattle.getAttribute('aria-pressed')!=='true'){cattle.click();}
+  });
+  sync();
+})();</script>
+</body>
+</html>

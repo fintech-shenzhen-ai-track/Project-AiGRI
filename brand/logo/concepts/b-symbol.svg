@@ -1,0 +1,2 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256"><defs><clipPath id="kb"><path d="M128 18 A154.5 154.5 0 0 1 128 238 A154.5 154.5 0 0 1 128 18 Z"/></clipPath></defs>
+<g transform="rotate(32 128 128)"><g clip-path="url(#kb)"><g transform="rotate(-62 128 128)"><rect x="-60" y="-60" width="376" height="152"/><rect x="-60" y="106" width="376" height="44"/><rect x="-60" y="164" width="376" height="160"/></g></g></g></svg>

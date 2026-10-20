@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aigri.local/schemas/risk-output.schema.json",
+  "title": "Risk Model output",
+  "description": "Loss probability per peril per Insurable Asset for one horizon. Stored with an input hash so any Curation run can be replayed. Confidence never sets risk to zero; missing data widens the band.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["asset_type", "asset_id", "peril", "horizon", "classes", "loss_probability", "expected_loss_pct", "expected_loss_band_pct", "confidence", "confidence_reasons", "inputs", "model_version", "computed_at"],
+  "properties": {
+    "asset_type": { "enum": ["parcel", "livestock_group"] },
+    "asset_id": { "type": "string" },
+    "asset_code": { "type": "string", "examples": ["DMK-01"] },
+    "peril": { "enum": ["flood", "drought", "pest_disease", "typhoon_wind", "death_flood", "death_disease"] },
+    "horizon": { "enum": ["d1-16", "season"] },
+    "horizon_end": { "type": "string", "format": "date" },
+    "stage": { "type": "string", "description": "Crop stage or species used for the vulnerability lookup." },
+    "classes": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["class", "p", "damage_fraction"],
+        "properties": {
+          "class": { "type": "string", "examples": ["short_flood", "long_flood", "gust_60_90", "gust_90_plus"] },
+          "p": { "type": "number", "minimum": 0, "maximum": 1 },
+          "damage_fraction": { "type": "number", "minimum": 0, "maximum": 1 }
+        }
+      }
+    },
+    "loss_probability": { "type": "number", "minimum": 0, "maximum": 1, "description": "Sum of class probabilities whose damage fraction is at least 0.10 (display only)." },
+    "expected_loss_pct": { "type": "number", "minimum": 0, "maximum": 100 },
+    "expected_loss_band_pct": { "type": "array", "prefixItems": [{ "type": "number" }, { "type": "number" }], "minItems": 2, "maxItems": 2, "description": "p10 and p90 across ensemble members." },
+    "confidence": { "enum": ["high", "medium", "low"] },
+    "confidence_reasons": { "type": "array", "items": { "enum": ["ensemble spread wide", "few past mapped events", "missing input layer", "no forecast for horizon", "fixture data"] } },
+    "inputs": {
+      "type": "object", "additionalProperties": false,
+      "required": ["vulnerability_table"],
+      "properties": {
+        "forecast_run": { "type": "string" },
+        "forecast_source": { "type": "string", "examples": ["open-meteo-ensemble:ecmwf_ifs025"] },
+        "history_events": { "type": "integer", "minimum": 0 },
+        "history_sources": { "type": "array", "items": { "type": "string" } },
+        "official_warning": { "type": "string" },
+        "vulnerability_table": { "type": "string", "examples": ["rice-v1"] },
+        "class_edges": { "type": "string", "examples": ["flood-edges-v1"] }
+      }
+    },
+    "model_version": { "type": "string", "examples": ["risk-0.1.0"] },
+    "input_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "computed_at": { "type": "string", "format": "date-time" }
+  }
+}

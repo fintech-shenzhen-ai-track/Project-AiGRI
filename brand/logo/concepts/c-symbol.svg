@@ -1,0 +1,3 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256"><defs><clipPath id="kc"><path clip-rule="evenodd" d="M60 0 H196 V130 H60 Z M60 78 H196 V92 H60 Z"/></clipPath></defs>
+<circle cx="128" cy="68" r="46" clip-path="url(#kc)"/>
+<rect x="100" y="138" width="56" height="102" rx="28"/></svg>

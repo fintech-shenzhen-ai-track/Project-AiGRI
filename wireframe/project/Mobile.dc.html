@@ -1,0 +1,903 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AiGRI landing page, mobile</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<style>
+:root{
+  /* colour */
+  --ink:#1F2A1B; --muted:#44533F; --green:#557945; --sun:#FFCB3D; --sun-press:#F2B91F;
+  --cream:#FFF8E1; --white:#FFFFFF; --surface-2:#F5F5F7; --surface-3:#EDEDF0; --track:#E3E3E0;
+  --focus:#1F2A1B;
+  /* legacy aliases, kept until every package migrates; integrator deletes */
+  --mist:#F5F5F7; --tint:#F5F5F7; --line:#E3E3E0; --sun-hover:#F2B91F;
+  /* type */
+  --font:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Segoe UI",system-ui,sans-serif;
+  --fs-h1:clamp(44px,7.2vw,96px); --fs-h2:clamp(34px,4.8vw,56px); --fs-h3:clamp(22px,2.2vw,26px);
+  --fs-lead:clamp(19px,1.8vw,22px); --fs-body:17px; --fs-small:15px; --fs-label:13px;
+  --tr-h1:-0.035em; --tr-h2:-0.028em; --tr-h3:-0.015em; --tr-label:0.08em;
+  /* space */
+  --s1:4px; --s2:8px; --s3:12px; --s4:16px; --s5:24px; --s6:32px; --s7:48px; --s8:64px; --s9:96px;
+  --sec-y:clamp(88px,11vw,136px); --gutter:32px; --wrap:1160px;
+  /* shape */
+  --r-lg:28px; --r-md:20px; --r-sm:14px; --r-pill:999px;
+  --shadow-float:0 8px 24px rgba(31,42,27,.10);
+  /* motion */
+  --ease-out:cubic-bezier(0.23,1,0.32,1);
+  --ease-in-out:cubic-bezier(0.77,0,0.175,1);
+  --ease-drawer:cubic-bezier(0.32,0.72,0,1);
+  --dur-press:160ms; --dur-fast:200ms; --dur-ui:240ms; --dur-reveal:600ms; --dur-explain:1600ms;
+  --stagger:60ms; --rise:16px;
+}
+@media (max-width:880px){ :root{ --gutter:20px; } }
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:80px;-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%}
+body{margin:0;font-family:var(--font);font-size:var(--fs-body);line-height:1.5;color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased}
+a{color:var(--green)}
+a,button,summary{touch-action:manipulation}
+img{max-width:100%;display:block}
+:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+.hero,.ins,.ftr{--focus:#FFFFFF}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gutter)}
+.skip{position:absolute;left:-9999px;top:8px;background:var(--white);color:var(--ink);padding:12px 16px;border-radius:var(--r-sm);z-index:100}
+.skip:focus{left:16px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+@media (hover:hover) and (pointer:fine){ a:hover{color:var(--ink)} }
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 26px;border-radius:var(--r-pill);font:600 17px/1 var(--font);text-decoration:none;cursor:pointer;border:0;
+  -webkit-user-select:none;user-select:none;
+  transition:background-color var(--dur-fast) ease,color var(--dur-fast) ease,transform var(--dur-press) var(--ease-out)}
+.btn:active{transform:scale(.97)}
+.btn-lg{min-height:56px;padding:0 32px;font-size:18px}
+.btn-y{background:var(--sun);color:var(--ink)}
+.btn-y:active{background:var(--sun-press)}
+.btn-w{background:var(--white);color:var(--ink)}
+.btn-w:active{background:var(--cream)}
+@media (hover:hover) and (pointer:fine){
+  .btn-y:hover{background:var(--sun-press);color:var(--ink)}
+  .btn-w:hover{background:var(--cream);color:var(--ink)}
+}
+
+/* global reduced motion: gentler, not zero. Packages add their own specifics. */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .btn:active{transform:none}
+}
+
+/* header */
+.hdr{position:sticky;top:0;z-index:50;background:var(--white)}
+.hdr::after{content:"";position:absolute;left:0;right:0;bottom:0;height:12px;transform:translateY(100%);pointer-events:none;
+  box-shadow:inset 0 10px 10px -10px rgba(31,42,27,.14);opacity:0;transition:opacity var(--dur-fast) ease}
+.hdr.scrolled::after{opacity:1}
+.hdr .wrap{display:flex;align-items:center;gap:20px;min-height:68px}
+.logo{display:flex;align-items:center;text-decoration:none;border-radius:8px}
+.logo-svg{display:block;height:41px;width:auto}
+.nav{display:flex;gap:4px;flex-grow:1;margin-left:20px}
+.nav a,.login{color:var(--ink);text-decoration:none;font-weight:500;font-size:15px;padding:12px 12px;border-radius:12px;transition:background-color var(--dur-fast) ease}
+.nav a[aria-current="true"]{background:var(--surface-2)}
+.nav-login{display:none}
+.hdr-cta{display:flex;gap:8px;align-items:center}
+.hdr-cta .btn{min-height:44px;padding:0 20px;font-size:15px}
+.menu-btn{display:none;width:44px;height:44px;border:0;background:transparent;border-radius:12px;cursor:pointer;align-items:center;justify-content:center;transition:background-color var(--dur-fast) ease}
+.menu-btn:active{background:var(--surface-3)}
+.menu-btn path{transform-box:fill-box;transform-origin:center;transition:transform var(--dur-fast) var(--ease-out),opacity var(--dur-fast) var(--ease-out)}
+.menu-btn[aria-expanded="true"] .mb-top{transform:translateY(5px) rotate(45deg)}
+.menu-btn[aria-expanded="true"] .mb-mid{opacity:0}
+.menu-btn[aria-expanded="true"] .mb-bot{transform:translateY(-5px) rotate(-45deg)}
+@media (hover:hover) and (pointer:fine){
+  .nav a:hover,.login:hover{background:var(--surface-2)}
+  .menu-btn:hover{background:var(--surface-2)}
+}
+
+/* section scaffolding */
+.sec{padding:var(--sec-y) 0}
+.sec-alt{background:var(--surface-2)}
+.eyebrow{margin:0 0 14px;font-size:var(--fs-label);font-weight:600;letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--green)}
+.h2{margin:0 0 20px;font-size:var(--fs-h2);line-height:1.05;font-weight:700;letter-spacing:var(--tr-h2);max-width:860px;text-wrap:balance}
+.lead{margin:0 0 56px;font-size:var(--fs-lead);line-height:1.45;color:var(--muted);max-width:640px;text-wrap:pretty}
+
+/* reveal: hidden state only when JS is running (html.js is set by PKG-1) */
+.js .reveal{opacity:0;transform:translateY(var(--rise));
+  transition:opacity var(--dur-reveal) var(--ease-out),transform var(--dur-reveal) var(--ease-out);
+  transition-delay:calc(var(--i,0) * var(--stagger))}
+.js .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .js .reveal{transform:none;transition:opacity 300ms ease;transition-delay:0ms}
+}
+
+/* hero */
+/* hero: styles live in the PKG-2 block */
+
+/* hero, gap, how-it-works: styles live in the PKG-2 block */
+
+/* PKG-3: styles live in the PKG-3 block */
+
+/* cta + footer */
+.cta{background:var(--cream);text-align:center;padding:var(--sec-y) 0}
+.cta .h2,.cta .lead{margin-left:auto;margin-right:auto}
+.cta .lead{margin-bottom:36px}
+.cta-mark{display:block;width:72px;height:72px;margin:0 auto 28px;overflow:visible}
+.cta-note{margin:20px 0 0;font-size:var(--fs-small);color:var(--muted)}
+/* sun-rise: once, when the mark is revealed */
+.js .cta-mark .cm-row{opacity:0;transform:translateY(8px);transition:opacity 500ms var(--ease-out),transform 500ms var(--ease-out);transition-delay:calc(var(--r) * 60ms)}
+.js .cta-mark .cm-sun{transform-box:fill-box;transform-origin:center;opacity:0;transform:translateY(40%) scale(.92);
+  transition:opacity 900ms var(--ease-out) 240ms,transform 900ms var(--ease-out) 240ms}
+.js .cta-mark.in .cm-row,.js .cta-mark.in .cm-sun{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .js .cta-mark .cm-row,.js .cta-mark .cm-sun{transform:none;transition:opacity 300ms ease}
+}
+.ftr{background:var(--ink);color:var(--cream);padding:72px 0 48px}
+.ftr a{color:var(--cream)}
+.ftr-logo .logo-svg{height:44px}
+.ftr-top{display:flex;gap:24px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:32px}
+.ftr-links{display:flex;gap:8px 24px;flex-wrap:wrap;font-size:var(--fs-small)}
+.ftr-links a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none}
+.credits{font-size:var(--fs-small);color:var(--cream)}
+.credits summary{cursor:pointer;width:max-content;min-height:44px;display:flex;align-items:center}
+.credits p{margin:8px 0 0;max-width:760px}
+@media (hover:hover) and (pointer:fine){ .ftr-links a:hover{text-decoration:underline} }
+
+
+/* PKG-1: shell (mobile menu) */
+@media (max-width:880px){
+  .login{display:none}
+  .menu-btn{display:inline-flex}
+  .nav{position:absolute;left:0;right:0;top:100%;margin:0;padding:8px var(--gutter) 20px;flex-direction:column;gap:2px;
+    background:var(--white);border-radius:0 0 var(--r-md) var(--r-md);box-shadow:var(--shadow-float);
+    visibility:hidden;opacity:0;transform:translateY(-8px);
+    transition:opacity 160ms var(--ease-out),transform 160ms var(--ease-out),visibility 0s linear 160ms}
+  .nav.open{visibility:visible;opacity:1;transform:none;
+    transition:opacity 220ms var(--ease-drawer),transform 220ms var(--ease-drawer),visibility 0s linear 0s}
+  .nav a{padding:14px 8px;font-size:17px;min-height:48px;opacity:0;transform:translateY(-4px);
+    transition:opacity 160ms var(--ease-out),transform 160ms var(--ease-out)}
+  .nav.open a{opacity:1;transform:none;transition-duration:220ms;transition-delay:calc(var(--i,0) * 30ms)}
+  .nav-login{display:block}
+  .hdr-cta .btn{padding:0 16px}
+}
+@media (prefers-reduced-motion:reduce){
+  .nav,.nav.open,.nav a,.nav.open a{transform:none!important;transition-delay:0ms!important}
+  .menu-btn path{transition:opacity var(--dur-fast) ease} /* X shape swaps instantly, no rotation motion */
+}
+/* end PKG-1 */
+
+/* PKG-3: cover, worked example, satellite */
+/* what you can insure */
+.card{--p:28px;background:var(--surface-2);border-radius:24px;padding:var(--p);overflow:hidden}
+.card-media{margin:calc(-1*var(--p)) calc(-1*var(--p)) 24px;height:260px;overflow:hidden}
+.card-img{width:100%;height:100%;max-width:none;object-fit:cover}
+.card h3{margin:0 0 8px;font-size:var(--fs-h3);letter-spacing:var(--tr-h3)}
+.card p{margin:0;color:var(--muted);font-size:var(--fs-body);max-width:440px}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+/* image settles inside its frame as the card reveals: one-shot, pacing */
+.js .card.reveal .card-img{transform:scale(1.06);transition:transform 1200ms var(--ease-out)}
+.js .card.reveal.in .card-img{transform:none}
+
+/* worked example: solid pins, scroll-driven fill */
+.wx{position:relative;max-width:760px}
+.wx-track,.wx-fill{position:absolute;left:10px;top:10px;bottom:10px;width:4px;border-radius:4px}
+.wx-track{background:var(--track)}
+.wx-fill{background:var(--green);transform-origin:top center;transform:scaleY(0)}
+.wx-list{list-style:none;margin:0;padding:0;position:relative}
+.wx-list li{position:relative;padding:0 0 40px 56px}
+.wx-list li:last-child{padding-bottom:0}
+.wx-pin{position:absolute;left:0;top:-2px;z-index:1;width:24px;height:24px;border-radius:var(--r-pill);background:var(--track);
+  transform:scale(.9);transition:transform var(--dur-ui) var(--ease-out),background-color var(--dur-fast) ease}
+.wx-list li.on .wx-pin{background:var(--green);transform:none}
+.wx-list li.key.on .wx-pin{background:var(--ink)}
+.wx-when{font-size:var(--fs-label);font-weight:600;letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--green);line-height:20px}
+.wx-list h3{margin:6px 0 0;font-size:var(--fs-h3);line-height:1.2;letter-spacing:var(--tr-h3)}
+/* no-JS: show the completed state */
+html:not(.js) .wx-fill{transform:none}
+html:not(.js) .wx-pin{background:var(--green);transform:none}
+html:not(.js) .wx-list li.key .wx-pin{background:var(--ink)}
+
+/* satellite checks: video placeholder */
+.video{--focus:#FFFFFF;position:relative;margin:0;border-radius:var(--r-lg);overflow:hidden;background:#1F3A1A;aspect-ratio:16/9;color:#fff}
+.video img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.video-shade{position:absolute;inset:0;background:rgba(18,34,14,.28)}
+.video-scan{position:absolute;inset:0;pointer-events:none;opacity:0}
+.video-scan span{position:absolute;top:0;bottom:0;left:0;width:2px;background:#fff}
+.video-scan span::before{content:"";position:absolute;top:0;bottom:0;right:2px;width:96px;background:#fff;opacity:.12}
+.video-tag{position:absolute;left:20px;top:20px;margin:0;padding:8px 14px;border-radius:var(--r-pill);background:var(--ink);font-size:var(--fs-small);font-weight:600}
+.play{position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:var(--r-pill);border:0;background:#fff;
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transition:transform var(--dur-press) var(--ease-out),opacity var(--dur-press) var(--ease-out)}
+.play svg{margin-left:4px}
+.play:active{transform:scale(.96)}
+.video-soon{position:absolute;left:50%;top:50%;margin:0;transform:translate(-50%,calc(-50% + 8px));opacity:0;pointer-events:none;
+  padding:14px 22px;border-radius:var(--r-pill);background:var(--ink);font-size:17px;font-weight:600;white-space:nowrap;
+  transition:opacity var(--dur-press) var(--ease-out),transform var(--dur-press) var(--ease-out)}
+.video[data-state="soon"] .play{opacity:0;transform:scale(.92)}
+.video[data-state="soon"] .video-soon{opacity:1;transform:translate(-50%,-50%);
+  transition:opacity var(--dur-ui) var(--ease-out) 80ms,transform var(--dur-ui) var(--ease-out) 80ms}
+.video-bar{position:absolute;left:20px;right:20px;bottom:18px;display:flex;align-items:center;gap:14px;font-size:13px;font-weight:600;font-variant-numeric:tabular-nums}
+.vb-track{position:relative;flex:1;height:4px;border-radius:4px;background:#fff;opacity:.4}
+.three{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:36px;margin-top:48px}
+.three h3{margin:0 0 8px;font-size:var(--fs-h3);letter-spacing:var(--tr-h3)}
+.three p{margin:0;color:var(--muted);font-size:var(--fs-body)}
+@media (hover:hover) and (pointer:fine){ .play:hover{transform:scale(1.04)} }
+@media (max-width:1000px){ .three{grid-template-columns:minmax(0,1fr);gap:28px} }
+@media (max-width:880px){ .two{grid-template-columns:minmax(0,1fr)} .card{--p:24px} .card-media{height:200px} }
+@media (max-width:560px){
+  .video{aspect-ratio:4/5}
+  .video-tag{left:14px;top:14px;right:14px;width:max-content;max-width:calc(100% - 28px)}
+  .play{width:72px;height:72px;margin:-36px 0 0 -36px}
+  .video-soon{white-space:normal;width:max-content;max-width:calc(100% - 40px);text-align:center}
+}
+@media (prefers-reduced-motion:reduce){
+  .js .card.reveal .card-img{transform:none;transition:none}
+  .wx-pin,.wx-list li.on .wx-pin{transform:none;transition:background-color var(--dur-fast) ease}
+  .play,.play:active,.video[data-state="soon"] .play{transform:none}
+  .video-soon,.video[data-state="soon"] .video-soon{transform:translate(-50%,-50%)}
+}
+@media (prefers-reduced-motion:reduce) and (hover:hover) and (pointer:fine){ .play:hover{transform:none} }
+/* end PKG-3 */
+
+/* PKG-2: hero, gap, how */
+/* hero */
+.hero{position:relative;overflow:hidden;min-height:760px;display:flex;align-items:flex-end;background:#1F3A1A;color:#fff}
+.hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 62%;
+  animation:hero-settle 8000ms var(--ease-out) 1 both}
+.hero .scrim{position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,34,14,.30) 0%,rgba(18,34,14,.55) 30%,rgba(18,34,14,.68) 60%,rgba(18,34,14,.82) 100%)}
+.hero .wrap{position:relative;width:100%;padding-top:140px;padding-bottom:88px}
+.hero .eyebrow{color:#fff}
+.hero-h1{margin:0 0 24px;font-size:var(--fs-h1);line-height:.98;font-weight:700;letter-spacing:var(--tr-h1);max-width:900px;text-wrap:balance;
+  animation:hero-lift 600ms var(--ease-out) 60ms both}
+.hero .sub{margin:0 0 36px;font-size:clamp(19px,2vw,24px);line-height:1.4;max-width:600px}
+.hero-actions{display:flex;gap:12px 24px;flex-wrap:wrap;align-items:center}
+.hero-link{display:inline-flex;align-items:center;gap:6px;min-height:48px;padding:0 4px;color:#fff;font-weight:600;font-size:17px;text-decoration:none;border-radius:8px;
+  transition:opacity var(--dur-press) var(--ease-out)}
+.hero-link svg{transition:transform var(--dur-fast) var(--ease-out)}
+.hero-link:active{opacity:.7}
+.hero-trust{margin:28px 0 0;font-size:var(--fs-small);color:#fff}
+.hero-in{animation:hero-rise var(--dur-reveal) var(--ease-out) var(--d,0ms) both}
+@keyframes hero-rise{from{opacity:0;transform:translateY(var(--rise))}to{opacity:1;transform:none}}
+@keyframes hero-lift{from{transform:translateY(12px)}to{transform:none}}
+@keyframes hero-settle{from{transform:scale(1.06)}to{transform:none}}
+@media (hover:hover) and (pointer:fine){ .hero-link:hover{color:#fff} .hero-link:hover svg{transform:translateX(3px)} }
+@media (max-width:880px){ .hero{min-height:640px} .hero .wrap{padding-top:112px;padding-bottom:48px} }
+@media (max-width:560px){
+  .hero-actions{flex-direction:column;align-items:stretch}
+  .hero-actions .btn{width:100%}
+  .hero-link{justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){
+  .hero img,.hero-h1{animation:none}
+  .hero-in{animation:hero-fade 300ms ease var(--d,0ms) both}
+  @keyframes hero-fade{from{opacity:0}to{opacity:1}}
+}
+
+/* gap */
+.gap{background:var(--cream);padding:clamp(80px,9vw,120px) 0}
+.gap-num{margin:0;font-size:clamp(64px,11vw,144px);font-weight:700;letter-spacing:-0.04em;line-height:.95;color:var(--green)}
+.gap-text{margin:16px 0 40px;max-width:720px;font-size:clamp(22px,2.4vw,30px);line-height:1.3;font-weight:600;letter-spacing:-0.012em;text-wrap:balance}
+.gap-bar{max-width:880px}
+.gap-track{position:relative;height:14px;border-radius:var(--r-pill);background:var(--ink);overflow:hidden}
+.gap-fill{position:absolute;left:0;top:0;bottom:0;width:4.53%;min-width:10px;background:var(--green);transform-origin:left center;border-radius:var(--r-pill)}
+.gap-labels{display:flex;justify-content:space-between;gap:16px;margin-top:12px;font-size:var(--fs-small);font-weight:600}
+.gap-src{margin:32px 0 0;font-size:var(--fs-small);color:var(--muted);max-width:720px}
+/* bar fill: plays after the bar block is revealed */
+.js .gap-bar .gap-fill{transform:scaleX(0);transition:transform 900ms var(--ease-out) 300ms}
+.js .gap-bar .gap-l-ins{opacity:0;transition:opacity 200ms ease 1100ms}
+.js .gap-bar.in .gap-fill{transform:none}
+.js .gap-bar.in .gap-l-ins{opacity:1}
+@media (prefers-reduced-motion:reduce){
+  .js .gap-bar .gap-fill{transform:none;opacity:0;transition:opacity 300ms ease}
+  .js .gap-bar.in .gap-fill{opacity:1}
+  .js .gap-bar .gap-l-ins{transition:opacity 300ms ease}
+}
+
+/* how it works timeline */
+.htl-wrap{position:relative}
+.htl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:28px;position:relative}
+.htl-track,.htl-fill{position:absolute;left:10%;top:34px;height:4px;border-radius:4px}
+.htl-track{right:10%;background:var(--track)}
+.htl-fill{width:80%;background:var(--green);transform-origin:left center;transform:scaleX(0)}
+.hstep{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center}
+.hnode{position:relative;z-index:1;width:72px;height:72px;border-radius:var(--r-pill);background:var(--surface-2);stroke:var(--muted);
+  display:flex;align-items:center;justify-content:center;margin-bottom:18px;
+  transition:background-color var(--dur-fast) ease,stroke var(--dur-fast) ease}
+.hnode svg{stroke:inherit;transform:scale(.9);transition:transform var(--dur-ui) var(--ease-out)}
+.hstep.on .hnode{background:var(--green);stroke:#fff}
+.hstep.on .hnode svg{transform:none}
+.hstep.last.on .hnode{background:var(--ink);stroke:#fff}
+.hnum{font-size:var(--fs-label);font-weight:600;letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--green)}
+.hstep h3{margin:6px 0 8px;font-size:20px;letter-spacing:var(--tr-h3);line-height:1.2}
+.hstep p{margin:0;font-size:var(--fs-small);color:var(--muted);max-width:200px}
+@media (max-width:880px){
+  .htl{grid-template-columns:minmax(0,1fr);gap:28px}
+  .htl-track,.htl-fill{left:26px;right:auto;top:28px;bottom:28px;width:4px;height:auto}
+  .htl-fill{transform-origin:center top;transform:scaleY(0)}
+  .hstep{display:grid;grid-template-columns:56px 1fr;column-gap:18px;align-items:start;text-align:left}
+  .hnode{width:56px;height:56px;margin:0;grid-row:1/4}
+  .hstep h3{margin:2px 0 4px}
+  .hstep p{max-width:none;font-size:var(--fs-body)}
+}
+/* no-JS: show the completed state */
+html:not(.js) .htl-fill{transform:none}
+html:not(.js) .hnode{background:var(--green);stroke:#fff}
+html:not(.js) .hnode svg{transform:none}
+html:not(.js) .hstep.last .hnode{background:var(--ink)}
+@media (prefers-reduced-motion:reduce){ .hnode svg{transform:none;transition:none} }
+/* end PKG-2 */
+
+/* PKG-4: compare, insurers, faq */
+/* compare: white rows on the alt surface, solid fills only. Table roles are explicit in the markup so the grid layout keeps table semantics. */
+.cmp{display:block;width:100%;font-size:var(--fs-body)}
+.cmp thead,.cmp tbody{display:block}
+.cmp tbody{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.cmp tr{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.1fr) minmax(0,1.1fr);gap:0;border-radius:var(--r-md);overflow:hidden}
+.cmp th,.cmp td{display:block;text-align:left;padding:22px 26px;vertical-align:top}
+.cmp-head th{padding:16px 26px;font-size:var(--fs-label);font-weight:600;letter-spacing:var(--tr-label);text-transform:uppercase;background:var(--surface-3);color:var(--ink)}
+.cmp-head th:first-child{background:transparent}
+.cmp-head th.with{background:var(--green);color:#fff}
+.cmp-head{border-radius:var(--r-md) var(--r-md) 0 0}
+.cmp-row{background:var(--white)}
+.cmp-row th{font-weight:600}
+.cmp td.without{color:var(--muted)}
+.cmp td.with{background:var(--cream)}
+.cmp .mark{display:inline-flex;align-items:flex-start;gap:10px}
+.cmp .mark svg{flex:none;margin-top:4px}
+/* ticks pop once as their row enters: 240ms --ease-out, scale .6 -> 1 (never from 0) */
+.js .cmp .tick{transform:scale(.6);opacity:0;transition:transform var(--dur-ui) var(--ease-out),opacity var(--dur-ui) var(--ease-out);transition-delay:calc(var(--i,0) * var(--stagger) + 240ms)}
+.js .cmp .cmp-row.in .tick{transform:none;opacity:1}
+@media (prefers-reduced-motion:reduce){
+  .js .cmp .tick{transform:none;transition:opacity 300ms ease;transition-delay:0ms}
+}
+@media (max-width:560px){
+  .cmp-head{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap}
+  .cmp tbody{margin-top:0}
+  .cmp tr{grid-template-columns:minmax(0,1fr)}
+  .cmp-row th{padding:20px 20px 4px;font-size:19px;letter-spacing:var(--tr-h3)}
+  .cmp-row td{padding:12px 20px}
+  .cmp-row td::before{content:attr(data-l);display:block;margin-bottom:4px;font-size:var(--fs-label);font-weight:600;letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--muted)}
+  .cmp-row td.with{padding-bottom:20px}
+  .cmp-row td.with::before{color:var(--green)}
+}
+/* insurers */
+.ins{background:var(--green);color:#fff}
+.ins .eyebrow,.ins .h2,.ins .lead{color:#fff}
+.logos{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+.logo-ph{flex:1 1 160px;min-height:64px;background:#fff;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:var(--fs-small);font-weight:600;color:var(--muted)}
+.lanes{position:relative;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:180px 180px;margin:0 0 48px}
+.lane{position:relative;z-index:2;grid-column:1/-1;align-self:start;padding:0 4px;font-size:var(--fs-label);font-weight:700;letter-spacing:var(--tr-label);text-transform:uppercase;color:#fff}
+.lane-team{grid-row:1}
+.lane-ai{grid-row:2;margin-top:4px}
+.lane-lines{grid-column:1/-1;grid-row:1/3;width:100%;height:100%;z-index:1}
+.lane-wipe{grid-column:1/-1;grid-row:1/3;z-index:1;background:var(--green);transform-origin:right center;transform:scaleX(0)}
+.lstep{position:relative;z-index:2;align-self:center;margin:0 10px;background:#fff;color:var(--ink);border-radius:16px;padding:16px;font-size:var(--fs-small);line-height:1.4}
+.lstep b{display:block;font-size:17px;margin-bottom:4px}
+.lstep span:last-child{color:var(--muted)}
+.lstep.dec{background:var(--ink);color:#fff}
+.lstep.dec span:last-child{color:#fff}
+.ltag{display:none;font-size:var(--fs-label);font-weight:700;letter-spacing:var(--tr-label);text-transform:uppercase;color:var(--green);margin-bottom:4px}
+.lstep.dec .ltag{color:#fff}
+/* draw: a green wipe (transform only) uncovers the white line left to right; cards arrive as it reaches their column. Linear on purpose so card delays stay in sync. Plays once. */
+.js .lanes .lane-wipe{transform:scaleX(1)}
+.js .lanes.in .lane-wipe{transform:scaleX(0);transition:transform 1500ms linear 150ms}
+.js .lanes .lstep{opacity:0;transform:translateY(12px)}
+.js .lanes .lstep.dec{transform:translateY(12px) scale(.97)}
+.js .lanes.in .lstep{opacity:1;transform:none;transition:opacity 300ms var(--ease-out) var(--t,0ms),transform 300ms var(--ease-out) var(--t,0ms)}
+.js .lanes.in .lstep.dec{transition:opacity 300ms var(--ease-out) var(--t,0ms),transform 340ms var(--ease-out) var(--t,0ms)}
+.js .lanes.reveal{transform:none}
+@media (max-width:1000px){
+  .lanes{display:flex;flex-direction:column;gap:12px}
+  .lane,.lane-lines,.lane-wipe{display:none}
+  .lstep{margin:0;align-self:stretch}
+  .ltag{display:block}
+  .js .lanes.in .lstep,.js .lanes.in .lstep.dec{transition-delay:calc(var(--n,0) * 60ms)}
+}
+@media (prefers-reduced-motion:reduce){
+  .js .lanes .lane-wipe{display:none}
+  .js .lanes .lstep,.js .lanes .lstep.dec{transform:none}
+  .js .lanes.in .lstep,.js .lanes.in .lstep.dec{transition:opacity 300ms ease;transition-delay:0ms}
+}
+/* faq */
+.faq-list{display:flex;flex-direction:column;gap:8px;max-width:820px}
+.faq{background:var(--surface-2);border-radius:var(--r-md)}
+.faq summary{cursor:pointer;list-style:none;padding:22px 24px;min-height:64px;font-size:19px;font-weight:600;display:flex;justify-content:space-between;align-items:center;gap:16px;border-radius:var(--r-md);
+  -webkit-user-select:none;user-select:none;transition:background-color var(--dur-fast) ease}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:active{background:var(--surface-3)}
+.faq .plus{flex:none;color:var(--green);transition:transform var(--dur-fast) var(--ease-out)}
+.faq[open] .plus{transform:rotate(45deg)}
+.faq-body{overflow:hidden}
+.faq-body p{margin:0;padding:0 24px 24px;color:var(--muted);font-size:var(--fs-body);max-width:720px}
+@media (hover:hover) and (pointer:fine){ .faq summary:hover{background:var(--surface-3)} }
+@media (prefers-reduced-motion:reduce){ .faq .plus{transition:none} }
+/* end PKG-4 */
+
+/* responsive */
+</style>
+</helmet>
+<div style="font-family:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',system-ui,sans-serif;color:#1F2A1B;background:#fff">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="hdr">
+  <div class="wrap">
+    <a class="logo" href="#top" aria-label="AiGRI, back to top">
+      <svg class="logo-svg" viewBox="0 0 756 256" aria-hidden="true" focusable="false">
+        <path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+        <rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+        <rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+        <circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+        <g transform="translate(304 0)">
+          <path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+          <rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+          <path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+          <path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+          <path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+          <rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+          <path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+          <path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+          <rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+        </g>
+      </svg>
+    </a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#how" style="--i:0">How it works</a>
+      <a href="#cover" style="--i:1">What you can insure</a>
+      <a href="#proof" style="--i:2">Satellite checks</a>
+      <a href="#insurers" style="--i:3">For insurers</a>
+      <a href="#faq" style="--i:4">FAQ</a>
+      <a class="nav-login" href="/login" style="--i:5">Log in</a>
+    </nav>
+    <div class="hdr-cta">
+      <a class="login" href="/login">Log in</a>
+      <a class="btn btn-y" href="/signup">Get covered</a>
+      <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav" aria-label="Open menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1F2A1B" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <path class="mb-top" d="M4 7h16"/><path class="mb-mid" d="M4 12h16"/><path class="mb-bot" d="M4 17h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- 1. HERO -->
+<section class="hero" id="top">
+  <img src="/_blob/592be2e11b23fa40c6c664b3456ea129" alt="A wide green rice paddy under a cloudy sky in Bulacan, Philippines" fetchpriority="high">
+  <div class="scrim" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="eyebrow hero-in" style="--d:0ms">For farmers and agri businesses</p>
+    <h1 class="hero-h1">Insurance that sees the storm coming.</h1>
+    <p class="sub hero-in" style="--d:120ms">Policies ranked for your risk. Alerts before the storm. Claims filed with satellite and photo proof.</p>
+    <div class="hero-actions hero-in" style="--d:180ms">
+      <a class="btn btn-y btn-lg" href="/signup">Get covered</a>
+      <a class="hero-link" href="#how">See how it works<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 6 6 6-6 6"/></svg></a>
+    </div>
+    <p class="hero-trust hero-in" style="--d:240ms">You confirm every claim. The insurer's adjuster decides.</p>
+  </div>
+</section>
+
+<!-- 2. PROTECTION GAP -->
+<section class="gap" id="gap" aria-labelledby="gapTitle">
+  <div class="wrap">
+    <p class="gap-num reveal" id="gapTitle">PHP 4.13B</p>
+    <p class="gap-text reveal" style="--i:1">of farm damage in the Philippines, 1 to 26 August 2026. Insurance covered PHP 187 million.</p>
+    <div class="gap-bar reveal" style="--i:2" role="img" aria-label="Insured share: PHP 187 million of PHP 4.13 billion, under 5 percent">
+      <div class="gap-track"><span class="gap-fill"></span></div>
+      <div class="gap-labels" aria-hidden="true"><span class="gap-l-ins">Insured: PHP 187M</span><span>Damage: PHP 4.13B</span></div>
+    </div>
+    <p class="gap-src reveal" style="--i:3">More than 60% of the agriculture sector is uninsured. <a href="https://www.insurancebusinessmag.com/asia/news/catastrophe/most-philippine-farm-losses-fall-outside-the-insured-pool-589508.aspx">Source: Insurance Business Asia, [article date]</a></p>
+  </div>
+</section>
+
+<!-- 3. HOW IT WORKS: timeline -->
+<section class="sec" id="how">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">How it works</p>
+      <h2 class="h2">From your first field to your payout.</h2>
+      <p class="lead">AiGRI does the paperwork. You make the calls.</p>
+    </div>
+    <div class="htl-wrap" id="htl">
+      <span class="htl-track" aria-hidden="true"></span><span class="htl-fill" id="htlFill" aria-hidden="true"></span>
+      <ol class="htl">
+      <li class="hstep"><span class="hnode"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg></span><span class="hnum">Step 1</span><h3>Tell us what you farm</h3><p>Map fields, list crops, tag livestock.</p></li><li class="hstep"><span class="hnode"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><span class="hnum">Step 2</span><h3>Compare ranked policies</h3><p>Ranked for your predicted risk, with reasons.</p></li><li class="hstep"><span class="hnode"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14.9A7 7 0 1 1 15.7 8h1.8a4.5 4.5 0 0 1 2.5 8.2"/><path d="M12 13v4M12 20h.01"/></svg></span><span class="hnum">Step 3</span><h3>Get warned early</h3><p>An alert with steps, before the storm.</p></li><li class="hstep"><span class="hnode"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></span><span class="hnum">Step 4</span><h3>File with proof</h3><p>Satellite readings and photos. You confirm.</p></li><li class="hstep last"><span class="hnode"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg></span><span class="hnum">Step 5</span><h3>Get paid</h3><p>The adjuster decides. Approved payouts arrive automatically.</p></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 4. CROPS AND LIVESTOCK -->
+<section class="sec" id="cover">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">What you can insure</p>
+      <h2 class="h2">Crops, livestock, or both.</h2>
+      <p class="lead">Set up only what you farm. Cover and payouts follow the policy you choose.</p>
+    </div>
+    <div class="two">
+      <article class="card reveal" style="--i:0">
+        <div class="card-media"><img class="card-img" src="/_blob/592be2e11b23fa40c6c664b3456ea129" alt="Close view of rice plants in a paddy" style="object-position:50% 92%" loading="lazy"></div>
+        <h3>Crops</h3>
+        <p>Rice, corn and high-value crops. Proof from satellite readings and in-app photos.</p>
+      </article>
+      <article class="card reveal" style="--i:1">
+        <div class="card-media"><img class="card-img" src="/_blob/4137c3a366b521912708a9a56dcd69af" alt="A carabao grazing on a farm with coconut palms and hills behind" style="object-position:50% 55%" loading="lazy"></div>
+        <h3>Livestock</h3>
+        <p>Cattle, hogs and poultry. Proof from ear-tag photos taken in the app.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 5. WORKED EXAMPLE (kept by owner override) -->
+<section class="sec sec-alt" id="worked">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">A worked example</p>
+      <h2 class="h2">One farm, one typhoon.</h2>
+      <p class="lead">Illustrative example. Not real data.</p>
+    </div>
+    <div class="wx" id="wx">
+      <span class="wx-track" id="wxTrack" aria-hidden="true"></span><span class="wx-fill" id="wxFill" aria-hidden="true"></span>
+      <ol class="wx-list">
+        <li><span class="wx-pin" aria-hidden="true"></span><div class="wx-when">Before the season</div><h3>Pick a policy ranked for your risk</h3></li>
+        <li><span class="wx-pin" aria-hidden="true"></span><div class="wx-when">Before the storm</div><h3>Get an alert, take your photos</h3></li>
+        <li><span class="wx-pin" aria-hidden="true"></span><div class="wx-when">After the storm</div><h3>Satellite and photo proof, gathered for you</h3></li>
+        <li class="key"><span class="wx-pin" aria-hidden="true"></span><div class="wx-when">Then</div><h3>You confirm, the adjuster decides, you get paid</h3></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<!-- 6. SATELLITE CHECKS -->
+<section class="sec" id="proof">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">Satellite checks</p>
+      <h2 class="h2">Seen from space. Backed by your photos.</h2>
+      <p class="lead">After a storm, radar satellites check each of your fields, even through cloud. The readings go in your claim beside your photos.</p>
+    </div>
+    <figure class="video reveal" id="video" data-state="idle">
+      <img src="/_blob/a6b0852ca105f79d0d36e82516873754" alt="A rice field flooded after Typhoon Ketsana" loading="lazy">
+      <div class="video-shade" aria-hidden="true"></div>
+      <div class="video-scan" aria-hidden="true"><span></span></div>
+      <p class="video-tag">[Video] How radar checks a flooded field</p>
+      <button class="play" id="playBtn" type="button" aria-label="Play video: how radar checks a flooded field">
+        <svg width="26" height="26" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z" fill="#1F2A1B"/></svg>
+      </button>
+      <p class="video-soon" id="videoSoon" role="status" aria-live="polite"></p>
+      <div class="video-bar" aria-hidden="true"><span class="vb-time">0:00 / 0:30</span><span class="vb-track"><span class="vb-fill"></span></span></div>
+    </figure>
+    <div class="three">
+      <div class="reveal" style="--i:0"><h3>Radar sees through cloud</h3><p>Storm cloud hides fields from cameras. Radar still sees the water.</p></div>
+      <div class="reveal" style="--i:1"><h3>Before and after, per field</h3><p>Each field gets a flood reading and a crop-change reading, with a confidence level.</p></div>
+      <div class="reveal" style="--i:2"><h3>Never the final word</h3><p>Radar can miss flooding under dense crops. A no-flood reading never closes a claim. Your photos and the adjuster fill the gap.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 7. WITHOUT VS WITH -->
+<section class="sec sec-alt" id="compare">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">Why AiGRI</p>
+      <h2 class="h2">Without AiGRI, and with it.</h2>
+      <p class="lead">The same storm, handled two ways.</p>
+    </div>
+    <div>
+      <table class="cmp" role="table">
+        <caption class="sr">Claiming without AiGRI compared with claiming with AiGRI</caption>
+        <thead role="rowgroup"><tr class="cmp-head reveal" role="row"><th scope="col" role="columnheader"><span class="sr">Task</span></th><th scope="col" role="columnheader">Without AiGRI</th><th scope="col" role="columnheader" class="with">With AiGRI</th></tr></thead>
+        <tbody role="rowgroup">
+          <tr class="cmp-row reveal" style="--i:0" role="row"><th scope="row" role="rowheader">Choosing a policy</th><td class="without" role="cell" data-l="Without AiGRI"><span class="mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#44533F" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>Read each policy yourself and guess which fits.</span></td><td class="with" role="cell" data-l="With AiGRI"><span class="mark"><svg class="tick" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#557945" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Ranked for your predicted risk, with the reason for each rank.</span></td></tr>
+          <tr class="cmp-row reveal" style="--i:1" role="row"><th scope="row" role="rowheader">Storm warning</th><td class="without" role="cell" data-l="Without AiGRI"><span class="mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#44533F" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>The news, and luck.</span></td><td class="with" role="cell" data-l="With AiGRI"><span class="mark"><svg class="tick" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#557945" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>An alert for your fields, with steps to take.</span></td></tr>
+          <tr class="cmp-row reveal" style="--i:2" role="row"><th scope="row" role="rowheader">Evidence</th><td class="without" role="cell" data-l="Without AiGRI"><span class="mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#44533F" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>Photos sent in a chat, with no place or time attached.</span></td><td class="with" role="cell" data-l="With AiGRI"><span class="mark"><svg class="tick" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#557945" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Satellite readings plus in-app photos that record place and time.</span></td></tr>
+          <tr class="cmp-row reveal" style="--i:3" role="row"><th scope="row" role="rowheader">The claim</th><td class="without" role="cell" data-l="Without AiGRI"><span class="mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#44533F" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>Paper forms and deadlines to remember.</span></td><td class="with" role="cell" data-l="With AiGRI"><span class="mark"><svg class="tick" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#557945" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>A prepared packet. You review it and confirm.</span></td></tr>
+          <tr class="cmp-row reveal" style="--i:4" role="row"><th scope="row" role="rowheader">Getting paid</th><td class="without" role="cell" data-l="Without AiGRI"><span class="mark"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#44533F" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"/></svg>Wait for a transfer and keep asking.</span></td><td class="with" role="cell" data-l="With AiGRI"><span class="mark"><svg class="tick" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#557945" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Paid automatically once the adjuster approves.</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- 8. INSURERS -->
+<section class="sec ins" id="insurers">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">For insurers</p>
+      <h2 class="h2">Decide claims with the evidence already attached.</h2>
+      <p class="lead">Reach farmers who need cover. Your adjuster makes every decision. AiGRI prepares the case and pays out after you approve.</p>
+    </div>
+    <div class="lanes reveal" role="list" aria-label="How a claim moves between your team and AiGRI">
+      <div class="lane lane-team" aria-hidden="true">Your team</div>
+      <div class="lane lane-ai" aria-hidden="true">AiGRI</div>
+      <svg class="lane-lines" viewBox="0 0 1000 360" preserveAspectRatio="none" aria-hidden="true"><path d="M100 90 H200 V270 H300 H500 H600 V90 H700 H800 V270 H900" fill="none" stroke="#FFFFFF" stroke-width="3" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>
+      <div class="lane-wipe" aria-hidden="true"></div>
+      <div class="lstep" role="listitem" style="grid-column:1;grid-row:1;--t:150ms;--n:0"><span class="ltag">Your team</span><b>1. Publish</b><span>Upload a policy PDF, review it, publish.</span></div>
+      <div class="lstep" role="listitem" style="grid-column:2;grid-row:2;--t:450ms;--n:1"><span class="ltag">AiGRI</span><b>2. Match</b><span>Ranks your policy for each client's risk.</span></div>
+      <div class="lstep" role="listitem" style="grid-column:3;grid-row:2;--t:750ms;--n:2"><span class="ltag">AiGRI</span><b>3. Prepare</b><span>A claim packet with satellite evidence and a proposed amount.</span></div>
+      <div class="lstep dec" role="listitem" style="grid-column:4;grid-row:1;--t:1050ms;--n:3"><span class="ltag">Your team</span><b>4. Decide</b><span>Your adjuster approves, asks for more, or denies.</span></div>
+      <div class="lstep" role="listitem" style="grid-column:5;grid-row:2;--t:1350ms;--n:4"><span class="ltag">AiGRI</span><b>5. Pay</b><span>Automatic payout from your wallet once approved.</span></div>
+    </div>
+    <a class="btn btn-w btn-lg" href="/partners">Become a partner insurer</a>
+    <div class="logos" aria-label="Partner insurers, placeholders">
+      <div class="logo-ph">[Insurer logo]</div><div class="logo-ph">[Insurer logo]</div><div class="logo-ph">[Insurer logo]</div>
+    </div>
+  </div>
+</section>
+
+<!-- 9. FAQ -->
+<section class="sec" id="faq">
+  <div class="wrap">
+    <div class="reveal">
+      <p class="eyebrow">Questions</p>
+      <h2 class="h2">Good to know.</h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq"><summary>Is it free?<svg class="plus" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><div class="faq-body"><p>[Pricing to be decided.]</p></div></details>
+    <details class="faq"><summary>Who decides my claim?<svg class="plus" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><div class="faq-body"><p>The insurer's adjuster, always. AiGRI prepares and files your case. It never approves or denies a claim.</p></div></details>
+    <details class="faq"><summary>What is satellite evidence?<svg class="plus" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><div class="faq-body"><p>Readings from public satellites showing whether each of your fields flooded and how the crop changed, with a confidence level. It supports your claim. It does not replace your photos or the adjuster.</p></div></details>
+    <details class="faq"><summary>What if my photo does not pass a check?<svg class="plus" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><div class="faq-body"><p>The app tells you what looked wrong and asks for a clearer photo. A failed check flags your claim for the adjuster. It does not reject it.</p></div></details>
+    <details class="faq"><summary>Who can see my farm data?<svg class="plus" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><div class="faq-body"><p>An insurer sees your data only after you buy from them, and only for the assets that policy covers. You give consent for each insurer at purchase.</p></div></details>
+    <details class="faq"><summary>Do I need a smartphone?<svg class="plus" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><div class="faq-body"><p>[Device requirements to be confirmed.]</p></div></details>
+    <details class="faq"><summary>Where does it work?<svg class="plus" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></summary><div class="faq-body"><p>The first market is the Philippines. The platform is built to run in other countries, with prices shown in your local currency for reference.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- 10. CTA -->
+<section class="cta" id="get-covered">
+  <div class="wrap">
+    <svg class="cta-mark reveal" viewBox="0 0 256 256" aria-hidden="true" focusable="false">
+      <path class="cm-row" style="--r:0" fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+      <rect class="cm-row" style="--r:1" fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+      <rect class="cm-row" style="--r:2" fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+      <circle class="cm-sun" fill="#FFCB3D" cx="196" cy="58" r="46"/>
+    </svg>
+    <h2 class="h2 reveal" style="--i:1">Know where you stand before the next storm.</h2>
+    <p class="lead reveal" style="--i:2">Set up your farm and see policies ranked for your risk.</p>
+    <div class="reveal" style="--i:3"><a class="btn btn-y btn-lg" href="/signup">Get covered</a></div>
+    <p class="cta-note reveal" style="--i:4">You confirm every claim before it is sent.</p>
+  </div>
+</section>
+</main>
+
+<footer class="ftr">
+  <div class="wrap">
+    <div class="ftr-top">
+      <a class="logo ftr-logo" href="#top" aria-label="AiGRI, back to top">
+        <svg class="logo-svg" viewBox="0 0 756 256" aria-hidden="true" focusable="false">
+          <path fill="#FFFFFF" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+          <rect fill="#FFFFFF" x="36" y="136" width="204" height="44" rx="16"/>
+          <rect fill="#FFFFFF" x="16" y="196" width="224" height="44" rx="16"/>
+          <circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+          <g transform="translate(304 0)">
+            <path fill="#FFFFFF" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+            <rect fill="#FFFFFF" x="130" y="116" width="22" height="72"/>
+            <path fill="#FFCB3D" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+            <path fill="#FFCB3D" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+            <path fill="#FFFFFF" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+            <rect fill="#FFFFFF" x="243" y="117" width="44" height="22"/>
+            <path fill="#FFFFFF" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+            <path fill="#FFFFFF" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+            <rect fill="#FFFFFF" x="419" y="68" width="22" height="120"/>
+          </g>
+        </svg>
+      </a>
+      <nav class="ftr-links" aria-label="Footer"><a href="/login">Log in</a><a href="#insurers">For insurers</a><a href="#faq">FAQ</a><a href="#">Privacy [placeholder]</a><a href="#">Contact [placeholder]</a></nav>
+    </div>
+    <details class="credits"><summary>Photo credits</summary><p>Rice Field Panorama, Bulacan, by Andrew Martin, <a href="https://commons.wikimedia.org/wiki/File:Rice_Field_Panorama,_Bulacan,_Philippines_-_panoramio.jpg">CC BY 3.0</a>. A cattle farm in Borongan City, by TheNuggeteer, <a href="https://commons.wikimedia.org/wiki/File:A_cattle_farm_in_Borongan_City,_Eastern_Samar.jpg">CC BY-SA 4.0</a>. Typhoon Ketsana flooded rice field, by Chris Quintana / IRRI, <a href="https://commons.wikimedia.org/wiki/File:Typhoon_Ketsana_flooded_rice_field.jpg">CC BY 2.0</a>. Cropped and darkened.</p></details>
+  </div>
+</footer>
+
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":12500}}'>
+class Component extends DCLogic {
+  componentDidMount() {
+
+(function(){
+  // ==== PKG-1: global (js class + reveal engine) - keep first ====
+  document.documentElement.classList.add('js');
+  (function reveal(){
+    var els=[].slice.call(document.querySelectorAll('.reveal'));
+    if(!('IntersectionObserver' in window)){ els.forEach(function(el){el.classList.add('in');}); return; }
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);} });
+    },{threshold:0.15,rootMargin:'0px 0px -8% 0px'});
+    els.forEach(function(el){io.observe(el);});
+  })();
+  // ==== end PKG-1 global ====
+
+  // ==== PKG-2: how-it-works ====
+  (function pkg2(){
+    var wrap=document.getElementById('htl'), fill=document.getElementById('htlFill');
+    if(!wrap||!fill) return;
+    var steps=[].slice.call(wrap.querySelectorAll('.hstep'));
+    var mq=matchMedia('(max-width:880px)'), ticking=false, near=true;
+    function update(){
+      var vh=innerHeight, r=wrap.getBoundingClientRect(), p;
+      if(mq.matches){
+        // vertical: fill reaches the point 60% down the viewport
+        var top=r.top+28, len=Math.max(1,r.height-56);
+        p=Math.min(1,Math.max(0,(vh*0.6-top)/len));
+        fill.style.transform='scaleY('+p+')';
+        steps.forEach(function(s){ var n=s.querySelector('.hnode').getBoundingClientRect();
+          s.classList.toggle('on', n.top+n.height/2 <= vh*0.6); });
+      }else{
+        p=Math.min(1,Math.max(0,(vh*0.85-r.top)/(vh*0.5)));
+        fill.style.transform='scaleX('+p+')';
+        steps.forEach(function(s,k){ s.classList.toggle('on', p>=Math.max(0.02,k/4)); });
+      }
+    }
+    function onScroll(){ if(!near||ticking) return; ticking=true; requestAnimationFrame(function(){ticking=false;update();}); }
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ near=es[0].isIntersecting; if(near) update(); },{rootMargin:'200px 0px'}).observe(wrap);
+    }
+    addEventListener('scroll',onScroll,{passive:true});
+    addEventListener('resize',update);
+    if(mq.addEventListener) mq.addEventListener('change',update);
+    update();
+  })();
+  // ==== end PKG-2 ====
+  // ==== PKG-4: insurers + faq ====
+  (function pkg4(){
+    var reduce=matchMedia('(prefers-reduced-motion: reduce)');
+    var EASE='cubic-bezier(0.23,1,0.32,1)';
+    [].forEach.call(document.querySelectorAll('.faq'),function(d){
+      var s=d.querySelector('summary'), b=d.querySelector('.faq-body'), p=b&&b.querySelector('p'), a=null, closing=false;
+      if(!s||!b) return;
+      s.addEventListener('click',function(e){
+        if(reduce.matches||!b.animate) return;           // native snap
+        e.preventDefault();
+        var from=b.getBoundingClientRect().height;        // current height, safe mid-animation
+        if(a) a.cancel();
+        if(d.open && !closing){                          // close: 200ms, faster than open
+          closing=true;
+          a=b.animate([{height:from+'px'},{height:'0px'}],{duration:200,easing:EASE});
+          a.onfinish=function(){ d.open=false; closing=false; a=null; };
+        }else{                                           // open (or reverse a close): 260ms
+          closing=false; d.open=true;
+          var to=b.scrollHeight;
+          a=b.animate([{height:from+'px'},{height:to+'px'}],{duration:260,easing:EASE});
+          if(p&&from===0) p.animate([{opacity:0,transform:'translateY(-4px)'},{opacity:1,transform:'none'}],{duration:200,delay:60,easing:EASE,fill:'backwards'});
+          a.onfinish=function(){ a=null; };
+        }
+      });
+    });
+  })();
+  // ==== end PKG-4 ====
+  // ==== PKG-1: shell ====
+  (function pkg1(){
+    var btn=document.getElementById('menuBtn'), nav=document.getElementById('nav');
+    var hdr=document.querySelector('.hdr');
+
+    // 1. mobile menu (disclosure pattern: focus is not moved into the menu)
+    function setOpen(open){
+      nav.classList.toggle('open',open);
+      btn.setAttribute('aria-expanded',open?'true':'false');
+      btn.setAttribute('aria-label',open?'Close menu':'Open menu');
+    }
+    if(btn&&nav){
+      btn.addEventListener('click',function(){ setOpen(!nav.classList.contains('open')); });
+      nav.addEventListener('click',function(e){ if(e.target.closest&&e.target.closest('a')) setOpen(false); });
+      document.addEventListener('keydown',function(e){
+        if(e.key==='Escape'&&nav.classList.contains('open')){ setOpen(false); btn.focus(); }
+      });
+      document.addEventListener('pointerdown',function(e){
+        if(nav.classList.contains('open')&&!nav.contains(e.target)&&!btn.contains(e.target)) setOpen(false);
+      });
+      var wide=matchMedia('(min-width:881px)');
+      var onWide=function(){ if(wide.matches) setOpen(false); };
+      if(wide.addEventListener) wide.addEventListener('change',onWide); else wide.addListener(onWide);
+    }
+
+    // 2. header shadow after 8px of scroll
+    if(hdr){
+      var ticking=false;
+      var paint=function(){ ticking=false; hdr.classList.toggle('scrolled',(window.pageYOffset||0)>8); };
+      addEventListener('scroll',function(){ if(!ticking){ ticking=true; requestAnimationFrame(paint); } },{passive:true});
+      paint();
+    }
+
+    // 3. scrollspy (instant state, no animation)
+    if('IntersectionObserver' in window){
+      var links=[].slice.call(document.querySelectorAll('.nav a[href^="#"]'));
+      var spy=new IntersectionObserver(function(es){
+        es.forEach(function(e){
+          if(!e.isIntersecting) return;
+          var id=e.target.id, on=/^(how|cover|proof|insurers|faq)$/.test(id);
+          links.forEach(function(a){
+            if(on&&a.getAttribute('href')==='#'+id) a.setAttribute('aria-current','true');
+            else a.removeAttribute('aria-current');
+          });
+        });
+      },{rootMargin:'-45% 0px -50% 0px'});
+      ['top','gap','how','cover','proof','insurers','faq'].forEach(function(id){
+        var el=document.getElementById(id); if(el) spy.observe(el);
+      });
+    }
+  })();
+  // ==== end PKG-1 ====
+  // ==== PKG-3: worked example + video placeholder ====
+  (function pkg3Worked(){
+    // Scroll-driven line: fill is scaleY on the element itself (origin top), no transition, because scroll is the clock.
+    var wx=document.getElementById('wx'), track=document.getElementById('wxTrack'), fill=document.getElementById('wxFill');
+    if(!wx||!track||!fill) return;
+    var items=[].slice.call(wx.querySelectorAll('.wx-list li'));
+    var pins=items.map(function(li){return li.querySelector('.wx-pin');});
+    var reduce=matchMedia('(prefers-reduced-motion: reduce)');
+    var cs=[], len=1, on=[], ticking=false, near=true, last=-1;
+    function measure(){ // layout only: place the line between first and last pin centres
+      var top=wx.getBoundingClientRect().top;
+      cs=pins.map(function(p){var r=p.getBoundingClientRect();return r.top-top+r.height/2;});
+      len=Math.max(1,cs[cs.length-1]-cs[0]);
+      [track,fill].forEach(function(el){el.style.top=cs[0]+'px';el.style.bottom='auto';el.style.height=len+'px';});
+    }
+    function update(){
+      var p, y;
+      if(reduce.matches){ p=1; items.forEach(function(li,k){ if(on[k]!==true){on[k]=true;li.classList.add('on');} }); }
+      else{
+        y=innerHeight*0.6-wx.getBoundingClientRect().top;      // line position in wx coordinates
+        p=Math.min(1,Math.max(0,(y-cs[0])/len));
+        items.forEach(function(li,k){ var s=y>=cs[k]; if(on[k]!==s){on[k]=s;li.classList.toggle('on',s);} });
+      }
+      if(p!==last){ last=p; fill.style.transform='scaleY('+p+')'; }
+    }
+    function onScroll(){ if(!near||ticking||reduce.matches) return; ticking=true; requestAnimationFrame(function(){ticking=false;update();}); }
+    function relayout(){ measure(); last=-1; update(); }
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(es){ near=es[0].isIntersecting; if(near) update(); },{rootMargin:'200px 0px'}).observe(wx);
+    }
+    addEventListener('scroll',onScroll,{passive:true});
+    addEventListener('resize',relayout);
+    addEventListener('load',relayout);
+    if(reduce.addEventListener) reduce.addEventListener('change',relayout);
+    relayout();
+  })();
+
+  (function pkg3Video(){
+    var fig=document.getElementById('video'), btn=document.getElementById('playBtn'), msg=document.getElementById('videoSoon');
+    if(!fig||!btn) return;
+    var scan=fig.querySelector('.video-scan'), anim=null, timer=null;
+    var reduce=matchMedia('(prefers-reduced-motion: reduce)');
+    function sweep(){
+      if(reduce.matches||!scan.animate) return;
+      if(anim) anim.cancel();                      // interruptible: restart cleanly
+      anim=scan.animate([
+        {opacity:0,transform:'translateX(-2%)'},
+        {opacity:1,offset:0.08},
+        {opacity:1,offset:0.92},
+        {opacity:0,transform:'translateX(100%)'}
+      ],{duration:1600,easing:'cubic-bezier(0.77,0,0.175,1)',fill:'none'});
+    }
+    function idle(){ clearTimeout(timer); fig.dataset.state='idle'; msg.textContent=''; btn.setAttribute('aria-label','Play video: how radar checks a flooded field'); }
+    function soon(){
+      fig.dataset.state='soon';
+      msg.textContent='Video coming soon';
+      btn.setAttribute('aria-label','Video coming soon. Press again to close.');
+      sweep();
+      clearTimeout(timer); timer=setTimeout(idle,3600);
+    }
+    btn.addEventListener('click',function(){ fig.dataset.state==='soon'?idle():soon(); });
+    fig.addEventListener('keydown',function(e){ if(e.key==='Escape'&&fig.dataset.state==='soon'){ idle(); btn.focus(); } });
+    // one sweep the first time the player is 40% visible
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){ if(es[0].isIntersecting){ io.disconnect(); setTimeout(sweep,400); } },{threshold:0.4});
+      io.observe(fig);
+    }
+  })();
+  // ==== end PKG-3 ====
+})();
+
+  }
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

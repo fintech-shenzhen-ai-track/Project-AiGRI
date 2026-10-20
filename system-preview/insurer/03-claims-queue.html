@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Claims · Jasindo on AiGRI</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: tighter cells so the 8-column queue fits the 1024px content width; stub rows get the row chevron */
+.qtable th,.qtable td{padding-left:8px;padding-right:8px}
+.qtable .id,.qtable td:nth-child(4),.qtable td:nth-child(7){white-space:nowrap}
+.qtable .pill{padding:0 10px;gap:6px}
+.qtable .pill::before{width:6px;height:6px}
+.qtable td{height:60px;line-height:1.35}
+.qtable tr[data-stub]{cursor:pointer}
+.qtable tr[data-stub] td:last-child{position:relative;padding-right:40px}
+.qtable tr[data-stub] td:last-child::after{content:"";position:absolute;right:12px;top:50%;width:20px;height:20px;margin-top:-10px;background:var(--muted-2);clip-path:polygon(34% 28.5%,41% 21.5%,69.6% 50%,41% 78.5%,34% 71.5%,55.4% 50%)}
+.qtable tr[data-href] td:last-child{padding-right:40px}
+.qtable td[colspan]{height:48px}
+.qtable td[colspan]::after{display:none!important}
+</style>
+</head>
+<body data-portal="insurer" data-page="claims">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="01-dashboard.html" aria-label="Jasindo on AiGRI, dashboard">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Asuransi Jasindo</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="dashboard" href="01-dashboard.html"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Dashboard</a>
+      <a class="nav-item" data-nav="products" href="02-publish-policy.html"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg>Products</a>
+      <a class="nav-item" data-nav="underwriting" href="#" data-stub="The underwriting queue is not part of this prototype."><svg class="i" aria-hidden="true"><use href="#i-shield-check"/></svg>Underwriting<span class="nav-badge">4</span></a>
+      <a class="nav-item" data-nav="claims" href="03-claims-queue.html" aria-current="page"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Claims<span class="nav-badge">41</span></a>
+      <a class="nav-item" data-nav="portfolio" href="05-portfolio.html"><svg class="i" aria-hidden="true"><use href="#i-layers"/></svg>Portfolio</a>
+      <a class="nav-item" data-nav="wallet" href="06-payouts.html"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet &amp; payouts</a>
+    </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span>
+      <div class="me"><span class="avatar">DP</span><span class="me-text"><span class="me-name">Dimas Prasetyo</span><span class="me-meta">Claims adjuster · Jasindo</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><span aria-current="page">Claims</span></nav>
+      <div class="topbar-actions">
+        <span class="meta only-desktop" style="margin-right:8px">Tuesday 24 Feb 2026, 08:35 WIB</span>
+        <input class="input" type="search" placeholder="Search claims, clients, policies" aria-label="Search claims, clients, policies">
+        <a class="icon-btn" href="#" data-stub="Notifications open here." aria-label="Notifications"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg></a>
+        <span class="avatar" aria-hidden="true">DP</span>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+
+      <div class="page-head">
+        <p class="eyebrow rv">Claims</p>
+        <h1 class="title rv" style="--i:1">Claims</h1>
+        <p class="lead rv" style="--i:2">Pre-checked by AiGRI for completeness. You decide every claim.</p>
+        <div class="page-actions rv" style="--i:3"><button class="btn btn-soft" type="button" data-stub="The CSV export is not part of this prototype."><svg class="i i-sm" aria-hidden="true"><use href="#i-download"/></svg>Export CSV</button></div>
+      </div>
+
+      <div class="tabs rv" data-tabs role="tablist" aria-label="Claim filters">
+        <button class="tab-btn" role="tab" id="t1" aria-controls="p1" aria-selected="true" type="button">All<span class="nav-badge">59</span></button>
+        <button class="tab-btn" role="tab" id="t2" aria-controls="p2" aria-selected="false" type="button">Open<span class="nav-badge">41</span></button>
+        <button class="tab-btn" role="tab" id="t3" aria-controls="p3" aria-selected="false" type="button">Due in 48 h<span class="nav-badge is-need">3</span></button>
+        <button class="tab-btn" role="tab" id="t4" aria-controls="p4" aria-selected="false" type="button">Info requested<span class="nav-badge is-need">5</span></button>
+        <button class="tab-btn" role="tab" id="t5" aria-controls="p5" aria-selected="false" type="button">Decided<span class="nav-badge">18</span></button>
+        <span class="tabs-ink" aria-hidden="true"></span>
+      </div>
+
+      <div class="table-tools" style="margin-top:20px">
+        <div class="wrap-row" data-select-group aria-label="Event filter"><button class="chip is-sel" type="button" aria-pressed="true">Central Java floods, Feb 2026</button></div>
+        <div class="wrap-row" data-select-group data-multi aria-label="Asset filter"><button class="chip" type="button" aria-pressed="false">Rice</button><button class="chip" type="button" aria-pressed="false">Cattle</button></div>
+        <div class="field" style="flex:1;max-width:320px;margin-left:auto"><input class="input" style="height:44px" type="search" placeholder="Search by claim, client or parcel" aria-label="Search by claim, client or parcel"></div>
+      </div>
+
+      <div class="tab-panel" id="p1" role="tabpanel" aria-labelledby="t1">
+        <div class="table-wrap"><table class="table qtable"><thead><tr><th>Claim</th><th>Client</th><th>Asset</th><th>Filed</th><th>Status</th><th>Pre-check</th><th class="r">Proposed</th><th>SLA</th></tr></thead><tbody><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000409</td><td>UD Sumber Pangan Kudus</td><td>Rice · 3 parcels · 22,4 ha</td><td>13 Feb</td><td><span class="pill pill-pending">Under review</span></td><td><span class="pill pill-info">Complete</span></td><td class="num">Rp74.880.000</td><td>25 Feb 2026 <span class="pill pill-need" style="margin-left:6px">Due in 1 day</span></td></tr><tr class="is-sel" data-href="04-claim-review.html"><td class="id">CLM-26-000418</td><td>CV Tani Makmur Demak</td><td>Rice · 5 parcels · 40,5 ha</td><td>16 Feb</td><td><span class="pill pill-pending">Under review</span></td><td><span class="pill pill-need">1 note</span></td><td class="num">Rp190.400.000</td><td>6 Mar 2026</td></tr><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000425</td><td>Bapak Joko Susilo</td><td>Rice · 1,5 ha (AUTP)</td><td>17 Feb</td><td><span class="pill pill-info">Pre-checked</span></td><td><span class="pill pill-info">Complete</span></td><td class="num">Rp9.000.000</td><td>2 Mar 2026</td></tr><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000427</td><td>Bapak Hadi Purnomo</td><td>Rice · 2,0 ha (AUTP)</td><td>23 Feb</td><td><span class="pill pill-pending">Submitted</span></td><td><span class="pill pill-pending">Running</span></td><td class="num">—</td><td>—</td></tr><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000429</td><td>Bapak Ahmad Fauzi</td><td>Cattle · 2 head (AUTS/K)</td><td>18 Feb</td><td><span class="pill pill-info">Pre-checked</span></td><td><span class="pill pill-info">Complete</span></td><td class="num">Rp20.000.000</td><td>3 Mar 2026</td></tr><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000431</td><td>Pak Slamet Santoso</td><td>Cattle · 2 head (AUTS/K)</td><td>18 Feb</td><td><span class="pill pill-need">Info requested</span></td><td><span class="pill pill-need">Tag unreadable</span></td><td class="num">Rp20.000.000</td><td>Paused, waiting for client since 23 Feb</td></tr><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000436</td><td>Pak Slamet Santoso</td><td>Rice · 1,2 ha (AUTP)</td><td>22 Feb</td><td><span class="pill pill-info">Pre-checked</span></td><td><span class="pill pill-info">Complete</span></td><td class="num">Rp7.200.000</td><td>8 Mar 2026</td></tr><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000422</td><td>Ibu Siti Aminah</td><td>Rice · 0,8 ha (AUTP)</td><td>10 Feb</td><td><span class="pill pill-ok">Paid</span></td><td><span class="pill pill-info">Complete</span></td><td class="num">Rp4.800.000</td><td>Paid 23 Feb 2026</td></tr><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000433</td><td>Ibu Ratna Dewi</td><td>Rice · 1,0 ha (AUTP)</td><td>23 Feb</td><td><span class="pill pill-denied">Denied</span></td><td><span class="pill pill-info">Complete</span></td><td class="num">—</td><td>Notice filed on day 9 (Clause 8.1)</td></tr></tbody></table></div>
+        <p class="meta" style="margin-top:16px">Showing 9 of 59 · Tenant: Asuransi Jasindo. You see only your own policyholders.</p>
+      </div>
+      <div class="tab-panel" id="p2" role="tabpanel" aria-labelledby="t2" hidden>
+        <div class="table-wrap"><table class="table qtable"><thead><tr><th>Claim</th><th>Client</th><th>Asset</th><th>Filed</th><th>Status</th><th>Pre-check</th><th class="r">Proposed</th><th>SLA</th></tr></thead><tbody><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000409</td><td>UD Sumber Pangan Kudus</td><td>Rice · 3 parcels · 22,4 ha</td><td>13 Feb</td><td><span class="pill pill-pending">Under review</span></td><td><span class="pill pill-info">Complete</span></td><td class="num">Rp74.880.000</td><td>25 Feb 2026 <span class="pill pill-need" style="margin-left:6px">Due in 1 day</span></td></tr><tr class="is-sel" data-href="04-claim-review.html"><td class="id">CLM-26-000418</td><td>CV Tani Makmur Demak</td><td>Rice · 5 parcels · 40,5 ha</td><td>16 Feb</td><td><span class="pill pill-pending">Under review</span></td><td><span class="pill pill-need">1 note</span></td><td class="num">Rp190.400.000</td><td>6 Mar 2026</td></tr><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000425</td><td>Bapak Joko Susilo</td><td>Rice · 1,5 ha (AUTP)</td><td>17 Feb</td><td><span class="pill pill-info">Pre-checked</span></td><td><span class="pill pill-info">Complete</span></td><td class="num">Rp9.000.000</td><td>2 Mar 2026</td></tr><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000427</td><td>Bapak Hadi Purnomo</td><td>Rice · 2,0 ha (AUTP)</td><td>23 Feb</td><td><span class="pill pill-pending">Submitted</span></td><td><span class="pill pill-pending">Running</span></td><td class="num">—</td><td>—</td></tr><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000429</td><td>Bapak Ahmad Fauzi</td><td>Cattle · 2 head (AUTS/K)</td><td>18 Feb</td><td><span class="pill pill-info">Pre-checked</span></td><td><span class="pill pill-info">Complete</span></td><td class="num">Rp20.000.000</td><td>3 Mar 2026</td></tr><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000431</td><td>Pak Slamet Santoso</td><td>Cattle · 2 head (AUTS/K)</td><td>18 Feb</td><td><span class="pill pill-need">Info requested</span></td><td><span class="pill pill-need">Tag unreadable</span></td><td class="num">Rp20.000.000</td><td>Paused, waiting for client since 23 Feb</td></tr><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000436</td><td>Pak Slamet Santoso</td><td>Rice · 1,2 ha (AUTP)</td><td>22 Feb</td><td><span class="pill pill-info">Pre-checked</span></td><td><span class="pill pill-info">Complete</span></td><td class="num">Rp7.200.000</td><td>8 Mar 2026</td></tr></tbody></table></div>
+        <p class="meta" style="margin-top:16px">Showing 7 of 41 open claims · Tenant: Asuransi Jasindo.</p>
+      </div>
+      <div class="tab-panel" id="p3" role="tabpanel" aria-labelledby="t3" hidden>
+        <div class="table-wrap"><table class="table qtable"><thead><tr><th>Claim</th><th>Client</th><th>Asset</th><th>Filed</th><th>Status</th><th>Pre-check</th><th class="r">Proposed</th><th>SLA</th></tr></thead><tbody><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000409</td><td>UD Sumber Pangan Kudus</td><td>Rice · 3 parcels · 22,4 ha</td><td>13 Feb</td><td><span class="pill pill-pending">Under review</span></td><td><span class="pill pill-info">Complete</span></td><td class="num">Rp74.880.000</td><td>25 Feb 2026 <span class="pill pill-need" style="margin-left:6px">Due in 1 day</span></td></tr><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000412</td><td>Bapak Suparno</td><td>Rice · 1,0 ha</td><td>11 Feb</td><td><span class="pill pill-info">Pre-checked</span></td><td><span class="pill pill-info">Complete</span></td><td class="num">—</td><td>25 Feb 2026 <span class="pill pill-need" style="margin-left:6px">Due in 1 day</span></td></tr><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000414</td><td>Ibu Sulastri</td><td>Rice · 0,9 ha</td><td>12 Feb</td><td><span class="pill pill-info">Pre-checked</span></td><td><span class="pill pill-info">Complete</span></td><td class="num">—</td><td>26 Feb 2026 <span class="pill pill-need" style="margin-left:6px">Due in 2 days</span></td></tr></tbody></table></div>
+        <p class="meta" style="margin-top:16px">Showing 3 of 3 · These reach their 14-day settlement window within 48 hours.</p>
+      </div>
+      <div class="tab-panel" id="p4" role="tabpanel" aria-labelledby="t4" hidden>
+        <div class="table-wrap"><table class="table qtable"><thead><tr><th>Claim</th><th>Client</th><th>Asset</th><th>Filed</th><th>Status</th><th>Pre-check</th><th class="r">Proposed</th><th>SLA</th></tr></thead><tbody><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000431</td><td>Pak Slamet Santoso</td><td>Cattle · 2 head (AUTS/K)</td><td>18 Feb</td><td><span class="pill pill-need">Info requested</span></td><td><span class="pill pill-need">Tag unreadable</span></td><td class="num">Rp20.000.000</td><td>Paused, waiting for client since 23 Feb</td></tr><tr><td colspan="8" class="meta">+4 more claims waiting for the client</td></tr></tbody></table></div>
+        <p class="meta" style="margin-top:16px">Showing 1 of 5 · Paused claims do not count against the settlement window.</p>
+      </div>
+      <div class="tab-panel" id="p5" role="tabpanel" aria-labelledby="t5" hidden>
+        <div class="table-wrap"><table class="table qtable"><thead><tr><th>Claim</th><th>Client</th><th>Asset</th><th>Filed</th><th>Status</th><th>Pre-check</th><th class="r">Proposed</th><th>SLA</th></tr></thead><tbody><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000422</td><td>Ibu Siti Aminah</td><td>Rice · 0,8 ha (AUTP)</td><td>10 Feb</td><td><span class="pill pill-ok">Paid</span></td><td><span class="pill pill-info">Complete</span></td><td class="num">Rp4.800.000</td><td>Paid 23 Feb 2026</td></tr><tr data-stub="Only CLM-26-000418 is built in this prototype." tabindex="0"><td class="id">CLM-26-000433</td><td>Ibu Ratna Dewi</td><td>Rice · 1,0 ha (AUTP)</td><td>23 Feb</td><td><span class="pill pill-denied">Denied</span></td><td><span class="pill pill-info">Complete</span></td><td class="num">—</td><td>Notice filed on day 9 (Clause 8.1)</td></tr><tr><td colspan="8" class="meta">+16 more decided claims</td></tr></tbody></table></div>
+        <p class="meta" style="margin-top:16px">Showing 2 of 18 · Tenant: Asuransi Jasindo.</p>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="../shared/system.js"></script>
+<script>(function(){
+  /* Enter on a stub row behaves like a click, as it does for rows with data-href */
+  document.addEventListener('keydown',function(e){
+    var r=e.target&&e.target.closest&&e.target.closest('tr[data-stub]');
+    if(r&&e.key==='Enter'&&e.target===r){r.click();}
+  });
+})();</script>
+</body>
+</html>

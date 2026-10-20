@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aigri.local/schemas/damage-assessment.schema.json",
+  "title": "Damage Assessment",
+  "description": "Evidence of loss for one Insurable Asset in one Loss Event. Immutable and hashed. Evidence for the Adjuster, never a decision: no field here closes a Claim.",
+  "oneOf": [
+    { "$ref": "#/$defs/crop" },
+    { "$ref": "#/$defs/livestock" }
+  ],
+  "$defs": {
+    "common": {
+      "type": "object",
+      "required": ["loss_event_id", "confidence", "confidence_reasons", "sources", "pipeline_version", "source_mode", "status", "created_at"],
+      "properties": {
+        "loss_event_id": { "type": "string" },
+        "confidence": { "enum": ["high", "medium", "low"] },
+        "confidence_reasons": { "type": "array", "items": { "type": "string" } },
+        "sources": { "type": "array", "items": { "type": "string" }, "examples": [["S1 RTC 2026-02-02", "S1 RTC 2026-02-08", "S2 L2A 2026-02-15", "GFM 2026-02-08"]] },
+        "pipeline_version": { "type": "string" },
+        "source_mode": { "enum": ["pipeline", "fixture"], "description": "fixture for synthetic demo events (decision D-05)." },
+        "status": { "enum": ["detected", "not_detected", "partial_data"], "description": "not_detected never closes a Claim." },
+        "created_at": { "type": "string", "format": "date-time" }
+      }
+    },
+    "crop": {
+      "allOf": [{ "$ref": "#/$defs/common" }],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["asset_type", "parcel_id", "flooded_pct", "flood_duration_days", "ndvi", "assessed_loss"],
+      "properties": {
+        "asset_type": { "const": "parcel" },
+        "parcel_id": { "type": "string" },
+        "parcel_code": { "type": "string" },
+        "loss_event_id": true, "confidence": true, "confidence_reasons": true, "sources": true, "pipeline_version": true, "source_mode": true, "status": true, "created_at": true,
+        "flooded_pct": {
+          "type": "object", "additionalProperties": false,
+          "description": "Per source, kept separate (decision D-08). null = source not available for this parcel.",
+          "required": ["aigri_s1"],
+          "properties": {
+            "aigri_s1": { "type": ["integer", "null"], "minimum": 0, "maximum": 100 },
+            "gfm": { "type": ["integer", "null"], "minimum": 0, "maximum": 100 },
+            "philsa": { "type": ["integer", "null"], "minimum": 0, "maximum": 100 },
+            "unosat": { "type": ["integer", "null"], "minimum": 0, "maximum": 100 },
+            "national": { "type": ["integer", "null"], "minimum": 0, "maximum": 100, "description": "BRIN or BNPB map when published (ID pack)." }
+          }
+        },
+        "possible_flooded_vegetation": { "type": "boolean", "description": "VV rise over crop flagged, never counted as dry." },
+        "flood_duration_days": {
+          "type": ["object", "null"], "additionalProperties": false,
+          "required": ["min", "max"],
+          "properties": { "min": { "type": "integer", "minimum": 0 }, "max": { "type": "integer", "minimum": 0 } }
+        },
+        "ndvi": {
+          "type": "object", "additionalProperties": false,
+          "required": ["before", "after", "drop", "valid_share"],
+          "properties": {
+            "before": { "type": ["number", "null"] },
+            "after": { "type": ["number", "null"] },
+            "drop": { "type": ["number", "null"] },
+            "change_pct": { "type": ["integer", "null"], "description": "Relative change, for the client label 'Crop change'." },
+            "valid_share": { "type": ["number", "null"], "minimum": 0, "maximum": 1 }
+          }
+        },
+        "pixel_count": { "type": "integer", "minimum": 0 },
+        "cross_check": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["source", "ours", "theirs", "agrees"],
+            "properties": { "source": { "type": "string" }, "ours": { "type": ["integer", "null"] }, "theirs": { "type": ["integer", "null"] }, "agrees": { "type": "boolean" } }
+          }
+        },
+        "assessed_loss": {
+          "type": "object", "additionalProperties": false,
+          "required": ["pct", "method", "table_version"],
+          "properties": {
+            "pct": { "type": "integer", "minimum": 0, "maximum": 100 },
+            "method": { "enum": ["vulnerability_x_flooded_share", "ndvi_floor", "fixture"] },
+            "table_version": { "type": "string" }
+          }
+        }
+      }
+    },
+    "livestock": {
+      "allOf": [{ "$ref": "#/$defs/common" }],
+      "type": "object",
+      "unevaluatedProperties": false,
+      "required": ["asset_type", "livestock_group_id", "animals"],
+      "properties": {
+        "asset_type": { "const": "livestock_group" },
+        "livestock_group_id": { "type": "string" },
+        "loss_event_id": true, "confidence": true, "confidence_reasons": true, "sources": true, "pipeline_version": true, "source_mode": true, "status": true, "created_at": true,
+        "animals": {
+          "type": "array",
+          "items": {
+            "type": "object", "additionalProperties": false,
+            "required": ["tag_no", "checks", "matched"],
+            "properties": {
+              "tag_no": { "type": "string" },
+              "ear_tag_id": { "type": ["string", "null"] },
+              "batch_dead_count": { "type": "integer", "minimum": 0 },
+              "photo_file_ids": { "type": "array", "items": { "type": "string" } },
+              "checks": {
+                "type": "object", "additionalProperties": false,
+                "properties": {
+                  "tag_visible": { "enum": ["pass", "fail", "unreadable"] },
+                  "tag_on_policy": { "enum": ["pass", "fail"] },
+                  "duplicate_tag": { "enum": ["pass", "fail"] },
+                  "poultry_count": { "enum": ["pass", "fail", "n/a"] },
+                  "photo_reuse": { "enum": ["pass", "fail"] },
+                  "location_time": { "enum": ["pass", "fail"] },
+                  "vet_certificate": { "enum": ["attached", "missing"] }
+                }
+              },
+              "matched": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

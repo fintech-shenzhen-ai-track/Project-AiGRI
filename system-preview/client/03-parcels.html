@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFFFFF">
+<title>Parcels · AiGRI</title>
+<link rel="stylesheet" href="../shared/system.css">
+<style>
+/* local: map parcel styling (system.css has the map shell and labels only) */
+.pc{fill:var(--parcel);stroke:#fff;stroke-width:2;cursor:pointer}
+.pc.risk{fill:var(--parcel-risk)}
+.ol{fill:none;stroke:var(--ink);stroke-width:4;stroke-linejoin:round;opacity:0;pointer-events:none;transition:opacity 200ms ease}
+.pg.is-sel .ol{opacity:1}
+.map-svg text.map-label.mid{font-size:22px;fill:#fff;stroke:rgba(31,42,27,.6);stroke-width:4px}
+.lbl-sc{transform-box:fill-box;transform-origin:50% 100%}
+.lbl-in{transform-box:fill-box;transform-origin:50% 100%;animation:lblpop 240ms var(--ease-out) both}
+@keyframes lblpop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
+@media (max-width:600px){.lbl-sc{transform:scale(1.55)}.map-svg text.map-label{font-size:24px}.map-svg text.map-label.mid{font-size:26px}}
+@media (prefers-reduced-motion:reduce){.lbl-in{animation:none}}
+/* local: c03 map height, inputs on cards, mobile sheet replaces the inline details card */
+.map-c3{height:560px}
+.card .input,.card .select,.card .textarea,.sheet .input,.sheet .select{background:var(--surface-2)}
+.card .input,.card .select{background:var(--white)}
+.pd-grid{gap:20px 24px}
+.card .affix{background:var(--white)}
+.card .affix .input{background:transparent}
+.parcel-tile:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+@media (max-width:600px){ .map-c3{height:320px} .js .pd-inline{display:none} .map-c3 .map-ctrl{left:12px;right:auto;flex-direction:row} }
+</style>
+</head>
+<body data-portal="client" data-page="farm">
+<a class="skip" href="#main">Skip to content</a>
+<div class="shell">
+  <aside class="side" aria-label="Main navigation"><div class="side-inner">
+    <a class="side-logo" href="09-home.html" aria-label="AiGRI home">
+<svg viewBox="0 0 756 256" height="41" aria-hidden="true" focusable="false">
+<path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/>
+<rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/>
+<rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/>
+<circle fill="#FFCB3D" cx="196" cy="58" r="46"/>
+<g transform="translate(304 0)">
+<path fill="#1F2A1B" fill-rule="evenodd" d="M15.85 188 L48 68 H72 L104.15 188 H81.37 L73.87 160 H46.13 L38.63 188 Z M60 108.3 L68.5 140 H51.5 Z"/>
+<rect fill="#1F2A1B" x="130" y="116" width="22" height="72"/>
+<path fill="#557945" d="M124.27 85 A17 17 0 1 1 157.73 85 Z"/>
+<path fill="#557945" d="M155.4 91 A17 17 0 0 1 126.6 91 Z"/>
+<path fill="#1F2A1B" d="M272.5 88.1 A62 62 0 1 0 287 128 L265 128 A40 40 0 1 1 255.6 102.3 Z"/>
+<rect fill="#1F2A1B" x="243" y="117" width="44" height="22"/>
+<path fill="#1F2A1B" fill-rule="evenodd" d="M309 68 H357.5 A37.5 37.5 0 0 1 357.5 143 H331 V188 H309 Z M331 90 H357.5 A15.5 15.5 0 0 1 357.5 121 H331 Z"/>
+<path fill="#1F2A1B" d="M348 143 H372 L397.98 188 H373.98 Z"/>
+<rect fill="#1F2A1B" x="419" y="68" width="22" height="120"/>
+</g></svg></a>
+    <p class="side-portal">Client</p>
+    <nav class="side-nav" aria-label="Sections">
+      <a class="nav-item" data-nav="home" href="09-home.html"><svg class="i" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+      <a class="nav-item" data-nav="farm" href="03-parcels.html"><svg class="i" aria-hidden="true"><use href="#i-farm"/></svg>My farm</a>
+      <a class="nav-item" data-nav="risk" href="05-risk.html"><svg class="i" aria-hidden="true"><use href="#i-chart"/></svg>Risk</a>
+      <a class="nav-item" data-nav="cover" href="06-policies.html"><svg class="i" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+      <a class="nav-item" data-nav="claims" href="12-claim-status.html"><svg class="i" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+      <a class="nav-item" data-nav="wallet" href="13-wallet.html"><svg class="i" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+      <a class="nav-item" data-nav="alerts" href="10-alert.html"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg>Alerts<span class="nav-badge is-need">1</span></a>
+    </nav>
+    <div class="side-foot">
+      <span class="country"><svg class="i i-sm" aria-hidden="true"><use href="#i-globe"/></svg>Indonesia · IDR</span>
+      <div class="me"><span class="avatar">SW</span><span class="me-text"><span class="me-name">Ibu Sri Wahyuni</span><span class="me-meta">CV Tani Makmur Demak</span></span></div>
+    </div>
+  </div></aside>
+  <div class="main">
+    <header class="mbar">
+      <a class="logo-link" href="09-home.html" aria-label="AiGRI home"><svg viewBox="0 0 256 256" aria-hidden="true" focusable="false"><path fill="#557945" d="M72 76 H134.6 A64 64 0 0 0 180.1 120 H72 A16 16 0 0 1 56 104 V92 A16 16 0 0 1 72 76 Z"/><rect fill="#557945" x="36" y="136" width="204" height="44" rx="16"/><rect fill="#557945" x="16" y="196" width="224" height="44" rx="16"/><circle fill="#FFCB3D" cx="196" cy="58" r="46"/></svg></a>
+      <span class="mbar-title">Your parcels</span>
+      <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+    </header>
+    <header class="topbar">
+      <nav class="crumbs" aria-label="Breadcrumb"><span aria-current="page">My farm</span></nav>
+      <div class="topbar-actions">
+        <a class="icon-btn" href="10-alert.html" aria-label="Alerts, 1 new"><svg class="i" aria-hidden="true"><use href="#i-bell"/></svg><span class="dot"></span></a>
+        <span class="avatar" aria-hidden="true">SW</span>
+      </div>
+    </header>
+
+    <main id="main" class="page">
+      <div class="page-head">
+        <p class="eyebrow rv">My farm</p>
+        <h1 class="title rv" style="--i:1">Your parcels</h1>
+        <p class="lead rv" style="--i:2">6 parcels, 48,0 ha of irrigated rice in Demak. Draw each parcel on the map so we can watch it from space.</p>
+        <div class="page-actions rv" style="--i:3">
+          <button class="btn btn-soft" type="button" data-toast="Click the map to place corners. Double-click to finish." data-tone="info"><svg class="i i-sm" aria-hidden="true"><use href="#i-plus"/></svg>Draw a parcel</button>
+          <a class="btn btn-y" href="05-risk.html">See my risk</a>
+        </div>
+      </div>
+
+      <div class="tabs" data-tabs role="tablist" aria-label="Farm inventory">
+        <button class="tab-btn" role="tab" id="tb-parcels" aria-controls="pn-parcels" aria-selected="true" type="button">Parcels<span class="nav-badge">6</span></button>
+        <button class="tab-btn" role="tab" id="tb-stock" aria-controls="pn-stock" aria-selected="false" type="button">Livestock<span class="nav-badge">0</span></button>
+        <span class="tabs-ink" aria-hidden="true"></span>
+      </div>
+
+      <div class="tab-panel" id="pn-parcels" role="tabpanel" aria-labelledby="tb-parcels" style="margin-top:24px">
+        <div class="split rv">
+          <div>
+            <div class="map map-c3">
+              <svg class="map-svg" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Schematic map of Demak with six parcels. DMK-01 is selected."><rect width="800" height="520" fill="#EEF2EA"/><path d="M0 0H800V62C700 92 600 52 500 78S250 92 0 62Z" fill="#CFE0EC"/><path d="M640 520C650 440 600 400 560 340S470 200 470 76" fill="none" stroke="#CFE0EC" stroke-width="22" stroke-linecap="round"/><path d="M300 520C300 440 330 340 380 290S440 250 466 200" fill="none" stroke="#CFE0EC" stroke-width="14" stroke-linecap="round"/><path d="M0 330H800M330 90V520" stroke="#fff" stroke-width="4" fill="none"/><g class="pg is-sel" data-id="DMK-01"><polygon class="pc" points="520,140 590,128 612,180 560,206 516,180"/><polygon class="ol" points="520,140 590,128 612,180 560,206 516,180"/></g><g class="pg" data-id="DMK-02"><polygon class="pc" points="530,214 596,212 606,268 548,290 520,252"/><polygon class="ol" points="530,214 596,212 606,268 548,290 520,252"/></g><g class="pg" data-id="DMK-03"><polygon class="pc" points="588,302 648,294 666,348 618,374 582,342"/><polygon class="ol" points="588,302 648,294 666,348 618,374 582,342"/></g><g class="pg" data-id="DMK-04"><polygon class="pc" points="570,400 640,396 650,452 590,470 560,440"/><polygon class="ol" points="570,400 640,396 650,452 590,470 560,440"/></g><g class="pg" data-id="DMK-05"><polygon class="pc" points="190,380 250,372 266,420 214,444 180,418"/><polygon class="ol" points="190,380 250,372 266,420 214,444 180,418"/></g><g class="pg" data-id="DMK-06"><polygon class="pc" points="200,175 262,168 280,218 228,240 190,214"/><polygon class="ol" points="200,175 262,168 280,218 228,240 190,214"/></g><text class="map-label" x="296" y="366">Demak</text><text class="map-label" x="452" y="196" text-anchor="end">Karanganyar</text><text class="map-label" x="596" y="288">Gajah</text><text class="map-label" x="552" y="432" text-anchor="end">Dempet</text><text class="map-label" x="150" y="476">Wonosalam</text><text class="map-label" x="196" y="156">Mijen</text><g id="selLabel" class="sel-label" transform="translate(440 82)"><g class="lbl-sc"><g class="lbl-in"><rect width="172" height="34" rx="17" fill="#1F2A1B"/><text x="86" y="23" text-anchor="middle" fill="#fff" font-size="18" font-weight="600" font-family="inherit">DMK-01 · 9,6 ha</text></g></g></g></svg>
+              <div class="map-ctrl"><button class="icon-btn" type="button" aria-label="Zoom in"><svg class="i" aria-hidden="true"><use href="#i-plus"/></svg></button><button class="icon-btn" type="button" aria-label="Zoom out"><svg class="i" aria-hidden="true"><use href="#i-minus"/></svg></button><button class="icon-btn" type="button" aria-label="Layers"><svg class="i" aria-hidden="true"><use href="#i-layers"/></svg></button></div>
+            </div>
+            <div class="legend" style="margin-top:12px"><span><i class="swatch" style="--c:var(--parcel)"></i>Your parcel</span><span><i class="swatch" style="--c:var(--ink)"></i>Selected</span><span><i class="swatch" style="--c:var(--map-water)"></i>River</span></div>
+            <p class="meta" style="margin-top:4px">Schematic map. Not to scale.</p>
+          </div>
+          <div class="stack-sm" id="tiles">
+          <div class="parcel-tile is-sel" role="button" tabindex="0" data-id="DMK-01" aria-pressed="true"><span class="parcel-thumb"><svg viewBox="0 0 44 44" aria-hidden="true"><polygon points="6.4,9.3 31.2,5.0 39.0,23.4 20.6,32.6 5.0,23.4" fill="#5D9253"/></svg></span><span class="grow"><span class="h-card" style="display:block">DMK-01</span><span class="meta" style="display:block">Karanganyar Utara · 9,6 ha</span></span><span class="pill pill-pending">Not insured yet</span></div>
+          <div class="parcel-tile" role="button" tabindex="0" data-id="DMK-02" aria-pressed="false"><span class="parcel-thumb"><svg viewBox="0 0 44 44" aria-hidden="true"><polygon points="9.0,5.8 35.0,5.0 39.0,27.1 16.1,35.8 5.0,20.8" fill="#5D9253"/></svg></span><span class="grow"><span class="h-card" style="display:block">DMK-02</span><span class="meta" style="display:block">Karanganyar Selatan · 8,4 ha</span></span><span class="pill pill-pending">Not insured yet</span></div>
+          <div class="parcel-tile" role="button" tabindex="0" data-id="DMK-03" aria-pressed="false"><span class="parcel-thumb"><svg viewBox="0 0 44 44" aria-hidden="true"><polygon points="7.4,8.2 31.7,5.0 39.0,26.9 19.6,37.4 5.0,24.4" fill="#5D9253"/></svg></span><span class="grow"><span class="h-card" style="display:block">DMK-03</span><span class="meta" style="display:block">Gajah Timur · 7,2 ha</span></span><span class="pill pill-pending">Not insured yet</span></div>
+          <div class="parcel-tile" role="button" tabindex="0" data-id="DMK-04" aria-pressed="false"><span class="parcel-thumb"><svg viewBox="0 0 44 44" aria-hidden="true"><polygon points="8.8,6.5 35.2,5.0 39.0,26.2 16.3,33.0 5.0,21.6" fill="#5D9253"/></svg></span><span class="grow"><span class="h-card" style="display:block">DMK-04</span><span class="meta" style="display:block">Dempet Barat · 8,8 ha</span></span><span class="pill pill-pending">Not insured yet</span></div>
+          <div class="parcel-tile" role="button" tabindex="0" data-id="DMK-05" aria-pressed="false"><span class="parcel-thumb"><svg viewBox="0 0 44 44" aria-hidden="true"><polygon points="9.0,8.2 32.7,5.0 39.0,24.0 18.4,33.5 5.0,23.2" fill="#5D9253"/></svg></span><span class="grow"><span class="h-card" style="display:block">DMK-05</span><span class="meta" style="display:block">Wonosalam · 6,5 ha</span></span><span class="pill pill-pending">Not insured yet</span></div>
+          <div class="parcel-tile" role="button" tabindex="0" data-id="DMK-06" aria-pressed="false"><span class="parcel-thumb"><svg viewBox="0 0 44 44" aria-hidden="true"><polygon points="8.8,7.6 32.2,5.0 39.0,23.9 19.4,32.2 5.0,22.4" fill="#5D9253"/></svg></span><span class="grow"><span class="h-card" style="display:block">DMK-06</span><span class="meta" style="display:block">Mijen Hilir · 7,5 ha</span></span><span class="pill pill-pending">Not insured yet</span></div>
+          </div>
+        </div>
+
+        <div class="card card-lg pd-inline" style="margin-top:24px">
+          <div class="row-between" style="margin-bottom:20px"><h2 class="h-section" data-f="title">Parcel details · DMK-01</h2></div>
+          <div class="grid-3 pd-grid">
+            <div class="field"><label class="field-label" for="i-name">Name</label><input class="input" id="i-name" data-f="name" value="Karanganyar Utara"></div>
+            <div class="field"><label class="field-label" for="i-crop">Crop</label><div class="select-wrap"><select class="select" id="i-crop" data-f="crop"><option selected>Rice</option></select></div></div>
+            <div class="field"><label class="field-label" for="i-var">Variety</label><div class="select-wrap"><select class="select" id="i-var" data-f="variety"><option selected>Inpari 32</option><option>Inpari 42</option><option>Ciherang</option><option>Mekongga</option></select></div></div>
+            <div class="field"><label class="field-label" for="i-date">Planting date</label><input class="input" id="i-date" data-f="date" value="2 Dec 2025" inputmode="numeric"></div>
+            <div class="field"><label class="field-label" for="i-area">Area</label><div class="affix"><input class="input" id="i-area" data-f="area" value="9,6" inputmode="decimal"><span class="affix-suf">ha</span></div><span class="field-hint">Measured from the boundary you drew</span></div>
+            <div class="field"><label class="field-label" for="i-irr">Irrigation</label><div class="select-wrap"><select class="select" id="i-irr" data-f="irr"><option selected>Technical irrigation</option><option>Rain-fed</option></select></div></div>
+            <div class="field"><label class="field-label" for="i-kec">Kecamatan</label><input class="input" id="i-kec" data-f="kec" value="Karanganyar"></div>
+          </div>
+          <div class="wrap-row" style="margin-top:24px"><button class="btn btn-ink" type="button" data-save data-toast="DMK-01 saved." data-tone="ok">Save parcel</button><button class="btn btn-danger" type="button" data-stub="Removing a parcel is not part of this prototype.">Remove</button></div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="pn-stock" role="tabpanel" aria-labelledby="tb-stock" style="margin-top:24px" hidden>
+        <div class="card"><div class="empty"><span class="empty-icon"><svg class="i i-lg" aria-hidden="true"><use href="#i-cow"/></svg></span><h2 class="h-card">No livestock yet</h2><p class="small">Add cattle, goats or poultry. Every animal gets an ear tag photo when you register it.</p><button class="btn btn-soft" type="button" data-stub="Livestock registration is on Pak Slamet's screen in this prototype.">Add livestock</button></div></div>
+      </div>
+    </main>
+  </div>
+</div>
+<nav class="tabbar" aria-label="Main">
+  <a class="tab" data-nav="home alerts" href="09-home.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-home"/></svg>Home</a>
+  <a class="tab" data-nav="farm risk" href="03-parcels.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-farm"/></svg>Farm</a>
+  <a class="tab" data-nav="cover" href="06-policies.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-shield"/></svg>Cover</a>
+  <a class="tab" data-nav="claims" href="12-claim-status.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-file-check"/></svg>Claims</a>
+  <a class="tab" data-nav="wallet" href="13-wallet.html"><svg class="i i-lg" aria-hidden="true"><use href="#i-wallet"/></svg>Wallet</a>
+</nav>
+
+<dialog class="sheet" id="parcelSheet" aria-labelledby="psT">
+  <div class="sheet-grab"></div>
+  <div class="ov-head"><h3 class="h-section" id="psT" data-f="title">Parcel details · DMK-01</h3><button class="icon-btn" type="button" data-close aria-label="Close"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="ov-body"><div class="stack-sm">
+    <div class="field"><label class="field-label" for="s-name">Name</label><input class="input" id="s-name" data-f="name" value="Karanganyar Utara"></div>
+    <div class="field"><label class="field-label" for="s-crop">Crop</label><div class="select-wrap"><select class="select" id="s-crop" data-f="crop"><option selected>Rice</option></select></div></div>
+    <div class="field"><label class="field-label" for="s-var">Variety</label><div class="select-wrap"><select class="select" id="s-var" data-f="variety"><option selected>Inpari 32</option><option>Inpari 42</option><option>Ciherang</option><option>Mekongga</option></select></div></div>
+    <div class="field"><label class="field-label" for="s-date">Planting date</label><input class="input" id="s-date" data-f="date" value="2 Dec 2025" inputmode="numeric"></div>
+    <div class="field"><label class="field-label" for="s-area">Area</label><div class="affix"><input class="input" id="s-area" data-f="area" value="9,6" inputmode="decimal"><span class="affix-suf">ha</span></div><span class="field-hint">Measured from the boundary you drew</span></div>
+    <div class="field"><label class="field-label" for="s-irr">Irrigation</label><div class="select-wrap"><select class="select" id="s-irr" data-f="irr"><option selected>Technical irrigation</option><option>Rain-fed</option></select></div></div>
+    <div class="field"><label class="field-label" for="s-kec">Kecamatan</label><input class="input" id="s-kec" data-f="kec" value="Karanganyar"></div>
+  </div></div>
+  <div class="ov-foot"><button class="btn btn-danger" type="button" data-stub="Removing a parcel is not part of this prototype.">Remove</button><button class="btn btn-ink" type="button" data-save data-close data-toast="DMK-01 saved." data-tone="ok">Save parcel</button></div>
+</dialog>
+
+<script src="../shared/system.js"></script>
+<script>(function(){
+  var P = {};
+  P['DMK-01'] = {name:'Karanganyar Utara',kec:'Karanganyar',area:'9,6',variety:'Inpari 32',date:'2 Dec 2025'};
+  P['DMK-02'] = {name:'Karanganyar Selatan',kec:'Karanganyar',area:'8,4',variety:'Inpari 32',date:'4 Dec 2025'};
+  P['DMK-03'] = {name:'Gajah Timur',kec:'Gajah',area:'7,2',variety:'Ciherang',date:'6 Dec 2025'};
+  P['DMK-04'] = {name:'Dempet Barat',kec:'Dempet',area:'8,8',variety:'Inpari 42',date:'9 Dec 2025'};
+  P['DMK-05'] = {name:'Wonosalam',kec:'Wonosalam',area:'6,5',variety:'Ciherang',date:'11 Dec 2025'};
+  P['DMK-06'] = {name:'Mijen Hilir',kec:'Mijen',area:'7,5',variety:'Mekongga',date:'14 Dec 2025'};
+  var PG = {"DMK-01":"520,140 590,128 612,180 560,206 516,180","DMK-02":"530,214 596,212 606,268 548,290 520,252","DMK-03":"588,302 648,294 666,348 618,374 582,342","DMK-04":"570,400 640,396 650,452 590,470 560,440","DMK-05":"190,380 250,372 266,420 214,444 180,418","DMK-06":"200,175 262,168 280,218 228,240 190,214"};
+  var cur = 'DMK-01';
+  var label = document.getElementById('selLabel');
+  function $$(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+  function mobile(){ return window.matchMedia && window.matchMedia('(max-width:600px)').matches; }
+  function select(id, open){
+    cur = id; var p = P[id];
+    $$('.pg').forEach(function(g){ g.classList.toggle('is-sel', g.getAttribute('data-id') === id); });
+    $$('.parcel-tile').forEach(function(t){ var on = t.getAttribute('data-id') === id; t.classList.toggle('is-sel', on); t.setAttribute('aria-pressed', on); });
+    var pts = PG[id].split(' ').map(function(s){ return s.split(',').map(Number); });
+    var xs = pts.map(function(q){return q[0];}), ys = pts.map(function(q){return q[1];});
+    var cx = (Math.min.apply(0,xs) + Math.max.apply(0,xs)) / 2, top = Math.min.apply(0,ys);
+    var x = Math.max(164, Math.min(440, cx - 86)), y = Math.max(86, top - 46);
+    if (label){ label.setAttribute('transform', 'translate(' + x + ' ' + y + ')'); label.querySelector('text').textContent = id + ' \u00b7 ' + p.area + ' ha';
+      var g = label.querySelector('.lbl-in'); var c = g.cloneNode(true); g.parentNode.replaceChild(c, g); }
+    $$('[data-f=title]').forEach(function(e){ e.textContent = 'Parcel details \u00b7 ' + id; });
+    $$('[data-f=name]').forEach(function(e){ e.value = p.name; });
+    $$('[data-f=kec]').forEach(function(e){ e.value = p.kec; });
+    $$('[data-f=area]').forEach(function(e){ e.value = p.area; });
+    $$('[data-f=date]').forEach(function(e){ e.value = p.date; });
+    $$('[data-f=variety]').forEach(function(e){ e.value = p.variety; });
+    $$('[data-save]').forEach(function(b){ b.setAttribute('data-toast', id + ' saved.'); });
+    if (open && mobile() && window.AG) AG.open('parcelSheet');
+  }
+  $$('.parcel-tile').forEach(function(t){
+    t.addEventListener('click', function(){ select(t.getAttribute('data-id'), true); });
+    t.addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); select(t.getAttribute('data-id'), true); } });
+  });
+  $$('.pg').forEach(function(g){ g.addEventListener('click', function(){ select(g.getAttribute('data-id'), true); }); });
+})();</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!-- @dsCard height=288 -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>AiGRI</title>
+<style>
+  html, body { margin:0; height:100%; }
+  body { background:var(--white); color:var(--ink); font-family:var(--font-sans); overflow:hidden; }
+  .cover { position:relative; width:960px; height:288px; overflow:hidden; }
+  .art { position:absolute; top:0; left:480px; width:480px; height:288px; overflow:hidden; }
+  .art svg { display:block; width:480px; height:288px; }
+  .grass { fill:var(--green); }
+  .leaf { fill:var(--leaf); }
+  .sun { fill:var(--sun); }
+  .seed { fill:var(--cream); }
+  .slab { rx:var(--r-lg); }
+  .furrow { rx:var(--r-md); }
+  .words { position:absolute; left:var(--s6); bottom:var(--s6); width:440px; }
+  .name { margin:0; font-size:120px; line-height:.95; font-weight:700; letter-spacing:var(--tr-h1); color:var(--ink); }
+  .tag { margin:var(--s2) 0 0 var(--s1); font-size:14px; line-height:20px; color:var(--muted); }
+</style>
+</head>
+<body>
+<div class="cover">
+<div class="art" aria-hidden="true">
+<svg viewBox="0 0 480 288" width="480" height="288">
+<!--
+  blocks      green 464×192 slab bled off the top and right (the field) · leaf 400×40 and green 424×40 furrow rows below it · sun disc r48 (the sun) · cream seeds: about 42% of 960×288
+  arrangement one tall green slab with two stepped rows under it, each row shifted s5 left of the one above, s2 between rows and s4 under the slab, the sun set at the slab's upper right, like the logo's rows with a sun rising
+  pattern     discs, from "rounded, solid, calm" and the logo idea of rows of a field: 21 cream seeds at r-xs (radius 10) on a 56 pitch, half-pitch offset between lines, cut into the slab and the rows
+  scales      sides in s multiples (s5 24, s6 32, s7 48, s8 64); slab corner r-lg; row corner r-md (half of the 40 height); seed radius r-xs; text inset s6
+-->
+<rect class="grass slab" x="32" y="-16" width="464" height="192" rx="28"/>
+<circle class="sun" cx="396" cy="72" r="48"/>
+<rect class="leaf furrow" x="96" y="192" width="400" height="40" rx="20"/>
+<rect class="grass furrow" x="72" y="240" width="424" height="40" rx="20"/>
+<circle class="seed" cx="72" cy="112" r="10"/>
+<circle class="seed" cx="128" cy="112" r="10"/>
+<circle class="seed" cx="184" cy="112" r="10"/>
+<circle class="seed" cx="240" cy="112" r="10"/>
+<circle class="seed" cx="296" cy="112" r="10"/>
+<circle class="seed" cx="100" cy="152" r="10"/>
+<circle class="seed" cx="156" cy="152" r="10"/>
+<circle class="seed" cx="212" cy="152" r="10"/>
+<circle class="seed" cx="268" cy="152" r="10"/>
+<circle class="seed" cx="324" cy="152" r="10"/>
+<circle class="seed" cx="140" cy="212" r="10"/>
+<circle class="seed" cx="196" cy="212" r="10"/>
+<circle class="seed" cx="252" cy="212" r="10"/>
+<circle class="seed" cx="308" cy="212" r="10"/>
+<circle class="seed" cx="364" cy="212" r="10"/>
+<circle class="seed" cx="108" cy="260" r="10"/>
+<circle class="seed" cx="164" cy="260" r="10"/>
+<circle class="seed" cx="220" cy="260" r="10"/>
+<circle class="seed" cx="276" cy="260" r="10"/>
+<circle class="seed" cx="332" cy="260" r="10"/>
+<circle class="seed" cx="388" cy="260" r="10"/>
+</svg>
+</div>
+<div class="words">
+<h1 class="name">AiGRI</h1>
+<p class="tag">AiGRI sees what is coming.</p>
+</div>
+</div>
+</body>
+</html>
