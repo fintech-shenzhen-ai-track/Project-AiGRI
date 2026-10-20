@@ -20,12 +20,12 @@ Wave 1, before M1. Docker restarts while developer A retries moving its disk ima
 
 ## Running
 
-- 01 phase B part 2 (DB tasks T-01.06, T-01.11, T-01.12, T-01.14) · `feat/01-foundation-pb` · `.claude/worktrees/agent-a1f1fd5aa4ac94f72` · 2026-10-20 · in review; adds migration `0001_ids` (down_revision `0001_core`): two heads once 12's `0012` merges → `alembic merge heads`
 - 12 phase A (T-12.01–T-12.03, C08) · `feat/12-wallet-pa` · `.claude/worktrees/agent-a913b84b2e51ae0de` · 2026-10-20 · fix round 1 (ledger txn status + payout shape, tenant columns from wallet, currency from packs, no superadmin claim)
 - 04 phase A (T-04.01–T-04.03, C13) · `feat/04-policy-compiler-pa` · new worktree · 2026-10-20 · `record_clauses` without `embedding` until R-004
 
 ## Merged
 
+- 01 phase B part 2 · `93d638c` · ticked T-01.06, T-01.11, T-01.12, T-01.14 (Done when re-run on lane/a with the DB: 293 passed; single head `0001_ids`) · no board contract; no fix round. Phase B done except T-01.10 (R-007, person) and T-01.13 (MinIO, needs `make up`). `core.audit.export_rows(from_ts, to_ts)` is sync (asyncio.run), `fetch_rows`, `write_export`, `verify`; outbox consumers register via `outbox.register` or `CONSUMER_MODULES`; new unpoliced tables go in `core/rls_check.NO_POLICY_ALLOWLIST`.
 - 05 phase C · `39138a6` · ticked T-05.11 (Done when re-run on lane/a: 251 passed; coverage gate `backend/tests/test_rules_coverage_gate.py` enforces 100% branches on `aigri/rules`; reviewer proved it fails at 97%) · one fix round (per_policy assessed-% monotonicity). T-05.12 stays with the accounting teammate. `pytest-cov` dev dep per R-022 (a). Note: `.coverage` is not in `.gitignore` (01 owns it).
 - 05 swap onto real core · `b4927bd` · no tasks · `rules/_compat.py` deleted; rules keep `_numeric.py` (`round_half_up`, `parse_pct`) and weekday `add_days` as rules logic; float guard before `core.hashing.jcs`. 210 passed on lane/a. No fix round.
 - 01 phase B part 1 · `2588bb2` · ticked T-01.05, T-01.07, T-01.08, T-01.09 (Done when re-run on lane/a with the DB: 210 passed; reviewer planted a `datetime.now()` and the ban test failed) · no board contract. No fix round. R-007 interim (b) in code (`core/packs.py` `_compact_decimals`); BPS region codes verified, unchanged. T-01.10 waits on R-007; T-01.13 needs MinIO.
@@ -41,6 +41,8 @@ Wave 1, before M1. Docker restarts while developer A retries moving its disk ima
 
 ## Fakes to swap
 
+- 12 `wallet/fakes.py` `RecordingAudit` (`AuditPort.write(action, object_type, object_id, payload, client_id, insurer_id)`) → `core.audit.append` (now merged) · swap after 12 A merges
+- 16 `bench/audit_chain.py` audit source + local hashing → `core.audit.export_rows`/`fetch_rows`/`write_export` and `core.hashing.jcs`/`entry_hash` (both now merged) · ready to dispatch
 - Swap notes for `rules/_compat.py` (from the 01 B review): `canonical_json` → `core.hashing.jcs` (byte-identical except: `jcs` accepts floats, so keep a float guard in `rules/`; `jcs` rejects ints from 2**53 with `rfc8785.IntegerDomainError`, adjust any `except ValueError`); money `round_minor` same for IDR/PHP/THB, `core.money` raises PackNotFound for undefined currencies and needs packs loaded; `round_half_up`, `parse_pct` have no core equivalent (keep in rules/ or add); check `core.packs` exposes time zone / local date helpers. `bench/audit_chain.py` `canonical_json` uses `json.dumps(sort_keys=True)`, differs from RFC 8785, switch to `core.hashing.jcs` + `entry_hash` (with the audit swap after T-01.06).
 - actor resolver · `backend/aigri/gateway/actor.py` default fails closed (401) · 01 T-01.15 (C03) must call `install_actor_resolver` with its session lookup
 - `gateway.denied` Audit Log entry not written · `gateway/authorize.py` · T-02.04 (02 phase B) after T-01.06
@@ -87,6 +89,9 @@ Lane B contracts this lane needs will not be built in this run (out of scope): C
 
 ## Raised
 
+- R-028 · audit chain limits (tail truncation, forged row, high-seq DoS); default (a) anchor + forged-insert test
+- R-027 · `uuid7` uses real time; default (a) documented exception
+- R-026 · RLS allowlist additions incl. `outbox`; default (a) payloads id-only
 - R-025 · 12 schema additions vs data-model.md; default (a) keep and update the shared file (person)
 - R-024 · payout trigger trusts an `audit_events` row the app role can INSERT; needs a person
 - R-023 · wallet posting privilege; default (3) SECURITY DEFINER posting functions; needs a person before 12 B
